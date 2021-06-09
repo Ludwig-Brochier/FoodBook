@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO\Requetes\" />
+    <Folder Include="DTO\Reponses\" />
+    <Folder Include="Entite\" />
+  </ItemGroup>
+
+</Project>
