@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DAL;
+using BLL.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,14 @@ namespace BLL
     {
         public static IServiceCollection AddBLL (this IServiceCollection services)
         {
+            // Liaison à la DAL via Injecteur de dépendance
+            services.AddDAL();
+
+            // Les services de la BLL
+            services.AddTransient<ICommandeService, CommandeService>();
+            services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IManagementService, ManagementService>();
+
             return services;
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    class ReservationService
+    class ReservationService : IReservationService
     {
     }
 }
