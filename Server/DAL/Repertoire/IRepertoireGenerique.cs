@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
-namespace DAL.Repository
-{
+namespace DAL.Repertoire
+{    
     public interface IRepertoireGenerique<TEntite>
     {
         /// <summary>

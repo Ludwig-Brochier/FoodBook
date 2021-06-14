@@ -1,9 +1,8 @@
 ﻿using BO.Entite;
 
-namespace DAL.Repository
+namespace DAL.Repertoire
 {
     public interface IIngredientRepertoire : IRepertoireGenerique<Ingredient>, IRepertoirePaginable<Ingredient>
     {
-
     }
 }

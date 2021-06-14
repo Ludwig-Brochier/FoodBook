@@ -8,38 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository
+namespace DAL.Repertoire
 {
-    class PlatRepertoire : IPlatRepertoire
+    class ReservationRepertoire : IReservationRepertoire
     {
         private readonly IDbSession _session;
-        public PlatRepertoire(IDbSession session)
+        public ReservationRepertoire(IDbSession session)
         {
             _session = session;
         }
 
 
-        public async Task<bool> DeleteAsync(int id)
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ReponsePagination<Plat>> GetAllAsync(RequetePagination requetePagination)
+        public Task<ReponsePagination<Reservation>> GetAllAsync(RequetePagination requetePagination)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Plat> GetAsync(int id)
+        public Task<Reservation> GetAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Plat> InsertAsync(Plat entite)
+        public Task<Reservation> InsertAsync(Reservation entite)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Plat> UpdateAsync(Plat entite)
+        public Task<Reservation> UpdateAsync(Reservation entite)
         {
             throw new NotImplementedException();
         }

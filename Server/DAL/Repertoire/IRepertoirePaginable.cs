@@ -2,7 +2,7 @@
 using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 
-namespace DAL.Repository
+namespace DAL.Repertoire
 {
     public interface IRepertoirePaginable<TEntite>
     {

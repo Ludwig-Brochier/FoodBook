@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DAL.Repository
+namespace DAL.Repertoire
 {
     public interface IRepertoireCRUD<TEntite> : IRepertoireGenerique<TEntite>, IRepertoirePaginable<TEntite>
     {
