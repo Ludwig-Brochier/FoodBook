@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO.Entite
 {
@@ -57,7 +53,7 @@ namespace BO.Entite
         /// </summary>
         public Formule Formule { get; set; }
 
-        
+
         /// <summary>
         /// Constructeur de base de l'objet Reservation
         /// </summary>
@@ -85,7 +81,42 @@ namespace BO.Entite
             DtePriseResa = dtePriseResa;
             NbPersonne = nbPersonne;
             Menu = menu;
-            Formule = formule;            
+            Formule = formule;
+        }
+
+
+        public bool Equals(Reservation autre)
+        {
+            return autre != null &&
+                IdReservation == autre.IdReservation &&
+                Nom == autre.Nom &&
+                Prenom == autre.Prenom &&
+                NumTel == autre.NumTel &&
+                DteResa == autre.DteResa &&
+                DtePriseResa == autre.DtePriseResa &&
+                NbPersonne == autre.NbPersonne &&
+                Menu == autre.Menu &&
+                Formule == autre.Formule;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as Reservation);
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(IdReservation);
+            hash.Add(Nom);
+            hash.Add(Prenom);
+            hash.Add(NumTel);
+            hash.Add(DteResa);
+            hash.Add(DtePriseResa);
+            hash.Add(NbPersonne);
+            hash.Add(Menu);
+            hash.Add(Formule);
+            return hash.ToHashCode();
         }
     }
 }

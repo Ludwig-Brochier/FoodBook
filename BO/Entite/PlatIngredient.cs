@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO.Entite
 {
@@ -36,6 +32,24 @@ namespace BO.Entite
         {
             IngredientPlat = ingredientPlat;
             Quantite = quantite;
+        }
+
+
+        public bool Equals(PlatIngredient autre)
+        {
+            return autre != null &&
+                IngredientPlat == autre.IngredientPlat &&
+                Quantite == autre.Quantite;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as PlatIngredient);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IngredientPlat, Quantite);
         }
     }
 }

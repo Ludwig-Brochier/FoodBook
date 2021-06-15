@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO.Entite
 {
@@ -44,6 +41,25 @@ namespace BO.Entite
             IdMenu = idMenu;
             ServiceMidi = serviceMidi;
             Plats = plats;
+        }
+
+
+        public bool Equals(Menu autre)
+        {
+            return autre != null &&
+                IdMenu == autre.IdMenu &&
+                ServiceMidi == autre.ServiceMidi &&
+                Plats == autre.Plats;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as Menu);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IdMenu, ServiceMidi, Plats);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO.Entite
 {
@@ -57,6 +54,27 @@ namespace BO.Entite
             DteDebut = dteDebut;
             DteFin = dteFin;
             Menus = menus;
+        }
+
+
+        public bool Equals(Semaine autre)
+        {
+            return autre != null &&
+                IdSemaine == autre.IdSemaine &&
+                DteDebut == autre.DteDebut &&
+                DteFin == autre.DteFin &&
+                DteButoir == autre.DteButoir &&
+                Menus == autre.Menus;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as Semaine);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IdSemaine, DteDebut, DteFin, DteButoir, Menus);
         }
     }
 }
