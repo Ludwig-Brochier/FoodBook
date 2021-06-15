@@ -1,10 +1,6 @@
 ﻿using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services

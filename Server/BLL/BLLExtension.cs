@@ -20,6 +20,7 @@ namespace BLL
             services.AddTransient<ICommandeService, CommandeService>();
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IManagementService, ManagementService>();
+            services.AddTransient<IRestaurationService, RestaurationService>();
 
             return services;
         }
