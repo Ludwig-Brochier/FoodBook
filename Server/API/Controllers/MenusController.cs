@@ -58,8 +58,91 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Permet d'ajouter un menu
+        /// </summary>
+        /// <param name="menu">Le menu à ajouter</param>
+        /// <returns>Le nouveau menu</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> InsertMenuAsync([FromBody]Menu menu)
+        {
+            // Méthode pour ajouter un menu
+            Menu newMenu = await _restaurationService.InsertMenuAsync(menu);
+
+            if (newMenu != null)
+            {
+                // Menu créé, donc retourne le nouveau menu en appelant la méthode Get
+                return CreatedAtAction(nameof(GetMenuAsync), new { id = newMenu.IdMenu }, newMenu);
+            }
+
+            else
+            {
+                // La requête n'est pas conforme
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Permet de mettre à jour un menu précis via son ID
+        /// </summary>
+        /// <param name="idMenu">L'identifiant du menu</param>
+        /// <param name="menu">Le nouveau menu</param>
+        /// <returns>Le menu modifié</returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateMenuAsync([FromRoute]int idMenu, [FromBody]Menu menu)
+        {
+            if (menu == null || idMenu != menu.IdMenu)
+            {
+                // La requête n'est pas conforme
+                return BadRequest();
+            }
+
+            else
+            {
+                // Méthode pour mettre à jour un menu
+                Menu updateMenu = await _restaurationService.UpdateMenuAsync(menu);
+
+                if (updateMenu != null)
+                {
+                    // Résultat Ok + menu modifié
+                    return Ok(updateMenu);
+                }
+
+                else
+                {
+                    // Menu introuvable
+                    return NotFound();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Permet de supprimer un menu précis via son ID
+        /// </summary>
+        /// <param name="idMenu">L'identifiant du menu</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteMenuAsync([FromRoute]int idMenu)
+        {
+            // Méthode pour supprimer un menu
+            if (await _restaurationService.DeleteMenuAsync(idMenu))
+            {
+                // Le menu est bien supprimé
+                return NoContent();
+            }
+
+            else
+            {
+                // Menu introuvable
+                return NotFound();
+            }
+        }
     }
 }
