@@ -24,7 +24,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<ReponsePagination<Reservation>> GetAllReservationsAsync(RequetePagination requetePagination)
+        public Task<ReponsePagination<Reservation>> GetAllReservationsAsync(RequetePagination requetePagination, int idSemaine)
         {
             throw new NotImplementedException();
         }

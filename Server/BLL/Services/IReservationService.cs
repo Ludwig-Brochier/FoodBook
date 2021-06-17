@@ -8,11 +8,12 @@ namespace BLL.Services
     public interface IReservationService
     {
         /// <summary>
-        /// Permet de récupérer toutes les réservations selon une pagination précise
+        /// Permet de récupérer toutes les réservations d'une semaine précise selon une pagination précise
         /// </summary>
         /// <param name="requetePagination">La pagination demandée</param>
-        /// <returns>Les réservations mises en page</returns>
-        Task<ReponsePagination<Reservation>> GetAllReservationsAsync(RequetePagination requetePagination);
+        /// <param name="idSemaine">L'identifiant de la semaine précise</param>
+        /// <returns>Les réservations de la semaine mises en page</returns>
+        Task<ReponsePagination<Reservation>> GetAllReservationsAsync(RequetePagination requetePagination, int idSemaine);
 
         /// <summary>
         /// Permet de récupérer une réservation précise via son ID

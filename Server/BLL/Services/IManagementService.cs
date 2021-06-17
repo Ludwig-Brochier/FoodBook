@@ -1,19 +1,10 @@
 ﻿using System.Threading.Tasks;
-using BO.DTO.Reponses;
-using BO.DTO.Requetes;
 using BO.Entite;
 
 namespace BLL.Services
 {
     public interface IManagementService
     {
-        /// <summary>
-        /// Permet de récupérer toutes les semaines selon une pagination précise
-        /// </summary>
-        /// <param name="requetePagination">La pagination demandée</param>
-        /// <returns>Les semaines mises en page</returns>
-        Task<ReponsePagination<Semaine>> GetAllSemaineAsync(RequetePagination requetePagination);
-
         /// <summary>
         /// Permet de récupérer une semaine précise en fonction de son identifiant
         /// </summary>

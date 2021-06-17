@@ -1,6 +1,4 @@
-﻿using BO.DTO.Reponses;
-using BO.DTO.Requetes;
-using BO.Entite;
+﻿using BO.Entite;
 using DAL.UOW;
 using System;
 using System.Collections.Generic;
@@ -20,11 +18,6 @@ namespace BLL.Services
 
 
         public Task<bool> DeleteSemaineAsync(int idSemaine)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ReponsePagination<Semaine>> GetAllSemaineAsync(RequetePagination requetePagination)
         {
             throw new NotImplementedException();
         }

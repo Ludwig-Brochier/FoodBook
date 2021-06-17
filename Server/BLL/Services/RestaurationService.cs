@@ -34,7 +34,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<ReponsePagination<Menu>> GetAllMenusAsync(RequetePagination requetePagination)
+        public Task<ReponsePagination<Menu>> GetAllMenusAsync(RequetePagination requetePagination, int idSemaine)
         {
             throw new NotImplementedException();
         }
