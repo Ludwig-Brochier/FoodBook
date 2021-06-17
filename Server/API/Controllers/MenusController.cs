@@ -21,15 +21,36 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Permet de récupérer tous les menus selon une pagination précise
+        /// Permet de récupérer tous les menus d'une semaine précise selon une pagination précise
         /// </summary>
         /// <param name="requetePagination">La pagination demandée</param>
-        /// <returns>Les menus mis en page</returns>
+        /// <param name="semaine">La semaine demandée</param>
+        /// <returns>Les menus de la semaine mis en page</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllMenusAsync([FromQuery] RequetePagination requetePagination)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllMenusSemaineAsync([FromQuery]RequetePagination requetePagination, [FromBody]Semaine semaine)
         {
-            // Méthode pour récupérer tous les menus
-            return Ok(await _restaurationService.GetAllMenusAsync(requetePagination));
+            if (semaine == null)
+            {
+                return BadRequest();
+            }
+
+            else
+            {
+                var reponse = await _restaurationService.GetAllMenusAsync(requetePagination, (int)semaine.IdSemaine);
+
+                if (reponse != null)
+                {
+                    return Ok(reponse);
+                }
+
+                else
+                {
+                    return NotFound();
+                }
+            }
         }
 
         /// <summary>
@@ -37,7 +58,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idMenu">L'identifiant du menu</param>
         /// <returns>Le menu demandé</returns>
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetMenuAsync([FromRoute]int idMenu)

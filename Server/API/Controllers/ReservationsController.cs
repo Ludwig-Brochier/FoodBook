@@ -22,15 +22,36 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Permet de récupérer toutes les réservations selon une pagination précise
+        /// Permet de récupérer toutes les réservations d'une semaine précise selon une pagination précise
         /// </summary>
         /// <param name="requetePagination">La pagination demandée</param>
-        /// <returns>Les réservations mise en page</returns>
+        /// <param name="semaine">La semaine demandée</param>
+        /// <returns>Les réservations de la semaine mises en page</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllReservationsAsync([FromQuery]RequetePagination requetePagination)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllReservationsSemaineAsync(RequetePagination requetePagination, Semaine semaine)
         {
-            // Méthode pour récupérer toutes les réservations
-            return Ok(await _reservationService.GetAllReservationsAsync(requetePagination));
+            if (semaine == null)
+            {
+                return BadRequest();
+            }
+
+            else
+            {
+                var reponse = await _reservationService.GetAllReservationsAsync(requetePagination, (int)semaine.IdSemaine);
+
+                if (reponse != null)
+                {
+                    return Ok(reponse);
+                }
+
+                else
+                {
+                    return NotFound();
+                }
+            }
         }
 
         /// <summary>

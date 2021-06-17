@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using BO.DTO.Requetes;
 using Microsoft.AspNetCore.Http;
 using BO.Entite;
 
@@ -18,19 +17,7 @@ namespace API.Controllers
         public SemaineController(IManagementService managementService)
         {
             _managementService = managementService;
-        }
-
-        /// <summary>
-        /// Permet de récupérer toutes les semaines selon une pagination précise
-        /// </summary>
-        /// <param name="requetePagination">La pagination demandée</param>
-        /// <returns>Les semaines mises en page</returns>
-        [HttpGet]
-        public async Task<IActionResult> GetAllSemaineAsync([FromQuery] RequetePagination requetePagination)
-        {
-            // Méthode pour récupérer toutes les semaines
-            return Ok(await _managementService.GetAllSemaineAsync(requetePagination));
-        }
+        }        
 
         /// <summary>
         /// Permet de récupérer une semaine précise via son ID
