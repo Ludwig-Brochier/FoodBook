@@ -22,12 +22,7 @@ namespace DAL.Repertoire
         public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
-        }
-
-        public Task<ReponsePagination<Semaine>> GetAllAsync(RequetePagination requetePagination)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         public Task<Semaine> GetAsync(int id)
         {

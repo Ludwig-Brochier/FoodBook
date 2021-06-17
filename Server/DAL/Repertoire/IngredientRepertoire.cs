@@ -21,19 +21,12 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePagination<Ingredient>> GetAllAsync(RequetePagination requetePagination)
         {
-            List<Ingredient> ingredients = new()
-            {
-                new Ingredient(1, "pain", 0.25),
-                new Ingredient(2, "fromage", 0.35),
-                new Ingredient(3, "jambon", 0.55)
-            };
-
-            return new ReponsePagination<Ingredient>(requetePagination.Page, requetePagination.TaillePage, 3, ingredients);
+            throw new NotImplementedException();
         }
 
         public async Task<Ingredient> GetAsync(int id)
         {
-            return new Ingredient(1, "pain", 0.25);
+            throw new NotImplementedException();
         }
     }
 }

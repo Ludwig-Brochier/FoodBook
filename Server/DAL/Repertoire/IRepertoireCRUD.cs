@@ -2,8 +2,8 @@
 
 namespace DAL.Repertoire
 {
-    public interface IRepertoireCRUD<TEntite> : IRepertoireGenerique<TEntite>, IRepertoirePaginable<TEntite>
-    {
+    public interface IRepertoireCRUD<TEntite> : IRepertoireGenerique<TEntite>
+    { 
         /// <summary>
         /// Permet d'ajouter un nouveau TEntite
         /// </summary>

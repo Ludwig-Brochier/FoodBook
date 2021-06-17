@@ -2,7 +2,7 @@
 
 namespace DAL.Repertoire
 {
-    public interface IReservationRepertoire : IRepertoireCRUD<Reservation>
+    public interface IReservationRepertoire : IRepertoireCRUD<Reservation>, IRepertoirePaginablePrecis<Reservation>
     {
     }
 }

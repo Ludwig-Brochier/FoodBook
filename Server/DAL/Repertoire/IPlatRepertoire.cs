@@ -2,7 +2,7 @@
 
 namespace DAL.Repertoire
 {
-    public interface IPlatRepertoire : IRepertoireCRUD<Plat>
+    public interface IPlatRepertoire : IRepertoireCRUD<Plat>, IRepertoirePaginable<Plat>
     {
     }
 }

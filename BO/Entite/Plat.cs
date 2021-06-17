@@ -26,7 +26,7 @@ namespace BO.Entite
         /// <summary>
         /// Prix du plat
         /// </summary>
-        public Double Prix { get; set; }
+        public float Prix { get; set; }
 
         /// <summary>
         /// Liste d'Objet PlatIngredient
@@ -48,7 +48,7 @@ namespace BO.Entite
         /// <param name="typePlat">Type de plat</param>
         /// <param name="prix">Prix du plat</param>
         /// <param name="platIngredients">Représente la liste des ingrédients composant le plat, ainsi que la quantité de l'ingrédient</param>
-        public Plat(int? idPlat, String intitule, String typePlat, Double prix, List<PlatIngredient> platIngredients)
+        public Plat(int? idPlat, String intitule, String typePlat, float prix, List<PlatIngredient> platIngredients)
         {
             IdPlat = idPlat;
             Intitule = intitule;

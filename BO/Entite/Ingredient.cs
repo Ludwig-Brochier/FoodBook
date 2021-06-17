@@ -20,7 +20,7 @@ namespace BO.Entite
         /// <summary>
         /// Prix moyen de l'ingrédient
         /// </summary>
-        public Double Prix { get; set; }
+        public float Prix { get; set; }
 
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BO.Entite
         /// <param name="idIngredient">Identifiant de l'ingrédient</param>
         /// <param name="intitule">Intitule de l'ingrédient</param>
         /// <param name="prix">Prix moyen de l'ingrédient</param>
-        public Ingredient(int? idIngredient, String intitule, Double prix)
+        public Ingredient(int? idIngredient, String intitule, float prix)
         {
             IdIngredient = idIngredient;
             Intitule = intitule;
