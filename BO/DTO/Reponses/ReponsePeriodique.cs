@@ -4,11 +4,24 @@ using System.Collections.Generic;
 namespace BO.DTO.Reponses
 {
     /// <summary>
-    /// DTO permettant au serveur de renvoyer des résultats suite à une demande de pagination précise
+    /// DTO permettant au serveur de renvoyer des résultats suite à une demande concernant une période précise
+    /// Mise en page des résultats
     /// </summary>
     /// <typeparam name="Obj">Objet affecté par la pagination</typeparam>
-    public class ReponsePagination<Obj>
+    public class ReponsePeriodique<Obj>
     {
+        /// <summary>
+        /// Début de la période
+        /// Représente IdSemaine de l'objet Semaine
+        /// </summary>
+        public int Debut { get; set; }
+
+        /// <summary>
+        /// Fin de la période
+        /// Représente IdSemaine de l'objet Semaine
+        /// </summary>
+        public int Fin { get; set; }
+
         /// <summary>
         /// Numéro de la page demandé
         /// </summary>
@@ -36,19 +49,23 @@ namespace BO.DTO.Reponses
 
 
         /// <summary>
-        /// Constructeur de base 
+        /// Constructeur de base
         /// </summary>
-        public ReponsePagination() { }
+        public ReponsePeriodique() { }
 
         /// <summary>
-        /// Constructeur complet 
+        /// Constructeur complet
         /// </summary>
+        /// <param name="debut">L'IdSemaine de début de période</param>
+        /// <param name="fin">L'IdSemaine de fin de période</param>
         /// <param name="page">Numéro de la page</param>
         /// <param name="taillePage">Taille de la page</param>
         /// <param name="totalEnregistrements">Nombre total d'enregistrements</param>
         /// <param name="donnees">Données de la page: Liste d'Obj concernés par la pagination</param>
-        public ReponsePagination(int page, int taillePage, int? totalEnregistrements, List<Obj> donnees)
+        public ReponsePeriodique(int debut, int fin, int page, int taillePage, int? totalEnregistrements, List<Obj> donnees)
         {
+            Debut = debut;
+            Fin = fin;
             Page = page;
             TaillePage = taillePage;
             TotalEnregistrements = totalEnregistrements;

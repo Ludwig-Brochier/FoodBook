@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO.DTO.Requetes
+﻿namespace BO.DTO.Requetes
 {
     /// <summary>
-    /// Pagination demandée en entrée du serveur
+    /// DTO permettant de demander au serveur une mise en page précise des résultats
     /// </summary>
     public class RequetePagination
     {
@@ -23,7 +17,7 @@ namespace BO.DTO.Requetes
 
 
         /// <summary>
-        /// Constructeur de base de l'Objet DTO RequetePagination
+        /// Constructeur de base avec pagination par défaut
         /// </summary>
         public RequetePagination()
         {
@@ -32,7 +26,7 @@ namespace BO.DTO.Requetes
         }
 
         /// <summary>
-        /// Constructeur complet de l'Objet DTO RequetePagination
+        /// Constructeur complet permettant une mise en page précise
         /// </summary>
         /// <param name="page">Numéro de la page</param>
         /// <param name="taillePage">Taille de la page</param>
