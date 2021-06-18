@@ -21,36 +21,15 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Permet de récupérer tous les menus d'une semaine précise selon une pagination précise
+        /// Permet de récupérer les menus sur une période précise, le tout mis en page
         /// </summary>
-        /// <param name="requetePagination">La pagination demandée</param>
-        /// <param name="semaine">La semaine demandée</param>
-        /// <returns>Les menus de la semaine mis en page</returns>
+        /// <param name="requetePeriodique">La période demandée, dont mise en page</param>
+        /// <returns>Les menus de la période mis en page</returns>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllMenusSemaineAsync([FromQuery]RequetePagination requetePagination, [FromBody]Semaine semaine)
+        public async Task<IActionResult> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
-            if (semaine == null)
-            {
-                return BadRequest();
-            }
-
-            else
-            {
-                var reponse = await _restaurationService.GetAllMenusAsync(requetePagination, (int)semaine.IdSemaine);
-
-                if (reponse != null)
-                {
-                    return Ok(reponse);
-                }
-
-                else
-                {
-                    return NotFound();
-                }
-            }
+            // Méthode pour récupérer les menus d'une période
+            return Ok(await _restaurationService.GetAllMenusAsync(requetePeriodique));
         }
 
         /// <summary>
