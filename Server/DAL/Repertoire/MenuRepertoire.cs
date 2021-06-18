@@ -25,7 +25,7 @@ namespace DAL.Repertoire
             throw new NotImplementedException();
         }
 
-        public Task<ReponsePagination<Menu>> GetAllPrecisAsync(RequetePagination requetePagination, int id)
+        public Task<ReponsePeriodique<Menu>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
             throw new NotImplementedException();
         }

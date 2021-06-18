@@ -2,7 +2,10 @@
 
 namespace DAL.Repertoire
 {
-    public interface IMenuRepertoire : IRepertoireCRUD<Menu>, IRepertoirePaginablePrecis<Menu>
+    /// <summary>
+    /// Interface implémentée par le répertoire Menu
+    /// </summary>
+    public interface IMenuRepertoire : IRepertoireCRUD<Menu>, IRepertoirePeriodique<Menu>
     {
     }
 }

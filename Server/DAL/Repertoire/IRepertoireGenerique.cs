@@ -1,7 +1,12 @@
 ﻿using System.Threading.Tasks;
 
 namespace DAL.Repertoire
-{    
+{   
+    /// <summary>
+    /// Interface implémentée par les répertoires génériques
+    /// Répertoire en lecture seule
+    /// </summary>
+    /// <typeparam name="TEntite">L'entité concernée</typeparam>
     public interface IRepertoireGenerique<TEntite>
     {
         /// <summary>

@@ -2,6 +2,10 @@
 
 namespace DAL.Repertoire
 {
+    /// <summary>
+    /// Interface implémentée par les répertoires modifiables
+    /// </summary>
+    /// <typeparam name="TEntite">L'entité concernée</typeparam>
     public interface IRepertoireCRUD<TEntite> : IRepertoireGenerique<TEntite>
     { 
         /// <summary>

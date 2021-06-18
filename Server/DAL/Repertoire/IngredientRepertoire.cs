@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repertoire
-{
+{    
     class IngredientRepertoire : IIngredientRepertoire
     {
         private readonly IDbSession _session;
