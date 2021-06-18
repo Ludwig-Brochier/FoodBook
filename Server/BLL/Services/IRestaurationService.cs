@@ -62,12 +62,11 @@ namespace BLL.Services
 
         #region Menu
         /// <summary>
-        /// Permet de récupérer tous les menus d'une semaine précise selon une pagination précise
+        /// Permet de récupérer tous les menus sur une période précise selon une pagination précise
         /// </summary>
-        /// <param name="requetePagination">La pagination précise</param>
-        /// <param name="idSemaine">L'identifiant de la semaine précise</param>
-        /// <returns>Les menus de la semaine mis en page</returns>
-        Task<ReponsePagination<Menu>> GetAllMenusAsync(RequetePagination requetePagination, int idSemaine);
+        /// <param name="requetePeriodique">La période précise</param>
+        /// <returns>Les menus de la période mis en page</returns>
+        Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique);
 
         /// <summary>
         /// Permet de récupérer un menu précis via son ID
