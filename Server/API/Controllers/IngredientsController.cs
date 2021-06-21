@@ -37,7 +37,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idIngredient">L'identifiant de l'ingrédient</param>
         /// <returns>L'ingrédient demandé</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{idIngredient}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetIngredientAsync([FromRoute]int idIngredient)

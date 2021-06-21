@@ -2,6 +2,7 @@
 using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
+using DAL.Repertoire;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,10 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
+        public async Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
         {
-            throw new NotImplementedException();
+            IIngredientRepertoire ingredient = _bdd.GetRepertoire<IIngredientRepertoire>();
+            return await ingredient.GetAllAsync(requetePagination);
         }
 
         public Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
@@ -44,9 +46,10 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<Ingredient> GetIngredientAsync(int idIngredient)
+        public async Task<Ingredient> GetIngredientAsync(int idIngredient)
         {
-            throw new NotImplementedException();
+            IIngredientRepertoire ingredient = _bdd.GetRepertoire<IIngredientRepertoire>();
+            return await ingredient.GetAsync(idIngredient);
         }
 
         public Task<Menu> GetMenuAsync(int idMenu)

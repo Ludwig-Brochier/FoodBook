@@ -38,7 +38,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idReservation">L'identifiant de la réservation</param>
         /// <returns>La réservation demandée</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetReservationAsync([FromRoute]int idReservation)
@@ -64,7 +64,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="reservation">La réservation à ajouter</param>
         /// <returns>La nouvelle réservation</returns>
-        [HttpPost()]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> InsertReservationAsync([FromBody]Reservation reservation)
@@ -91,7 +91,7 @@ namespace API.Controllers
         /// <param name="idReservation">L'identifiant de la réservation</param>
         /// <param name="reservation">La nouvelle réservation</param>
         /// <returns>La réservation modifiée</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,7 +127,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idReservation">L'identifiant de la réservation</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{idReservation}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteReservationAsync([FromRoute]int idReservation)

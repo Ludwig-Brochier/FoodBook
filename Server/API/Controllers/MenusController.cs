@@ -37,7 +37,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idMenu">L'identifiant du menu</param>
         /// <returns>Le menu demandé</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{idMenu}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetMenuAsync([FromRoute]int idMenu)
@@ -90,7 +90,7 @@ namespace API.Controllers
         /// <param name="idMenu">L'identifiant du menu</param>
         /// <param name="menu">Le nouveau menu</param>
         /// <returns>Le menu modifié</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{idMenu}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -126,7 +126,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idMenu">L'identifiant du menu</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{idMenu}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteMenuAsync([FromRoute]int idMenu)

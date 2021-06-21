@@ -24,7 +24,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idSemaine">L'identifiant de la semaine</param>
         /// <returns>La semaine demandée</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{idSemaine}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetSemaineAsync([FromRoute] int idSemaine)
@@ -77,7 +77,7 @@ namespace API.Controllers
         /// <param name="idSemaine">L'identifiant de la semaine</param>
         /// <param name="semaine">La nouvelle semaine</param>
         /// <returns>La semaine modifiée</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{idSemaine}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,7 +113,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idSemaine">L'identifiant de la semaine</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{idSemaine}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteSemaineAsync([FromRoute]int idSemaine)

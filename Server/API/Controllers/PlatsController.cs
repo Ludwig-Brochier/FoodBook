@@ -38,7 +38,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idPlat">L'identifiant du plat</param>
         /// <returns>Le plat demandé</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{idPlat}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPlatAsync([FromRoute]int idPlat)
@@ -91,7 +91,7 @@ namespace API.Controllers
         /// <param name="idPlat">L'identifiant du plat</param>
         /// <param name="plat">Le nouveau plat</param>
         /// <returns>Le plat modifié</returns>
-        [HttpPut]
+        [HttpPut("{idPlat}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,7 +127,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idPlat">L'identifiant du plat</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{idPlat}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePlatAsync([FromRoute]int idPlat)
