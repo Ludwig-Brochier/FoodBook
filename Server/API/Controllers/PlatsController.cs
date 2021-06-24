@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BO.DTO.Requetes;
 using Microsoft.AspNetCore.Http;
 using BO.Entite;
+using System.Data.Common;
 
 namespace API.Controllers
 {
@@ -30,7 +31,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllPlatsAsync([FromQuery]RequetePagination requetePagination)
         {
             // Méthode pour récupérer tous les plats
-            return Ok(await _restaurationService.GetAllIngredientsAsync(requetePagination));
+            return Ok(await _restaurationService.GetAllPlatsAsync(requetePagination));
         }
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idPlat">L'identifiant du plat</param>
         /// <returns>Le plat demandé</returns>
+        [ActionName("Get")]
         [HttpGet("{idPlat}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,6 +61,7 @@ namespace API.Controllers
             }
         }
 
+        
         /// <summary>
         /// Permet d'ajouter un plat
         /// </summary>
@@ -69,20 +72,28 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> InsertPlatAsync([FromBody]Plat plat)
         {
-            // Méthode pour ajouter un plat
-            Plat newPlat = await _restaurationService.InsertPlatAsync(plat);
-
-            if (newPlat != null)
+            if (plat == null || string.IsNullOrEmpty(plat.Intitule) || string.IsNullOrEmpty(plat.TypePlat) || plat.Prix == 0 || plat.PlatIngredients.Count == 0)
             {
-                // Plat créé, donc retourne le nouveau plat en appelant la méthode Get
-                return CreatedAtAction(nameof(GetPlatAsync), new { id = newPlat.IdPlat }, newPlat);
+                return BadRequest();
             }
 
             else
             {
-                // La requête n'est pas conforme
-                return BadRequest();
-            }
+                // Méthode pour ajouter un plat
+                Plat newPlat = await _restaurationService.InsertPlatAsync(plat);
+
+                if (newPlat != null)
+                {
+                    // Plat créé, donc retourne le nouveau plat en appelant la méthode Get
+                    return CreatedAtAction(HttpMethods.Get.ToString(), new { newPlat.IdPlat }, newPlat);
+                }
+
+                else
+                {
+                    // La requête n'est pas conforme
+                    return BadRequest();
+                }
+            }            
         }
 
         /// <summary>
@@ -97,7 +108,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePlatAsync([FromRoute]int idPlat, [FromBody]Plat plat)
         {
-            if (plat == null || idPlat != plat.IdPlat)
+            if (plat == null || idPlat != plat.IdPlat || string.IsNullOrEmpty(plat.Intitule) || string.IsNullOrEmpty(plat.TypePlat) || plat.Prix == 0)
             {
                 // La requête n'est pas conforme
                 return BadRequest();

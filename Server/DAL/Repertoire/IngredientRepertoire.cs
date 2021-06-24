@@ -22,7 +22,7 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePagination<Ingredient>> GetAllAsync(RequetePagination requetePagination)
         {
-            var requeteTask = @"select * from Ingredient
+            var requeteTask = @"SELECT * FROM Ingredient
                             ORDER BY IdIngredient
                             OFFSET @TaillePage * (@Page - 1) rows
                             FETCH NEXT @TaillePage rows only";
@@ -36,7 +36,7 @@ namespace DAL.Repertoire
 
         public async Task<Ingredient> GetAsync(int id)
         {
-            var requete = @"select * from Ingredient where IdIngredient = @ID";
+            var requete = @"SELECT * FROM Ingredient WHERE IdIngredient = @ID";
 
             return await _session.Connection.QueryFirstOrDefaultAsync<Ingredient>(requete, param: new { ID = id }, _session.Transaction);
         }

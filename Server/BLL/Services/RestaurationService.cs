@@ -25,9 +25,22 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeletePlatAsync(int idPlat)
+        public async Task<bool> DeletePlatAsync(int idPlat)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            bool delete = await platRepertoire.DeleteAsync(idPlat);
+            if (delete)
+            {
+                _bdd.Commit();
+                return true;
+            }
+
+            else
+            {
+                _bdd.Rollback();
+                return false;
+            }
         }
 
         public async Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
@@ -41,9 +54,10 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequetePagination requetePagination)
+        public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequetePagination requetePagination)
         {
-            throw new NotImplementedException();
+            IPlatRepertoire plat = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await plat.GetAllAsync(requetePagination);
         }
 
         public async Task<Ingredient> GetIngredientAsync(int idIngredient)
@@ -57,9 +71,10 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<Plat> GetPlatAsync(int idPlat)
+        public async Task<Plat> GetPlatAsync(int idPlat)
         {
-            throw new NotImplementedException();
+            IPlatRepertoire plat = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await plat.GetAsync(idPlat);
         }
 
         public Task<Menu> InsertMenuAsync(Menu menu)
@@ -67,9 +82,13 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<Plat> InsertPlatAsync(Plat plat)
+        public async Task<Plat> InsertPlatAsync(Plat plat)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            Plat newPlat = await platRepertoire.InsertAsync(plat);
+            _bdd.Commit();
+            return newPlat;
         }
 
         public Task<Menu> UpdateMenuAsync(Menu menu)
@@ -77,9 +96,13 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<Plat> UpdatePlatAsync(Plat plat)
+        public async Task<Plat> UpdatePlatAsync(Plat plat)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            Plat newPlat = await platRepertoire.UpdateAsync(plat);
+            _bdd.Commit();
+            return newPlat;
         }
     }
 }
