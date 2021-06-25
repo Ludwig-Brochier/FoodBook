@@ -1,5 +1,6 @@
 ﻿using BO.Entite;
 using DAL.UOW;
+using DAL.Repertoire;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,24 +18,46 @@ namespace BLL.Services
         }
 
 
-        public Task<bool> DeleteSemaineAsync(int idSemaine)
+        public async Task<bool> DeleteSemaineAsync(int idSemaine)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            ISemaineRepertoire semaineRepertoire = _bdd.GetRepertoire<ISemaineRepertoire>();
+            bool delete = await semaineRepertoire.DeleteAsync(idSemaine);
+
+            if (delete)
+            {
+                _bdd.Commit();
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
 
-        public Task<Semaine> GetSemaineAsync(int idSemaine)
+        public async Task<Semaine> GetSemaineAsync(int idSemaine)
         {
-            throw new NotImplementedException();
+            ISemaineRepertoire semaineRepertoire = _bdd.GetRepertoire<ISemaineRepertoire>();
+            return await semaineRepertoire.GetAsync(idSemaine);
         }
 
-        public Task<Semaine> InsertSemaineAsync(Semaine semaine)
+        public async Task<Semaine> InsertSemaineAsync(Semaine semaine)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            ISemaineRepertoire semaineRepertoire = _bdd.GetRepertoire<ISemaineRepertoire>();
+            Semaine newSemaine = await semaineRepertoire.InsertAsync(semaine);
+            _bdd.Commit();
+            return newSemaine;
         }
 
-        public Task<Semaine> UpdateSemaineAsync(Semaine semaine)
+        public async Task<Semaine> UpdateSemaineAsync(Semaine semaine)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            ISemaineRepertoire semaineRepertoire = _bdd.GetRepertoire<ISemaineRepertoire>();
+            Semaine newSemaine = await semaineRepertoire.UpdateAsync(semaine);
+            _bdd.Commit();
+            return newSemaine;
         }
     }
 }

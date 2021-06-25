@@ -24,6 +24,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idSemaine">L'identifiant de la semaine</param>
         /// <returns>La semaine demandée</returns>
+        [ActionName("Get")]
         [HttpGet("{idSemaine}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,7 +62,7 @@ namespace API.Controllers
             if (newSemaine != null)
             {
                 // Semaine créée, donc retourne la nouvelle semaine en appelant la méthodeGet
-                return CreatedAtAction(nameof(GetSemaineAsync), new { id = semaine.IdSemaine }, newSemaine);
+                return CreatedAtAction(HttpMethods.Get.ToString(), new { newSemaine.IdSemaine }, newSemaine);
             }
 
             else

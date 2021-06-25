@@ -101,7 +101,7 @@ namespace DAL.Repertoire
             // Requete SQL pour insérer un nouveau plat
             var requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES (@intitule, @typePlat, @prix)";
             // L'identifiant du plat généré automatiquement par la base de données, en retour de la requete SQL
-            int IdPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
+            int idPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
 
             // Liste des ingrédients et leur quantité
             List<PlatIngredient> platIngredients = entite.PlatIngredients; 
@@ -114,11 +114,11 @@ namespace DAL.Repertoire
             {
                 // Insère les ingrédients du nouveau plat dans la table d'association PlatIngredient
                 await _session.Connection.QueryAsync(requetePlatIngredient, 
-                        param: new { IdPlat, platIngredient.IngredientPlat.IdIngredient, platIngredient.Quantite },
+                        param: new { idPlat, platIngredient.IngredientPlat.IdIngredient, platIngredient.Quantite },
                         _session.Transaction);
             }            
 
-            return await GetAsync(IdPlat);
+            return await GetAsync(idPlat);
         }
 
         public async Task<Plat> UpdateAsync(Plat entite)

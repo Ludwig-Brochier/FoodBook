@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace DAL.Repertoire
 {
@@ -19,24 +20,60 @@ namespace DAL.Repertoire
         }
 
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var requete = @"DELETE FROM Semaine WHERE IdSemaine = @ID";
+
+            Semaine semaine = await GetAsync(id);
+
+            if (semaine.Menus.Count > 0)
+            {
+                var requeteMenus = @"DELETE FROM Menu WHERE IdSemaine = @ID";
+
+                await _session.Connection.ExecuteAsync(requeteMenus, param: new { ID = id }, _session.Transaction);
+            }
+
+            return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
+
         }        
 
-        public Task<Semaine> GetAsync(int id)
+        public async Task<Semaine> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            var requete = @"SELECT * FROM Semaine WHERE IdSemaine = @ID";
+            var requeteMenu = @"SELECT IdMenu, ServiceMidi FROM Semaine JOIN Menu ON Semaine.IdSemaine = Menu.IdSemaine WHERE Semaine.IdSemaine = @ID";
+
+            Semaine semaine = await _session.Connection.QueryFirstOrDefaultAsync<Semaine>(requete, param: new { ID = id }, _session.Transaction);
+
+            if (semaine != null)
+            {
+                semaine.Menus = (List<Menu>) await _session.Connection.QueryAsync<Menu>(requeteMenu, param: new { ID = id }, _session.Transaction);
+            }
+
+            return semaine;
         }
 
-        public Task<Semaine> InsertAsync(Semaine entite)
+        public async Task<Semaine> InsertAsync(Semaine entite)
         {
-            throw new NotImplementedException();
+            var requete = @"INSERT INTO Semaine(DteDebut, DteFin, DteButoir) OUTPUT INSERTED.IdSemaine VALUES(@dteDebut, @dteFin, @dteButoir)";
+
+            int idSemaine = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
+
+            return await GetAsync(idSemaine);
         }
 
-        public Task<Semaine> UpdateAsync(Semaine entite)
+        public async Task<Semaine> UpdateAsync(Semaine entite)
         {
-            throw new NotImplementedException();
+            var requete = @"UPDATE Semaine SET DteDebut = @dteDebut, DteFin = @dteFin, DteButoir = @dteButoir WHERE IdSemaine = @idSemaine";
+
+            if (await _session.Connection.ExecuteAsync(requete, entite, _session.Transaction) > 0)
+            {
+                return await GetAsync((int)entite.IdSemaine);
+            }
+
+            else
+            {
+                return null;
+            }
         }
     }
 }

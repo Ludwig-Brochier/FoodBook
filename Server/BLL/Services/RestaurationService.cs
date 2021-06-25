@@ -62,8 +62,8 @@ namespace BLL.Services
 
         public async Task<Ingredient> GetIngredientAsync(int idIngredient)
         {
-            IIngredientRepertoire ingredient = _bdd.GetRepertoire<IIngredientRepertoire>();
-            return await ingredient.GetAsync(idIngredient);
+            IIngredientRepertoire ingredientRepertoire = _bdd.GetRepertoire<IIngredientRepertoire>();
+            return await ingredientRepertoire.GetAsync(idIngredient);
         }
 
         public Task<Menu> GetMenuAsync(int idMenu)
@@ -73,8 +73,8 @@ namespace BLL.Services
 
         public async Task<Plat> GetPlatAsync(int idPlat)
         {
-            IPlatRepertoire plat = _bdd.GetRepertoire<IPlatRepertoire>();
-            return await plat.GetAsync(idPlat);
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await platRepertoire.GetAsync(idPlat);
         }
 
         public Task<Menu> InsertMenuAsync(Menu menu)
