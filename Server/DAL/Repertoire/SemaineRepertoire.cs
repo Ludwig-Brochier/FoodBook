@@ -23,18 +23,28 @@ namespace DAL.Repertoire
         public async Task<bool> DeleteAsync(int id)
         {
             var requete = @"DELETE FROM Semaine WHERE IdSemaine = @ID";
+            var requeteExist = @"SELECT COUNT(*) FROM Menu WHERE IdSemaine = @ID";
 
-            Semaine semaine = await GetAsync(id);
-
-            if (semaine.Menus.Count > 0)
+            if (await _session.Connection.ExecuteScalarAsync<int>(requeteExist, param: new { ID = id },_session.Transaction) > 0)
             {
-                var requeteMenus = @"DELETE FROM Menu WHERE IdSemaine = @ID";
+                var requeteMenu = @"DELETE FROM Menu WHERE IdSemaine = @ID";
+                var requeteIdMenu = @"SELECT IdMenu FROM Menu WHERE IdSemaine = @ID";
+                var requeteMenuPlatExist = @"SELECT COUNT(*) FROM MenuPlat WHERE IdMenu = @ID";
+                var requeteMenuPlat = @"DELETE FROM MenuPlat WHERE IdMenu = @ID";
 
-                await _session.Connection.ExecuteAsync(requeteMenus, param: new { ID = id }, _session.Transaction);
+                List<int> menus = (List<int>) await _session.Connection.QueryAsync<int>(requeteIdMenu, param: new { ID = id }, _session.Transaction);
+                foreach (var idMenu in menus)
+                {
+                    if (await _session.Connection.ExecuteScalarAsync<int>(requeteMenuPlatExist, param: new { ID = idMenu }, _session.Transaction) > 0)
+                    {
+                        await _session.Connection.ExecuteAsync(requeteMenuPlat, param: new { ID = idMenu }, _session.Transaction);
+                    }
+                }
+
+                await _session.Connection.ExecuteAsync(requeteMenu, param: new { ID = id }, _session.Transaction);
             }
 
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
-
         }        
 
         public async Task<Semaine> GetAsync(int id)

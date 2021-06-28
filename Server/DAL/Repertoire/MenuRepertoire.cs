@@ -20,9 +20,19 @@ namespace DAL.Repertoire
         }
 
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var requete = @"DELETE FROM Menu WHERE IdMenu = @ID";
+            var requeteExist = @"SELECT COUNT(*) FROM MenuPlat WHERE IdMenu = @ID";
+
+            if (await _session.Connection.ExecuteScalarAsync<int>(requeteExist, param: new { ID = id }, _session.Transaction) > 0)
+            {
+                var requeteMenuPlat = @"DELETE FROM MenuPlat WHERE IdMenu = @ID";
+
+                await _session.Connection.ExecuteAsync(requeteMenuPlat, param: new { ID =id }, _session.Transaction);
+            }
+
+            return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
         }
 
         public Task<ReponsePeriodique<Menu>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)

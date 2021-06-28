@@ -20,9 +20,21 @@ namespace BLL.Services
         }
 
 
-        public Task<bool> DeleteMenuAsync(int idMenu)
+        public async Task<bool> DeleteMenuAsync(int idMenu)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            bool delete = await menuRepertoire.DeleteAsync(idMenu);
+            if (delete)
+            {
+                _bdd.Commit();
+                return true;
+            }
+            else
+            {
+                _bdd.Rollback();
+                return false;
+            }
         }
 
         public async Task<bool> DeletePlatAsync(int idPlat)
