@@ -32,7 +32,12 @@
         /// <summary>
         /// Constructeur de base
         /// </summary>
-        public RequetePeriodique() { }
+        public RequetePeriodique() {
+            Debut = 1;
+            Fin = 1;
+            Page = 1;
+            TaillePage = 10;
+        }
 
         /// <summary>
         /// Constructeur pour période d'une semaine, Fin est égal à Debut 

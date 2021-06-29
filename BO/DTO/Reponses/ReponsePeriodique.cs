@@ -7,8 +7,8 @@ namespace BO.DTO.Reponses
     /// DTO permettant au serveur de renvoyer des résultats suite à une demande concernant une période précise
     /// Mise en page des résultats
     /// </summary>
-    /// <typeparam name="Obj">Objet affecté par la pagination</typeparam>
-    public class ReponsePeriodique<Obj>
+    /// <typeparam name="T">Type affecté par la pagination</typeparam>
+    public class ReponsePeriodique<T>
     {
         /// <summary>
         /// Début de la période
@@ -45,7 +45,7 @@ namespace BO.DTO.Reponses
         /// <summary>
         /// Les données de la page
         /// </summary>
-        public List<Obj> Donnees { get; set; }
+        public List<T> Donnees { get; set; }
 
 
         /// <summary>

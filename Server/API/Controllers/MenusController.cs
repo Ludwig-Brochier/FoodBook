@@ -26,7 +26,7 @@ namespace API.Controllers
         /// <param name="requetePeriodique">La période demandée, dont mise en page</param>
         /// <returns>Les menus de la période mis en page</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllMenusAsync(RequetePeriodique requetePeriodique)
+        public async Task<IActionResult> GetAllMenusAsync([FromQuery] RequetePeriodique requetePeriodique)
         {
             // Méthode pour récupérer les menus d'une période
             return Ok(await _restaurationService.GetAllMenusAsync(requetePeriodique));

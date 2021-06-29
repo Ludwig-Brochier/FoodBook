@@ -43,11 +43,11 @@ namespace DAL.Repertoire
         {
             // Requete SQL pour récupérer une liste de plat paginés
             var requeteTask = @"SELECT * FROM Plat
-                            ORDER BY IdPlat
-                            OFFSET @TaillePage * (@Page - 1) rows
-                            FETCH NEXT @TaillePage rows only";
+                                ORDER BY IdPlat
+                                OFFSET @TaillePage * (@Page - 1) rows
+                                FETCH NEXT @TaillePage rows only";
             // Requete SQL pour récupérer le nombre de plat présent dans la base de données
-            string requeteNbPlat = "SELECT COUNT(*) FROM Plat";
+            var requeteNbPlat = "SELECT COUNT(*) FROM Plat";
 
             // Récupère la liste des plats
             IEnumerable<Plat> taskPlat = await _session.Connection.QueryAsync<Plat>(requeteTask, requetePagination, _session.Transaction);
@@ -60,20 +60,21 @@ namespace DAL.Repertoire
         public async Task<Plat> GetAsync(int id)
         {
             // Requete SQL pour récupérer le plat demandé
-            var requete = @"SELECT * FROM Plat WHERE IdPlat = @ID";
-            // Requete SQL pour récupérer les ingrédients du plat demandé
-            var requeteIngredient = @"SELECT Ingredient.IdIngredient, Ingredient.Intitule, Ingredient.Prix FROM Plat 
-                                            JOIN PlatIngredient ON Plat.IdPLat = PlatIngredient.IdPlat
-                                            JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
-                                            WHERE Plat.IdPlat = @ID";
-            // Requete SQL pour récupérer la quantité des ingrédients du plat demandé
-            var requeteQuantite = @"SELECT Quantite FROM PlatIngredient WHERE IdIngredient = @IdIngredient AND IdPlat = @IdPlat";
+            var requete = @"SELECT * FROM Plat WHERE IdPlat = @ID";  
 
             // Le plat demandé
             Plat plat = await _session.Connection.QueryFirstOrDefaultAsync<Plat>(requete, param: new { ID = id }, _session.Transaction);
 
             if (plat != null)
             {
+                // Requete SQL pour récupérer les ingrédients du plat demandé
+                var requeteIngredient = @"SELECT Ingredient.IdIngredient, Ingredient.Intitule, Ingredient.Prix FROM Plat 
+                                            JOIN PlatIngredient ON Plat.IdPLat = PlatIngredient.IdPlat
+                                            JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
+                                            WHERE Plat.IdPlat = @ID";
+                // Requete SQL pour récupérer la quantité des ingrédients du plat demandé
+                var requeteQuantite = @"SELECT Quantite FROM PlatIngredient WHERE IdIngredient = @IdIngredient AND IdPlat = @IdPlat";
+
                 // La liste des ingrédients du plat
                 List<Ingredient> ingredients = (List<Ingredient>)await _session.Connection.QueryAsync<Ingredient>(requeteIngredient, param: new { ID = id }, _session.Transaction);
 

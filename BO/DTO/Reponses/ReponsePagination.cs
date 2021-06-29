@@ -6,8 +6,8 @@ namespace BO.DTO.Reponses
     /// <summary>
     /// DTO permettant au serveur de renvoyer des résultats suite à une demande de pagination précise
     /// </summary>
-    /// <typeparam name="Obj">Objet affecté par la pagination</typeparam>
-    public class ReponsePagination<Obj>
+    /// <typeparam name="T">Type affecté par la pagination</typeparam>
+    public class ReponsePagination<T>
     {
         /// <summary>
         /// Numéro de la page demandé
@@ -32,7 +32,7 @@ namespace BO.DTO.Reponses
         /// <summary>
         /// Les données de la page
         /// </summary>
-        public List<Obj> Donnees { get; set; }
+        public List<T> Donnees { get; set; }
 
 
         /// <summary>

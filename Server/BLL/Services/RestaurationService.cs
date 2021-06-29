@@ -3,10 +3,6 @@ using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
 using DAL.Repertoire;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -61,15 +57,16 @@ namespace BLL.Services
             return await ingredient.GetAllAsync(requetePagination);
         }
 
-        public Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
+        public async Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
-            throw new NotImplementedException();
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            return await menuRepertoire.GetAllPeriodeAsync(requetePeriodique);
         }
 
         public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequetePagination requetePagination)
         {
-            IPlatRepertoire plat = _bdd.GetRepertoire<IPlatRepertoire>();
-            return await plat.GetAllAsync(requetePagination);
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await platRepertoire.GetAllAsync(requetePagination);
         }
 
         public async Task<Ingredient> GetIngredientAsync(int idIngredient)
@@ -78,9 +75,10 @@ namespace BLL.Services
             return await ingredientRepertoire.GetAsync(idIngredient);
         }
 
-        public Task<Menu> GetMenuAsync(int idMenu)
+        public async Task<Menu> GetMenuAsync(int idMenu)
         {
-            throw new NotImplementedException();
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            return await menuRepertoire.GetAsync(idMenu);
         }
 
         public async Task<Plat> GetPlatAsync(int idPlat)
@@ -89,9 +87,13 @@ namespace BLL.Services
             return await platRepertoire.GetAsync(idPlat);
         }
 
-        public Task<Menu> InsertMenuAsync(Menu menu)
+        public async Task<Menu> InsertMenuAsync(Menu menu)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            Menu newMenu = await menuRepertoire.InsertAsync(menu);
+            _bdd.Commit();
+            return newMenu;
         }
 
         public async Task<Plat> InsertPlatAsync(Plat plat)
@@ -103,9 +105,13 @@ namespace BLL.Services
             return newPlat;
         }
 
-        public Task<Menu> UpdateMenuAsync(Menu menu)
+        public async Task<Menu> UpdateMenuAsync(Menu menu)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            Menu newMenu = await menuRepertoire.UpdateAsync(menu);
+            _bdd.Commit();
+            return newMenu;
         }
 
         public async Task<Plat> UpdatePlatAsync(Plat plat)
