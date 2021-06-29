@@ -70,7 +70,7 @@ namespace DAL.Repertoire
 
         public async Task<Menu> InsertAsync(Menu entite)
         {
-            throw new NotImplementedException();
+            var requete = @"INSERT INTO Menu(ServiceMidi) OUTPUT INSERTED.IdMenu VALUES(@serviceMidi)";
         }
 
         public async Task<Menu> UpdateAsync(Menu entite)

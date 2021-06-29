@@ -62,7 +62,7 @@ namespace BO.DTO.Reponses
         /// <param name="taillePage">Taille de la page</param>
         /// <param name="totalEnregistrements">Nombre total d'enregistrements</param>
         /// <param name="donnees">Données de la page: Liste d'Obj concernés par la pagination</param>
-        public ReponsePeriodique(int debut, int fin, int page, int taillePage, int? totalEnregistrements, List<Obj> donnees)
+        public ReponsePeriodique(int debut, int fin, int page, int taillePage, int? totalEnregistrements, List<T> donnees)
         {
             Debut = debut;
             Fin = fin;
