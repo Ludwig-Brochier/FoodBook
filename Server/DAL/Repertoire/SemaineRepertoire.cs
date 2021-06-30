@@ -32,7 +32,7 @@ namespace DAL.Repertoire
                 var requeteMenuPlatExist = @"SELECT COUNT(*) FROM MenuPlat WHERE IdMenu = @ID";
                 var requeteMenuPlat = @"DELETE FROM MenuPlat WHERE IdMenu = @ID";
 
-                List<int> menus = (List<int>) await _session.Connection.QueryAsync<int>(requeteIdMenu, param: new { ID = id }, _session.Transaction);
+                List<int> menus = (List<int>)await _session.Connection.QueryAsync<int>(requeteIdMenu, param: new { ID = id }, _session.Transaction);
                 foreach (var idMenu in menus)
                 {
                     if (await _session.Connection.ExecuteScalarAsync<int>(requeteMenuPlatExist, param: new { ID = idMenu }, _session.Transaction) > 0)
@@ -65,8 +65,19 @@ namespace DAL.Repertoire
         public async Task<Semaine> InsertAsync(Semaine entite)
         {
             var requete = @"INSERT INTO Semaine(DteDebut, DteFin, DteButoir) OUTPUT INSERTED.IdSemaine VALUES(@dteDebut, @dteFin, @dteButoir)";
-
             int idSemaine = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
+
+            if (entite.Menus.Count > 0)
+            {
+                var requeteMenus = @"UPDATE Menu SET IdSemaine = @idSemaine WHERE IdMenu = @idMenu";
+
+                List<Menu> menus = entite.Menus;
+
+                foreach (var menu in menus)
+                {
+                    await _session.Connection.ExecuteAsync(requeteMenus, param: new { menu.IdMenu, idSemaine }, _session.Transaction);
+                }
+            }
 
             return await GetAsync(idSemaine);
         }
@@ -74,6 +85,21 @@ namespace DAL.Repertoire
         public async Task<Semaine> UpdateAsync(Semaine entite)
         {
             var requete = @"UPDATE Semaine SET DteDebut = @dteDebut, DteFin = @dteFin, DteButoir = @dteButoir WHERE IdSemaine = @idSemaine";
+
+            if (entite.Menus.Count > 0)
+            {
+                var requeteUpdate = @"UPDATE Menu SET IdSemaine = null WHERE IdSemaine = @idSemaine";
+                var requeteMenus = @"UPDATE Menu SET IdSemaine = @idSemaine WHERE IdMenu = @idMenu";
+
+                await _session.Connection.ExecuteAsync(requeteUpdate, entite, _session.Transaction);
+
+                List<Menu> menus = entite.Menus;
+
+                foreach (var menu in menus)
+                {
+                    await _session.Connection.ExecuteAsync(requeteMenus, param: new { menu.IdMenu, entite.IdSemaine }, _session.Transaction);
+                }
+            }
 
             if (await _session.Connection.ExecuteAsync(requete, entite, _session.Transaction) > 0)
             {
