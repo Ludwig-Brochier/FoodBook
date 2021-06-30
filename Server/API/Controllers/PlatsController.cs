@@ -72,6 +72,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> InsertPlatAsync([FromBody]Plat plat)
         {
+            // Obligation d'ajouter une liste d'ingrédients au nouveau plat
             if (plat == null || string.IsNullOrEmpty(plat.Intitule) || string.IsNullOrEmpty(plat.TypePlat) || plat.Prix == 0 || plat.PlatIngredients.Count == 0)
             {
                 return BadRequest();

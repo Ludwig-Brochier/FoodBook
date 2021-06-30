@@ -37,6 +37,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idMenu">L'identifiant du menu</param>
         /// <returns>Le menu demandé</returns>
+        [ActionName("Get")]
         [HttpGet("{idMenu}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,7 +75,7 @@ namespace API.Controllers
             if (newMenu != null)
             {
                 // Menu créé, donc retourne le nouveau menu en appelant la méthode Get
-                return CreatedAtAction(nameof(GetMenuAsync), new { id = newMenu.IdMenu }, newMenu);
+                return CreatedAtAction(HttpMethods.Get.ToString(), new { newMenu.IdMenu }, newMenu);
             }
 
             else

@@ -71,11 +71,48 @@ namespace DAL.Repertoire
         public async Task<Menu> InsertAsync(Menu entite)
         {
             var requete = @"INSERT INTO Menu(ServiceMidi) OUTPUT INSERTED.IdMenu VALUES(@serviceMidi)";
+            int idMenu = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
+
+            List<Plat> plats = entite.Plats;
+
+            var requeteMenuPlats = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
+
+            foreach (var plat in plats)
+            {
+                await _session.Connection.QueryAsync(requeteMenuPlats, param: new { idMenu, plat.IdPlat }, _session.Transaction);
+            }
+
+            return await GetAsync(idMenu);
         }
 
         public async Task<Menu> UpdateAsync(Menu entite)
         {
-            throw new NotImplementedException();
+            var requete = @"UPDATE Menu SET ServiceMidi = @serviceMidi WHERE IdMenu = @idMenu";
+
+            if (entite.Plats.Count > 0)
+            {
+                var requeteDelete = @"DELETE FROM MenuPlat WHERE IdMenu = @idMenu";
+                var requeteInsert = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
+
+                await _session.Connection.ExecuteAsync(requeteDelete, entite, _session.Transaction);
+
+                List<Plat> plats = entite.Plats;
+
+                foreach (var plat in plats)
+                {
+                    await _session.Connection.QueryAsync(requeteInsert, param: new { entite.IdMenu, plat.IdPlat }, _session.Transaction);
+                }
+            }
+
+            if (await _session.Connection.ExecuteAsync(requete, entite, _session.Transaction) > 0)
+            {
+                return await GetAsync((int)entite.IdMenu);
+            }
+
+            else
+            {
+                return null;
+            }
         }
     }
 }

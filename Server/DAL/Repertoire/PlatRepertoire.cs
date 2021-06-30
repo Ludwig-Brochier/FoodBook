@@ -100,7 +100,7 @@ namespace DAL.Repertoire
         public async Task<Plat> InsertAsync(Plat entite)
         {
             // Requete SQL pour insérer un nouveau plat
-            var requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES (@intitule, @typePlat, @prix)";
+            var requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES(@intitule, @typePlat, @prix)";
             // L'identifiant du plat généré automatiquement par la base de données, en retour de la requete SQL
             int idPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
 
@@ -108,13 +108,13 @@ namespace DAL.Repertoire
             List<PlatIngredient> platIngredients = entite.PlatIngredients; 
 
             // Requete pour insérer les ingrédients du nouveau plat
-            var requetePlatIngredient = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES (@idPlat, @idIngredient, @quantite)";
+            var requetePlatIngredients = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES(@idPlat, @idIngredient, @quantite)";
 
             // Boucle les ingrédients
             foreach (var platIngredient in platIngredients)
             {
                 // Insère les ingrédients du nouveau plat dans la table d'association PlatIngredient
-                await _session.Connection.QueryAsync(requetePlatIngredient, 
+                await _session.Connection.QueryAsync(requetePlatIngredients, 
                         param: new { idPlat, platIngredient.IngredientPlat.IdIngredient, platIngredient.Quantite },
                         _session.Transaction);
             }            
@@ -136,7 +136,7 @@ namespace DAL.Repertoire
                 var requeteInsert = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES (@idPlat, @idIngredient, @quantite)";
 
                 // Supprime les ingrédients
-                await _session.Connection.ExecuteAsync(requeteDelete, param: new { entite.IdPlat }, _session.Transaction);
+                await _session.Connection.ExecuteAsync(requeteDelete, entite, _session.Transaction);
 
                 // Liste des ingrédients et leur quantité
                 List<PlatIngredient> platIngredients = entite.PlatIngredients;
