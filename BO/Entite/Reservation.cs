@@ -3,7 +3,7 @@
 namespace BO.Entite
 {
     /// <summary>
-    /// Représente la Réservation d'un client
+    /// Représente les Réservations d'un client
     /// </summary>
     public class Reservation
     {
@@ -28,11 +28,6 @@ namespace BO.Entite
         public String NumTel { get; set; }
 
         /// <summary>
-        /// Date et heure de la réservation
-        /// </summary>
-        public DateTime DteResa { get; set; }
-
-        /// <summary>
         /// Date de la prise de réservation par le client
         /// Valeur par défaut: SYSDATE
         /// </summary>
@@ -44,12 +39,12 @@ namespace BO.Entite
         public int NbPersonne { get; set; }
 
         /// <summary>
-        /// Objet Menu réservé
+        /// Le Menu réservé
         /// </summary>
         public Menu Menu { get; set; }
 
         /// <summary>
-        /// Objet Formule du menu réservé
+        /// La Formule du menu réservé
         /// </summary>
         public Formule Formule { get; set; }
 
@@ -66,18 +61,16 @@ namespace BO.Entite
         /// <param name="nom">Nom du client</param>
         /// <param name="prenom">Prénom du client</param>
         /// <param name="numTel">Numéro de téléphone du client</param>
-        /// <param name="dteResa">Date et heure de la réservation</param>
         /// <param name="dtePriseResa">Date de la prise de la réservation</param>
         /// <param name="nbPersonne">Nombre de personnes inclus dans la réservation</param>
         /// <param name="menu">Le menu réservé</param>
         /// <param name="formule">La formule du menu</param>
-        public Reservation(int? idReservation, String nom, String prenom, String numTel, DateTime dteResa, DateTime dtePriseResa, int nbPersonne, Menu menu, Formule formule)
+        public Reservation(int? idReservation, String nom, String prenom, String numTel, DateTime dtePriseResa, int nbPersonne, Menu menu, Formule formule)
         {
             IdReservation = idReservation;
             Nom = nom;
             Prenom = prenom;
             NumTel = numTel;
-            DteResa = dteResa;
             DtePriseResa = dtePriseResa;
             NbPersonne = nbPersonne;
             Menu = menu;
@@ -92,7 +85,6 @@ namespace BO.Entite
                 Nom == autre.Nom &&
                 Prenom == autre.Prenom &&
                 NumTel == autre.NumTel &&
-                DteResa == autre.DteResa &&
                 DtePriseResa == autre.DtePriseResa &&
                 NbPersonne == autre.NbPersonne &&
                 Menu == autre.Menu &&
@@ -111,7 +103,6 @@ namespace BO.Entite
             hash.Add(Nom);
             hash.Add(Prenom);
             hash.Add(NumTel);
-            hash.Add(DteResa);
             hash.Add(DtePriseResa);
             hash.Add(NbPersonne);
             hash.Add(Menu);

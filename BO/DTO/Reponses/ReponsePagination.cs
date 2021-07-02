@@ -10,22 +10,23 @@ namespace BO.DTO.Reponses
     public class ReponsePagination<T>
     {
         /// <summary>
-        /// Numéro de la page demandé
+        /// Numéro de la page
         /// </summary>
         public int Page { get; set; }
 
         /// <summary>
-        /// Nombre d'Obj par page
+        /// Taille de la page
         /// </summary>
         public int TaillePage { get; set; }
 
         /// <summary>
-        /// Nombre total d'Obj
+        /// Nombre total d'enregistrements
         /// </summary>
         public int? TotalEnregistrements { get; set; }
 
         /// <summary>
-        /// Nombre total de page, en fonction de la taille de la page
+        /// Nombre total de page
+        /// Calculé en fonction de la taille de la page
         /// </summary>
         public int? TotalPages => TotalEnregistrements.HasValue ? (int)Math.Ceiling(TotalEnregistrements.Value / (double)TaillePage) : null;
 
@@ -46,7 +47,7 @@ namespace BO.DTO.Reponses
         /// <param name="page">Numéro de la page</param>
         /// <param name="taillePage">Taille de la page</param>
         /// <param name="totalEnregistrements">Nombre total d'enregistrements</param>
-        /// <param name="donnees">Données de la page: Liste d'Obj concernés par la pagination</param>
+        /// <param name="donnees">Données de la page : liste typée</param>
         public ReponsePagination(int page, int taillePage, int? totalEnregistrements, List<T> donnees)
         {
             Page = page;

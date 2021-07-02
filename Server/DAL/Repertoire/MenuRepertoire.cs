@@ -37,17 +37,7 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePeriodique<Menu>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
-            var requeteTask = @"SELECT IdMenu, ServiceMidi FROM Menu
-                                WHERE IdSemaine BETWEEN @Debut AND @Fin
-                                ORDER BY IdMenu
-                                OFFSET @TaillePage * (@Page - 1) rows
-                                FETCH NEXT @TaillePage rows ONLY";
-            var requeteNbMenu = @"SELECT COUNT(*) FROM Menu WHERE IdSemaine BETWEEN @Debut AND @Fin";
-
-            List<Menu> menusTask = (List<Menu>)await _session.Connection.QueryAsync<Menu>(requeteTask, requetePeriodique, _session.Transaction);
-            int nbMenu = await _session.Connection.ExecuteScalarAsync<int>(requeteNbMenu, requetePeriodique, _session.Transaction);
-
-            return new ReponsePeriodique<Menu>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbMenu, menusTask);
+            throw new NotImplementedException();
         }
 
         public async Task<Menu> GetAsync(int id)
@@ -70,49 +60,12 @@ namespace DAL.Repertoire
 
         public async Task<Menu> InsertAsync(Menu entite)
         {
-            var requete = @"INSERT INTO Menu(ServiceMidi) OUTPUT INSERTED.IdMenu VALUES(@serviceMidi)";
-            int idMenu = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
-
-            List<Plat> plats = entite.Plats;
-
-            var requeteMenuPlats = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
-
-            foreach (var plat in plats)
-            {
-                await _session.Connection.QueryAsync(requeteMenuPlats, param: new { idMenu, plat.IdPlat }, _session.Transaction);
-            }
-
-            return await GetAsync(idMenu);
+            throw new NotImplementedException();
         }
 
         public async Task<Menu> UpdateAsync(Menu entite)
         {
-            var requete = @"UPDATE Menu SET ServiceMidi = @serviceMidi WHERE IdMenu = @idMenu";
-
-            if (entite.Plats.Count > 0)
-            {
-                var requeteDelete = @"DELETE FROM MenuPlat WHERE IdMenu = @idMenu";
-                var requeteInsert = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
-
-                await _session.Connection.ExecuteAsync(requeteDelete, entite, _session.Transaction);
-
-                List<Plat> plats = entite.Plats;
-
-                foreach (var plat in plats)
-                {
-                    await _session.Connection.QueryAsync(requeteInsert, param: new { entite.IdMenu, plat.IdPlat }, _session.Transaction);
-                }
-            }
-
-            if (await _session.Connection.ExecuteAsync(requete, entite, _session.Transaction) > 0)
-            {
-                return await GetAsync((int)entite.IdMenu);
-            }
-
-            else
-            {
-                return null;
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace BO.Entite
 {
     /// <summary>
-    /// Représente les Formules proposées par le restaurateur
+    /// Représente les Formules
     /// </summary>
     public class Formule
     {
@@ -19,12 +19,12 @@ namespace BO.Entite
 
 
         /// <summary>
-        /// Constructeur de base de l'objet Formule
+        /// Constructeur de base de Formule
         /// </summary>
         public Formule() { }
 
         /// <summary>
-        /// Constructeur complet de l'objet Formule
+        /// Constructeur complet de Formule
         /// </summary>
         /// <param name="idFormule">Identifiant de la formule</param>
         /// <param name="intitule">Intitule de la formule</param>

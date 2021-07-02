@@ -71,30 +71,21 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> InsertPlatAsync([FromBody]Plat plat)
-        {
-            // Obligation d'ajouter une liste d'ingrédients au nouveau plat
-            if (plat == null || string.IsNullOrEmpty(plat.Intitule) || string.IsNullOrEmpty(plat.TypePlat) || plat.Prix == 0 || plat.PlatIngredients.Count == 0)
+        {            
+            // Méthode pour ajouter un plat
+            Plat newPlat = await _restaurationService.InsertPlatAsync(plat);
+
+            if (newPlat != null)
             {
-                return BadRequest();
+                // Plat créé, donc retourne le nouveau plat en appelant la méthode Get
+                return CreatedAtAction(HttpMethods.Get.ToString(), new { newPlat.IdPlat }, newPlat);
             }
 
             else
             {
-                // Méthode pour ajouter un plat
-                Plat newPlat = await _restaurationService.InsertPlatAsync(plat);
-
-                if (newPlat != null)
-                {
-                    // Plat créé, donc retourne le nouveau plat en appelant la méthode Get
-                    return CreatedAtAction(HttpMethods.Get.ToString(), new { newPlat.IdPlat }, newPlat);
-                }
-
-                else
-                {
-                    // La requête n'est pas conforme
-                    return BadRequest();
-                }
-            }            
+                // La requête n'est pas conforme
+                return BadRequest();
+            }                      
         }
 
         /// <summary>
@@ -108,30 +99,21 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePlatAsync([FromRoute]int idPlat, [FromBody]Plat plat)
-        {
-            if (plat == null || idPlat != plat.IdPlat || string.IsNullOrEmpty(plat.Intitule) || string.IsNullOrEmpty(plat.TypePlat) || plat.Prix == 0)
+        {            
+            // Méthode pour mettre à jour un plat
+            Plat updatePlat = await _restaurationService.UpdatePlatAsync(plat);
+
+            if (updatePlat != null)
             {
-                // La requête n'est pas conforme
-                return BadRequest();
+                // Résultat Ok + plat modifié
+                return Ok(updatePlat);
             }
 
             else
             {
-                // Méthode pour mettre à jour un plat
-                Plat updatePlat = await _restaurationService.UpdatePlatAsync(plat);
-
-                if (updatePlat != null)
-                {
-                    // Résultat Ok + plat modifié
-                    return Ok(updatePlat);
-                }
-
-                else
-                {
-                    // Plat introuvable
-                    return NotFound();
-                }
-            }            
+                // Plat introuvable
+                return NotFound();
+            }                        
         }
 
         /// <summary>

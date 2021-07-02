@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BO.Entite
 {
     /// <summary>
-    /// Représente les Plats proposés par le restaurateur
+    /// Représente les Plats
     /// </summary>
     public class Plat
     {
@@ -29,19 +29,19 @@ namespace BO.Entite
         public float Prix { get; set; }
 
         /// <summary>
-        /// Liste d'Objet PlatIngredient
+        /// Liste de PlatIngredient
         /// Représente la liste des ingrédients composant le plat, ainsi que la quantité de l'ingrédient
         /// </summary>
         public List<PlatIngredient> PlatIngredients { get; set; }
 
 
         /// <summary>
-        /// Constructeur de base de l'objet Plat
+        /// Constructeur de base de Plat
         /// </summary>
         public Plat() { }
 
         /// <summary>
-        /// Constructeur complet de l'objet Plat
+        /// Constructeur complet de Plat
         /// </summary>
         /// <param name="idPlat">Identifiant du plat</param>
         /// <param name="intitule">Intitule du plat</param>

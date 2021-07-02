@@ -4,6 +4,7 @@ namespace BO.Entite
 {
     /// <summary>
     /// Représente les Ingrédients composant un Plat
+    /// Entité fictive
     /// </summary>
     public class PlatIngredient
     {
@@ -19,12 +20,12 @@ namespace BO.Entite
 
 
         /// <summary>
-        /// Constructeur de base de l'objet PlatIngredient
+        /// Constructeur de base de l'entité fictive PlatIngredient
         /// </summary>
         public PlatIngredient() { }
 
         /// <summary>
-        /// Constructeur complet de l'objet PlatIngredient
+        /// Constructeur complet de l'entité fictive PlatIngredient
         /// </summary>
         /// <param name="ingredientPlat">Ingrédient composant le plat</param>
         /// <param name="quantite">Quantité de l'ingrédient composant le plat</param>

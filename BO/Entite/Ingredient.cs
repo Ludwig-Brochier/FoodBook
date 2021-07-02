@@ -24,12 +24,12 @@ namespace BO.Entite
 
 
         /// <summary>
-        /// Constructeur de base de l'objet Ingredient
+        /// Constructeur de base d'Ingredient
         /// </summary>
         public Ingredient() { }
 
         /// <summary>
-        /// Constructeur complet de l'objet Ingredient
+        /// Constructeur complet d'Ingredient
         /// </summary>
         /// <param name="idIngredient">Identifiant de l'ingrédient</param>
         /// <param name="intitule">Intitule de l'ingrédient</param>

@@ -1,4 +1,6 @@
 ﻿using BO.Entite;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DAL.Repertoire
 {

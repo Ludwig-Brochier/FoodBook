@@ -18,7 +18,6 @@ namespace DAL
             services.AddTransient<IPlatRepertoire, PlatRepertoire>();
             services.AddTransient<IReservationRepertoire, ReservationRepertoire>();
             services.AddTransient<IMenuRepertoire, MenuRepertoire>();
-            services.AddTransient<ISemaineRepertoire, SemaineRepertoire>();
 
             return services;
         }
