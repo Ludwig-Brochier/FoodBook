@@ -90,20 +90,36 @@ namespace BLL.Services
 
         public async Task<Menu> InsertMenuAsync(Menu menu)
         {
-            _bdd.DebutTransaction();
-            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
-            Menu newMenu = await menuRepertoire.InsertAsync(menu);
-            _bdd.Commit();
-            return newMenu;
+            if (menu.Plats.Count != 3)
+            {
+                return null;
+            }
+
+            else
+            {
+                _bdd.DebutTransaction();
+                IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+                Menu newMenu = await menuRepertoire.InsertAsync(menu);
+                _bdd.Commit();
+                return newMenu;
+            }            
         }
 
         public async Task<Plat> InsertPlatAsync(Plat plat)
         {
-            _bdd.DebutTransaction();
-            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-            Plat newPlat = await platRepertoire.InsertAsync(plat);
-            _bdd.Commit();
-            return newPlat;
+            if (plat.PlatIngredients.Count == 0 || plat.Intitule == string.Empty || plat.TypePlat == string.Empty)
+            {
+                return null;
+            }
+
+            else
+            {
+                _bdd.DebutTransaction();
+                IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+                Plat newPlat = await platRepertoire.InsertAsync(plat);
+                _bdd.Commit();
+                return newPlat;
+            }            
         }
 
         public async Task<Menu> UpdateMenuAsync(Menu menu)

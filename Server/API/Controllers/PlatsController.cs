@@ -99,21 +99,29 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePlatAsync([FromRoute]int idPlat, [FromBody]Plat plat)
-        {            
-            // Méthode pour mettre à jour un plat
-            Plat updatePlat = await _restaurationService.UpdatePlatAsync(plat);
-
-            if (updatePlat != null)
+        {
+            if (plat == null || idPlat != plat.IdPlat)
             {
-                // Résultat Ok + plat modifié
-                return Ok(updatePlat);
+                return BadRequest();
             }
 
             else
             {
-                // Plat introuvable
-                return NotFound();
-            }                        
+                // Méthode pour mettre à jour un plat
+                Plat updatePlat = await _restaurationService.UpdatePlatAsync(plat);
+
+                if (updatePlat != null)
+                {
+                    // Résultat Ok + plat modifié
+                    return Ok(updatePlat);
+                }
+
+                else
+                {
+                    // Plat introuvable
+                    return NotFound();
+                }
+            }
         }
 
         /// <summary>
