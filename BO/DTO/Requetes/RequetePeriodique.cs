@@ -37,7 +37,7 @@ namespace BO.DTO.Requetes
         public RequetePeriodique()
         {
             Debut = DateTime.Today;
-            Fin = DateTime.Today.AddDays(7);
+            Fin = DateTime.Today.AddDays(6);
             Page = 1;
             TaillePage = 15;
         }

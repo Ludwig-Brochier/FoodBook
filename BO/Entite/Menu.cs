@@ -62,6 +62,7 @@ namespace BO.Entite
                 IdMenu == autre.IdMenu &&
                 DteMenu == autre.DteMenu &&
                 ServiceMidi == autre.ServiceMidi &&
+                DteButoire == autre.DteButoire &&
                 Plats == autre.Plats;
         }
 
@@ -72,7 +73,7 @@ namespace BO.Entite
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdMenu, DteMenu, ServiceMidi, Plats);
+            return HashCode.Combine(IdMenu, DteMenu, ServiceMidi, DteButoire, Plats);
         }
 
         /// <summary>
