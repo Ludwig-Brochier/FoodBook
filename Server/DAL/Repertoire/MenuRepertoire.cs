@@ -2,10 +2,7 @@
 using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
@@ -44,9 +41,9 @@ namespace DAL.Repertoire
             var requeteNbMenu = @"SELECT COUNT(*) FROM Menu WHERE DteMenu BETWEEN @debut AND @fin";
 
             List<Menu> menus = await _session.Connection.QueryAsync<Menu>(requete, requetePeriodique, _session.Transaction) as List<Menu>;
-            int nbMenus = await _session.Connection.ExecuteScalarAsync<int>(requeteNbMenu, requetePeriodique, _session.Transaction);
+            int nbMenu = await _session.Connection.ExecuteScalarAsync<int>(requeteNbMenu, requetePeriodique, _session.Transaction);
 
-            return new ReponsePeriodique<Menu>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbMenus, menus);
+            return new ReponsePeriodique<Menu>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbMenu, menus);
         }
 
         public async Task<Menu> GetAsync(int id)

@@ -3,10 +3,7 @@ using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
 using Dapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repertoire
@@ -42,7 +39,7 @@ namespace DAL.Repertoire
         public async Task<ReponsePagination<Plat>> GetAllAsync(RequetePagination requetePagination)
         {
             // Requete SQL pour récupérer une liste de plat paginés
-            var requeteTask = @"SELECT * FROM Plat
+            var requete = @"SELECT * FROM Plat
                                 ORDER BY IdPlat
                                 OFFSET @TaillePage * (@Page - 1) rows
                                 FETCH NEXT @TaillePage rows only";
@@ -50,11 +47,11 @@ namespace DAL.Repertoire
             var requeteNbPlat = "SELECT COUNT(*) FROM Plat";
 
             // Récupère la liste des plats
-            IEnumerable<Plat> taskPlat = await _session.Connection.QueryAsync<Plat>(requeteTask, requetePagination, _session.Transaction);
+            List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requetePagination, _session.Transaction) as List<Plat>;
             // Recupère le nombre de plat total
             int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, null, _session.Transaction);
 
-            return new ReponsePagination<Plat>(requetePagination.Page, requetePagination.TaillePage, nbPlat, taskPlat.ToList());
+            return new ReponsePagination<Plat>(requetePagination.Page, requetePagination.TaillePage, nbPlat, plats);
         }
 
         public async Task<Plat> GetAsync(int id)

@@ -3,10 +3,7 @@ using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
 using Dapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repertoire
@@ -22,16 +19,16 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePagination<Ingredient>> GetAllAsync(RequetePagination requetePagination)
         {
-            var requeteTask = @"SELECT * FROM Ingredient
+            var requete = @"SELECT * FROM Ingredient
                             ORDER BY IdIngredient
                             OFFSET @TaillePage * (@Page - 1) rows
                             FETCH NEXT @TaillePage rows only";
             string requeteNbIngredient = "select count(*) from Ingredient";
 
-            IEnumerable<Ingredient> taskIngredient = await _session.Connection.QueryAsync<Ingredient>(requeteTask, requetePagination, _session.Transaction);
+            List<Ingredient> ingredients = await _session.Connection.QueryAsync<Ingredient>(requete, requetePagination, _session.Transaction) as List<Ingredient>;
             int nbIngredient = await _session.Connection.ExecuteScalarAsync<int>(requeteNbIngredient, null, _session.Transaction);
 
-            return new ReponsePagination<Ingredient>(requetePagination.Page, requetePagination.TaillePage, nbIngredient, taskIngredient.ToList());
+            return new ReponsePagination<Ingredient>(requetePagination.Page, requetePagination.TaillePage, nbIngredient, ingredients);
         }
 
         public async Task<Ingredient> GetAsync(int id)
