@@ -61,17 +61,15 @@ namespace BO.Entite
         /// <param name="nom">Nom du client</param>
         /// <param name="prenom">Prénom du client</param>
         /// <param name="numTel">Numéro de téléphone du client</param>
-        /// <param name="dtePriseResa">Date de la prise de la réservation</param>
         /// <param name="nbPersonne">Nombre de personnes inclus dans la réservation</param>
         /// <param name="menu">Le menu réservé</param>
         /// <param name="formule">La formule du menu</param>
-        public Reservation(int? idReservation, String nom, String prenom, String numTel, DateTime dtePriseResa, int nbPersonne, Menu menu, Formule formule)
+        public Reservation(int? idReservation, String nom, String prenom, String numTel, int nbPersonne, Menu menu, Formule formule)
         {
             IdReservation = idReservation;
             Nom = nom;
             Prenom = prenom;
             NumTel = numTel;
-            DtePriseResa = dtePriseResa;
             NbPersonne = nbPersonne;
             Menu = menu;
             Formule = formule;

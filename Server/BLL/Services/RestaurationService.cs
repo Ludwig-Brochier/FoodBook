@@ -4,7 +4,6 @@ using BO.Entite;
 using DAL.UOW;
 using DAL.Repertoire;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace BLL.Services
 {

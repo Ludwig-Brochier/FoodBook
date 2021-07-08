@@ -27,7 +27,7 @@ namespace API.Controllers
         /// <param name="requetePeriodique">La période demandée, dont mise en page</param>
         /// <returns>Les réservations de la période mises en page</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllReservationsAsync([FromQuery]RequetePeriodique requetePeriodique)
+        public async Task<IActionResult> GetAllReservationsAsync([FromQuery] RequetePeriodique requetePeriodique)
         {
             // Méthode pour récupérer les réservations d'une période
             return Ok(await _reservationService.GetAllReservationsAsync(requetePeriodique));
@@ -38,6 +38,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="idReservation">L'identifiant de la réservation</param>
         /// <returns>La réservation demandée</returns>
+        [ActionName("Get")]
         [HttpGet("{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -75,7 +76,7 @@ namespace API.Controllers
             if (newReservation != null)
             {
                 // Réservation crée, donc retourne la nouvelle réservation en appelant la méthode Get
-                return CreatedAtAction(nameof(GetReservationAsync), new { id = newReservation.IdReservation }, newReservation);
+                return CreatedAtAction(HttpMethods.Get.ToString(), new { newReservation.IdReservation }, newReservation);
             }
 
             else

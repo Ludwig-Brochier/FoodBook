@@ -56,7 +56,7 @@ namespace DAL.Repertoire
             {
                 var requetePlat = @"SELECT * FROM MenuPlat JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat WHERE IdMenu = @ID";
 
-                List<Plat> plats = (List<Plat>) await _session.Connection.QueryAsync<Plat>(requetePlat, param: new { ID = id }, _session.Transaction);
+                List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requetePlat, param: new { ID = id }, _session.Transaction) as List<Plat>;
 
                 menu.Plats = plats;
             }

@@ -2,6 +2,7 @@
 using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
+using DAL.Repertoire;
 using System;
 using System.Threading.Tasks;
 
@@ -16,29 +17,51 @@ namespace BLL.Services
         }
 
 
-        public Task<bool> DeleteReservationAsync(int idReservation)
+        public async Task<bool> DeleteReservationAsync(int idReservation)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            bool delete = await reservationRepertoire.DeleteAsync(idReservation);
+            if (delete)
+            {
+                _bdd.Commit();
+                return true;
+            }
+            else
+            {
+                _bdd.Rollback();
+                return false;
+            }
         }
 
-        public Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
+        public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            throw new NotImplementedException();
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
         }
 
-        public Task<Reservation> GetReservationAsync(int idReservation)
+        public async Task<Reservation> GetReservationAsync(int idReservation)
         {
-            throw new NotImplementedException();
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            return await reservationRepertoire.GetAsync(idReservation);
         }
 
-        public Task<Reservation> InsertReservationAsync(Reservation reservation)
+        public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            Reservation newReservation = await reservationRepertoire.InsertAsync(reservation);
+            _bdd.Commit();
+            return newReservation;
         }
 
-        public Task<Reservation> UpdateReservation(Reservation reservation)
+        public async Task<Reservation> UpdateReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+            _bdd.DebutTransaction();
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            Reservation newReservation = await reservationRepertoire.UpdateAsync(reservation);
+            _bdd.Commit();
+            return newReservation;
         }
     }
 }
