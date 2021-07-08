@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BO.DTO.Reponses;
+using BO.DTO.Requetes;
 using BO.Entite;
 
 namespace BLL.Services
@@ -7,6 +8,6 @@ namespace BLL.Services
     public interface ICommandeService
     {
 
-        Task<ReponsePagination<Ingredient>> CommandeIngredientsAsync(int idSemaine);
+        Task<ReponsePeriodique<PlatIngredient>> CommandeIngredientsAsync(RequetePeriodique requetePeriodique);
     }
 }
