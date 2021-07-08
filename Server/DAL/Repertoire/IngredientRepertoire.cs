@@ -23,7 +23,7 @@ namespace DAL.Repertoire
                             ORDER BY IdIngredient
                             OFFSET @TaillePage * (@Page - 1) rows
                             FETCH NEXT @TaillePage rows only";
-            string requeteNbIngredient = "select count(*) from Ingredient";
+            string requeteNbIngredient = "SELECT COUNT(*) FROM Ingredient";
 
             List<Ingredient> ingredients = await _session.Connection.QueryAsync<Ingredient>(requete, requetePagination, _session.Transaction) as List<Ingredient>;
             int nbIngredient = await _session.Connection.ExecuteScalarAsync<int>(requeteNbIngredient, null, _session.Transaction);

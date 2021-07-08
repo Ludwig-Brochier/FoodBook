@@ -73,7 +73,7 @@ namespace DAL.Repertoire
                 var requeteQuantite = @"SELECT Quantite FROM PlatIngredient WHERE IdIngredient = @IdIngredient AND IdPlat = @IdPlat";
 
                 // La liste des ingrédients du plat
-                List<Ingredient> ingredients = (List<Ingredient>)await _session.Connection.QueryAsync<Ingredient>(requeteIngredient, param: new { ID = id }, _session.Transaction);
+                List<Ingredient> ingredients = await _session.Connection.QueryAsync<Ingredient>(requeteIngredient, param: new { ID = id }, _session.Transaction) as List<Ingredient>;
 
                 // Instanciation d'une liste de PlatIngredient représentant les ingrédients du plat
                 List<PlatIngredient> platIngredients = new();

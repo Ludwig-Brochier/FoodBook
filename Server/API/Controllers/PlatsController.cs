@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using BO.DTO.Requetes;
 using Microsoft.AspNetCore.Http;
 using BO.Entite;
-using System.Data.Common;
 
 namespace API.Controllers
 {
