@@ -38,13 +38,12 @@ namespace BO.Entite
         public bool Equals(Formule autre)
         {
             return autre != null &&
-                IdFormule == autre.IdFormule &&
-                Intitule == autre.Intitule;
+                IdFormule == autre.IdFormule;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Formule);
+            return Equals(obj as Formule);
         }
 
         public override int GetHashCode()

@@ -61,16 +61,12 @@ namespace BO.Entite
         public bool Equals(Plat autre)
         {
             return autre != null &&
-                IdPlat == autre.IdPlat &&
-                Intitule == autre.Intitule &&
-                TypePlat == autre.TypePlat &&
-                Prix == autre.Prix &&
-                PlatIngredients == autre.PlatIngredients;
+                IdPlat == autre.IdPlat;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Plat);
+            return Equals(obj as Plat);
         }
 
         public override int GetHashCode()

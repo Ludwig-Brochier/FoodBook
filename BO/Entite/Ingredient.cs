@@ -45,14 +45,12 @@ namespace BO.Entite
         public bool Equals(Ingredient autre)
         {
             return autre != null &&
-                IdIngredient == autre.IdIngredient &&
-                Intitule == autre.Intitule &&
-                Prix == autre.Prix;
+                IdIngredient == autre.IdIngredient;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Ingredient);
+            return Equals(obj as Ingredient);
         }
 
         public override int GetHashCode()

@@ -79,19 +79,12 @@ namespace BO.Entite
         public bool Equals(Reservation autre)
         {
             return autre != null &&
-                IdReservation == autre.IdReservation &&
-                Nom == autre.Nom &&
-                Prenom == autre.Prenom &&
-                NumTel == autre.NumTel &&
-                DtePriseResa == autre.DtePriseResa &&
-                NbPersonne == autre.NbPersonne &&
-                Menu == autre.Menu &&
-                Formule == autre.Formule;
+                IdReservation == autre.IdReservation;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Reservation);
+            return Equals(obj as Reservation);
         }
 
         public override int GetHashCode()

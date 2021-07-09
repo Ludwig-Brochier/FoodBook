@@ -59,16 +59,12 @@ namespace BO.Entite
         public bool Equals(Menu autre)
         {
             return autre != null &&
-                IdMenu == autre.IdMenu &&
-                DteMenu == autre.DteMenu &&
-                ServiceMidi == autre.ServiceMidi &&
-                DteButoire == autre.DteButoire &&
-                Plats == autre.Plats;
+                IdMenu == autre.IdMenu;
         }
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Menu);
+            return Equals(obj as Menu);
         }
 
         public override int GetHashCode()
