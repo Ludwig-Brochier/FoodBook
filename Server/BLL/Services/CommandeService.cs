@@ -95,6 +95,8 @@ namespace BLL.Services
                     }
                 }
             }
+
+            ingredientsReservations.Sort();
             
             return new ReponsePeriodique<PlatIngredient>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, ingredientsReservations.Count, ingredientsReservations);
         }

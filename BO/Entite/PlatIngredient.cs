@@ -7,7 +7,7 @@ namespace BO.Entite
     /// Représente les Ingrédients composant un Plat
     /// Entité fictive
     /// </summary>
-    public class PlatIngredient
+    public class PlatIngredient : IComparable<PlatIngredient>
     {
         /// <summary>
         /// Ingrédient composant le plat
@@ -46,6 +46,11 @@ namespace BO.Entite
         {
             return obj is PlatIngredient ingredient &&
                    EqualityComparer<Ingredient>.Default.Equals(IngredientPlat, ingredient.IngredientPlat);
+        }
+
+        public int CompareTo(PlatIngredient other)
+        {
+            return this.IngredientPlat.CompareTo(other.IngredientPlat);
         }
     }
 }

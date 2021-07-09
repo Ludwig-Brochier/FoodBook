@@ -5,7 +5,7 @@ namespace BO.Entite
     /// <summary>
     /// Représente les Ingrédients
     /// </summary>
-    public class Ingredient
+    public class Ingredient : IComparable<Ingredient>
     {
         /// <summary>
         /// Identifiant de l'ingredient
@@ -56,6 +56,19 @@ namespace BO.Entite
         public override int GetHashCode()
         {
             return HashCode.Combine(IdIngredient, Intitule, Prix);
+        }
+
+        public int CompareTo(Ingredient other)
+        {
+            if (IdIngredient < other.IdIngredient)
+            {
+                return -1;
+            }
+
+            else
+            {
+                return 1;
+            }
         }
     }
 }
