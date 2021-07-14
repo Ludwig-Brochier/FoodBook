@@ -4,6 +4,7 @@ using BO.Entite;
 using DAL.UOW;
 using Dapper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DAL.Repertoire
@@ -26,20 +27,21 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePeriodique<Reservation>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
-            var requete = @"SELECT *, m.*, f.*  FROM Reservation 
-                            inner JOIN Menu as m ON Reservation.IdMenu = m.IdMenu
-                            inner JOIN Formule as f ON Reservation.IdFormule = f.IdFormule
+            var requete = @"SELECT * FROM Reservation 
+                            inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
+                            inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
                             WHERE DteMenu >= @debut AND DteMenu <= @fin
                             ORDER BY IdReservation OFFSET @taillePage * (@page - 1) rows
                             FETCH NEXT @taillePage rows only";
 
-            var requeteNbReservations = @"SELECT COUNT(*) FROM Reservation JOIN Menu ON Reservation.IdMenu = Menu.IdMenu WHERE DteMenu BETWEEN @debut AND @fin";
+            var requeteNbReservations = @"SELECT COUNT(*) FROM Reservation inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu WHERE DteMenu BETWEEN @debut AND @fin";
 
-            List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) => {
+            List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) => 
+            {
                 reservation.Menu = menu;
                 reservation.Formule = formule;
                 return reservation;
-            }, requetePeriodique, _session.Transaction, splitOn: "idMenu,idFormule") as List<Reservation>;
+            }, requetePeriodique, _session.Transaction, splitOn: "idMenu, idFormule") as List<Reservation>;
             int nbReservations = await _session.Connection.ExecuteScalarAsync<int>(requeteNbReservations, requetePeriodique, _session.Transaction);
 
             return new ReponsePeriodique<Reservation>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbReservations, reservations);
@@ -47,24 +49,19 @@ namespace DAL.Repertoire
 
         public async Task<Reservation> GetAsync(int id)
         {
-            var requete = @"SELECT * FROM Reservation WHERE IdReservation = @ID";
+            var requete = @"SELECT * FROM Reservation 
+                            inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
+                            inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
+                            WHERE IdReservation = @ID";
 
-            Reservation reservation = await _session.Connection.QueryFirstOrDefaultAsync<Reservation>(requete, param: new { ID = id }, _session.Transaction);
-
-            if (reservation != null)
+            List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) =>
             {
-                var requeteFormule = @"SELECT * FROM Formule 
-                                        JOIN Reservation ON Formule.IdFormule = Reservation.IdFormule 
-                                        WHERE IdReservation = @ID";
-                var requeteMenu = @"SELECT * FROM Menu 
-                                    JOIN Reservation ON Menu.IdMenu = Reservation.IdMenu 
-                                    WHERE IdReservation = @ID";
+                reservation.Menu = menu;
+                reservation.Formule = formule;
+                return reservation;
+            }, param: new { ID = id }, _session.Transaction, splitOn: "idMenu, idFormule") as List<Reservation>;
 
-                reservation.Formule = await _session.Connection.QueryFirstOrDefaultAsync<Formule>(requeteFormule, param: new { ID = id }, _session.Transaction);
-                reservation.Menu = await _session.Connection.QueryFirstOrDefaultAsync<Menu>(requeteMenu, param: new { ID = id }, _session.Transaction);
-            }
-
-            return reservation;         
+            return reservations.FirstOrDefault();
         }
 
         public async Task<Reservation> InsertAsync(Reservation entite)

@@ -21,18 +21,7 @@ namespace DAL.Repertoire
         {
             // Requete SQL pour supprimer le plat
             var requete = @"DELETE FROM Plat WHERE IdPlat = @ID";            
-            // Requete SQL pour vérifier le nombre de lignes dans la table d'association PlatIngredient
-            var requeteExist = @"SELECT COUNT(*) FROM PlatIngredient WHERE IdPlat = @ID"; // Normalement suppérieur à 0
-
-            if (await _session.Connection.ExecuteScalarAsync<int>(requeteExist, param: new { ID = id }, _session.Transaction) > 0)
-            {
-                // Requete SQL pour supprimer le plat dans la table d'association PlatIngredient
-                var requetePlatIngredient = @"DELETE FROM PlatIngredient WHERE IdPlat = @ID";
-
-                // Supprimer les entrées correspondante au plat dans la table PlatIngredient
-                await _session.Connection.ExecuteAsync(requetePlatIngredient, param: new { ID = id }, _session.Transaction);
-            }
-
+            
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0; 
         }
 
@@ -64,31 +53,15 @@ namespace DAL.Repertoire
 
             if (plat != null)
             {
-                // Requete SQL pour récupérer les ingrédients du plat demandé
-                var requeteIngredient = @"SELECT Ingredient.IdIngredient, Ingredient.Intitule, Ingredient.Prix FROM Plat 
-                                            JOIN PlatIngredient ON Plat.IdPLat = PlatIngredient.IdPlat
-                                            JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
-                                            WHERE Plat.IdPlat = @ID";
-                // Requete SQL pour récupérer la quantité des ingrédients du plat demandé
-                var requeteQuantite = @"SELECT Quantite FROM PlatIngredient WHERE IdIngredient = @IdIngredient AND IdPlat = @IdPlat";
+                string requetePlatIngredient = @"SELECT * FROM PlatIngredient
+                                                inner JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
+                                                WHERE IdPlat = @ID";
 
-                // La liste des ingrédients du plat
-                List<Ingredient> ingredients = await _session.Connection.QueryAsync<Ingredient>(requeteIngredient, param: new { ID = id }, _session.Transaction) as List<Ingredient>;
-
-                // Instanciation d'une liste de PlatIngredient représentant les ingrédients du plat
-                List<PlatIngredient> platIngredients = new();
-
-                // Boucle la liste des ingrédients du plat
-                foreach (var ingredient in ingredients)
+                plat.PlatIngredients = await _session.Connection.QueryAsync<PlatIngredient, Ingredient, PlatIngredient>(requetePlatIngredient, (platInregient, ingredient) =>
                 {
-                    // Quantité de l'ingrédient en question
-                    int quantite = await _session.Connection.QueryFirstOrDefaultAsync<int>(requeteQuantite, param: new { ingredient.IdIngredient, IdPlat = id }, _session.Transaction);
-                    // Ajoute l'ingrédient du plat et sa quantité à la liste de PlatIngredient
-                    platIngredients.Add(new PlatIngredient(ingredient, quantite));
-                }
-
-                // Passe la liste des ingrédients et leur quantité au plat
-                plat.PlatIngredients = platIngredients;
+                    platInregient.IngredientPlat = ingredient;
+                    return platInregient;
+                },param: new { ID = id }, _session.Transaction, splitOn:"idIngredient") as List<PlatIngredient>;
             }
 
             return plat;

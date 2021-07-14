@@ -20,15 +20,7 @@ namespace DAL.Repertoire
         public async Task<bool> DeleteAsync(int id)
         {
             var requete = @"DELETE FROM Menu WHERE IdMenu = @ID";
-            var requeteExist = @"SELECT COUNT(*) FROM MenuPlat WHERE IdMenu = @ID";
-
-            if (await _session.Connection.ExecuteScalarAsync<int>(requeteExist, param: new { ID = id }, _session.Transaction) > 0)
-            {
-                var requeteMenuPlat = @"DELETE FROM MenuPlat WHERE IdMenu = @ID";
-
-                await _session.Connection.ExecuteAsync(requeteMenuPlat, param: new { ID =id }, _session.Transaction);
-            }
-
+            
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
         }
 
@@ -54,7 +46,7 @@ namespace DAL.Repertoire
 
             if (menu != null)
             {
-                var requetePlat = @"SELECT * FROM MenuPlat JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat WHERE IdMenu = @ID";
+                var requetePlat = @"SELECT * FROM MenuPlat inner JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat WHERE IdMenu = @ID";
 
                 List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requetePlat, param: new { ID = id }, _session.Transaction) as List<Plat>;
 
