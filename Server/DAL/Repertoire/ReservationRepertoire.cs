@@ -26,21 +26,21 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePeriodique<Reservation>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
-            var requete = @"SELECT IdReservation FROM Reservation 
-                            JOIN Menu ON Reservation.IdMenu = Menu.IdMenu 
-                            WHERE DteMenu BETWEEN @debut AND @fin
-                            ORDER BY IdReservation OFFSET @taillePage * (@page - 1) rows 
+            var requete = @"SELECT *, m.*, f.*  FROM Reservation 
+                            inner JOIN Menu as m ON Reservation.IdMenu = m.IdMenu
+                            inner JOIN Formule as f ON Reservation.IdFormule = f.IdFormule
+                            WHERE DteMenu >= @debut AND DteMenu <= @fin
+                            ORDER BY IdReservation OFFSET @taillePage * (@page - 1) rows
                             FETCH NEXT @taillePage rows only";
+
             var requeteNbReservations = @"SELECT COUNT(*) FROM Reservation JOIN Menu ON Reservation.IdMenu = Menu.IdMenu WHERE DteMenu BETWEEN @debut AND @fin";
 
-            List<int> idReservations = await _session.Connection.QueryAsync<int>(requete, requetePeriodique, _session.Transaction) as List<int>;
+            List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) => {
+                reservation.Menu = menu;
+                reservation.Formule = formule;
+                return reservation;
+            }, requetePeriodique, _session.Transaction, splitOn: "idMenu,idFormule") as List<Reservation>;
             int nbReservations = await _session.Connection.ExecuteScalarAsync<int>(requeteNbReservations, requetePeriodique, _session.Transaction);
-
-            List<Reservation> reservations = new();
-            foreach (var id in idReservations)
-            {
-                reservations.Add(await GetAsync(id));
-            }
 
             return new ReponsePeriodique<Reservation>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbReservations, reservations);
         }

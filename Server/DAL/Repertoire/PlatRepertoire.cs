@@ -89,7 +89,7 @@ namespace DAL.Repertoire
 
                 // Passe la liste des ingrédients et leur quantité au plat
                 plat.PlatIngredients = platIngredients;
-            }            
+            }
 
             return plat;
         }

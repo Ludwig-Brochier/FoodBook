@@ -46,7 +46,7 @@ namespace BLL.Services
 
                     // Ajoute la liste des ingrédients du plat à la liste des ingrédients à commander, en gérant les doublons
                     ingredientsReservations = GestionDoublons(ingredientPlat, ingredientsReservations);
-                }                
+                }
             }
 
             // Tri de la liste des ingrédients à commander

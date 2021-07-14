@@ -6,7 +6,7 @@ namespace BO.DTO.Requetes
     /// DTO permettant de demander au serveur des données sur une période de date à date précise
     /// Permet aussi une mise en page précise des résultats
     /// </summary>
-    public class RequetePeriodique
+    public class RequetePeriodique : RequetePagination
     {
         /// <summary>
         /// Début de la période
@@ -18,28 +18,16 @@ namespace BO.DTO.Requetes
         /// </summary>
         public DateTime Fin { get; set; }
 
-        /// <summary>
-        /// Numéro de la page
-        /// </summary>
-        public int Page { get; set; }
-
-        /// <summary>
-        /// Taille de la page
-        /// </summary>
-        public int TaillePage { get; set; }
-
 
         /// <summary>
         /// Constructeur de base
         /// Pré-rempli avec la date du jour, sur une période de 7 jours
         /// Pagination de base
         /// </summary>
-        public RequetePeriodique()
+        public RequetePeriodique() : base()
         {
             Debut = DateTime.Today;
             Fin = DateTime.Today.AddDays(6);
-            Page = 1;
-            TaillePage = 15;
         }
 
         /// <summary>
@@ -48,12 +36,10 @@ namespace BO.DTO.Requetes
         /// </summary>
         /// <param name="debut">Date de début de période</param>
         /// <param name="fin">Date de fin de période</param>
-        public RequetePeriodique(DateTime debut, DateTime fin)
+        public RequetePeriodique(DateTime debut, DateTime fin) : base()
         {
             Debut = debut;
             Fin = fin;
-            Page = 1;
-            TaillePage = 15;
         }
 
         /// <summary>
@@ -63,12 +49,10 @@ namespace BO.DTO.Requetes
         /// <param name="fin">Date de fin de période</param>
         /// <param name="page">Numéro de la page</param>
         /// <param name="taillePage">Taille de la page</param>
-        public RequetePeriodique(DateTime debut, DateTime fin, int page, int taillePage)
+        public RequetePeriodique(DateTime debut, DateTime fin, int page, int taillePage) : base(page, taillePage)
         {
             Debut = debut;
             Fin = fin;
-            Page = page;
-            TaillePage = taillePage;
         }
     }
 }
