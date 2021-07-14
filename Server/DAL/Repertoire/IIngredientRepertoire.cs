@@ -1,4 +1,7 @@
-﻿using BO.Entite;
+﻿using BO.DTO.Reponses;
+using BO.DTO.Requetes;
+using BO.Entite;
+using System.Threading.Tasks;
 
 namespace DAL.Repertoire
 {
@@ -7,5 +10,6 @@ namespace DAL.Repertoire
     /// </summary>
     public interface IIngredientRepertoire : IRepertoireGenerique<Ingredient>, IRepertoirePaginable<Ingredient>
     {
+        public Task<ReponsePeriodique<PlatIngredient>> GetCommandeIngredientsAsync(RequetePeriodique requetePeriodique);
     }
 }

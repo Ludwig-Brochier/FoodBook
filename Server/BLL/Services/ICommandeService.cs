@@ -8,6 +8,6 @@ namespace BLL.Services
     public interface ICommandeService
     {
 
-        Task<ReponsePeriodique<PlatIngredient>> CommandeIngredientsAsync(RequetePeriodique requetePeriodique);
+        Task<ReponsePeriodique<PlatIngredient>> GetCommandeIngredientsAsync(RequetePeriodique requetePeriodique);
     }
 }

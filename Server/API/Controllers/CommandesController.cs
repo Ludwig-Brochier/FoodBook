@@ -22,7 +22,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCommendeIngredientsAsync([FromQuery]RequetePeriodique requetePeriodique)
         {
-            return Ok(await _commandeService.CommandeIngredientsAsync(requetePeriodique));
+            return Ok(await _commandeService.GetCommandeIngredientsAsync(requetePeriodique));
         }
     }
 }
