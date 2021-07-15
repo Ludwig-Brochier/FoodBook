@@ -36,16 +36,19 @@ namespace BO.Entite
             Quantite = quantite;
         }
 
-   
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(IngredientPlat, Quantite);
-        }
 
         public override bool Equals(object obj)
         {
             return obj is PlatIngredient ingredient &&
                    EqualityComparer<Ingredient>.Default.Equals(IngredientPlat, ingredient.IngredientPlat);
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1129305355;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Ingredient>.Default.GetHashCode(IngredientPlat);
+            hashCode = hashCode * -1521134295 + Quantite.GetHashCode();
+            return hashCode;
         }
 
         public int CompareTo(PlatIngredient other)

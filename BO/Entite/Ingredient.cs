@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BO.Entite
 {
@@ -52,10 +53,13 @@ namespace BO.Entite
         {
             return Equals(obj as Ingredient);
         }
-
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdIngredient, Intitule, Prix);
+            int hashCode = -1107114518;
+            hashCode = hashCode * -1521134295 + IdIngredient.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Intitule);
+            hashCode = hashCode * -1521134295 + Prix.GetHashCode();
+            return hashCode;
         }
 
         public int CompareTo(Ingredient other)

@@ -273,7 +273,7 @@
       },
       "BO/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
+        "framework": ".NETStandard,Version=v2.0",
         "compile": {
           "bin/placeholder/BO.dll": {}
         },

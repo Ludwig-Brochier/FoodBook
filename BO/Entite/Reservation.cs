@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BO.Entite
 {
@@ -89,16 +90,16 @@ namespace BO.Entite
 
         public override int GetHashCode()
         {
-            HashCode hash = new HashCode();
-            hash.Add(IdReservation);
-            hash.Add(Nom);
-            hash.Add(Prenom);
-            hash.Add(NumTel);
-            hash.Add(DtePriseResa);
-            hash.Add(NbPersonne);
-            hash.Add(Menu);
-            hash.Add(Formule);
-            return hash.ToHashCode();
+            int hashCode = 842853851;
+            hashCode = hashCode * -1521134295 + IdReservation.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Nom);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Prenom);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(NumTel);
+            hashCode = hashCode * -1521134295 + DtePriseResa.GetHashCode();
+            hashCode = hashCode * -1521134295 + NbPersonne.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<Menu>.Default.GetHashCode(Menu);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Formule>.Default.GetHashCode(Formule);
+            return hashCode;
         }
     }
 }

@@ -28,7 +28,17 @@ namespace BO.DTO.Reponses
         /// Nombre total de page
         /// Calculé en fonction de la taille de la page
         /// </summary>
-        public int? TotalPages => TotalEnregistrements.HasValue ? (int)Math.Ceiling(TotalEnregistrements.Value / (double)TaillePage) : null;
+        public int? TotalPages
+        {
+            get
+            {
+                if (TotalEnregistrements > 0)
+                {
+                    return (int)Math.Ceiling((double)(TotalEnregistrements / (double)TaillePage));
+                }
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Les données de la page

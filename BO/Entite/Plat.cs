@@ -71,7 +71,13 @@ namespace BO.Entite
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdPlat, Intitule, TypePlat, Prix, PlatIngredients);
+            int hashCode = 37635952;
+            hashCode = hashCode * -1521134295 + IdPlat.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Intitule);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TypePlat);
+            hashCode = hashCode * -1521134295 + Prix.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<PlatIngredient>>.Default.GetHashCode(PlatIngredients);
+            return hashCode;
         }
     }
 }
