@@ -20,21 +20,21 @@ namespace DAL.Repertoire
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var requete = @"DELETE FROM Reservation WHERE IdReservation = @ID";
+            string requete = @"DELETE FROM Reservation WHERE IdReservation = @ID";
 
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
         }
 
         public async Task<ReponsePeriodique<Reservation>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
-            var requete = @"SELECT * FROM Reservation 
-                            inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
-                            inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
-                            WHERE DteMenu >= @debut AND DteMenu <= @fin
-                            ORDER BY IdReservation OFFSET @taillePage * (@page - 1) rows
-                            FETCH NEXT @taillePage rows only";
+            string requete = @"SELECT * FROM Reservation 
+                                    inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
+                                    inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
+                                WHERE DteMenu >= @debut AND DteMenu <= @fin
+                                ORDER BY IdReservation OFFSET @taillePage * (@page - 1) rows
+                                FETCH NEXT @taillePage rows only";
 
-            var requeteNbReservations = @"SELECT COUNT(*) FROM Reservation inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu WHERE DteMenu BETWEEN @debut AND @fin";
+            string requeteNbReservations = @"SELECT COUNT(*) FROM Reservation inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu WHERE DteMenu BETWEEN @debut AND @fin";
 
             List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) => 
             {
@@ -49,10 +49,10 @@ namespace DAL.Repertoire
 
         public async Task<Reservation> GetAsync(int id)
         {
-            var requete = @"SELECT * FROM Reservation 
-                            inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
-                            inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
-                            WHERE IdReservation = @ID";
+            string requete = @"SELECT * FROM Reservation 
+                                    inner JOIN Menu ON Reservation.IdMenu = Menu.IdMenu
+                                    inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule
+                                 WHERE IdReservation = @ID";
 
             List<Reservation> reservations = await _session.Connection.QueryAsync<Reservation, Menu, Formule, Reservation>(requete, (reservation, menu, formule) =>
             {
@@ -66,8 +66,8 @@ namespace DAL.Repertoire
 
         public async Task<Reservation> InsertAsync(Reservation entite)
         {
-            var requete = @"INSERT INTO Reservation(Nom, Prenom, NumTel, NbPersonne, IdFormule, IdMenu) OUTPUT INSERTED.IdReservation 
-                            VALUES(@nom, @prenom, @numTel, @nbPersonne, @idFormule, @idMenu)";
+            string requete = @"INSERT INTO Reservation(Nom, Prenom, NumTel, NbPersonne, IdFormule, IdMenu) OUTPUT INSERTED.IdReservation 
+                                      VALUES(@nom, @prenom, @numTel, @nbPersonne, @idFormule, @idMenu)";
 
             int idReservation = await _session.Connection.QuerySingleAsync<int>(requete, param: new { 
                 entite.Nom, entite.Prenom, entite.NumTel, entite.NbPersonne, entite.Formule.IdFormule, entite.Menu.IdMenu 
@@ -78,14 +78,14 @@ namespace DAL.Repertoire
 
         public async Task<Reservation> UpdateAsync(Reservation entite)
         {
-            var requete = @"UPDATE Reservation SET 
-                                Nom = @nom, 
-                                Prenom = @prenom, 
-                                NumTel = @numTel, 
-                                NbPersonne = @nbPersonne, 
-                                IdFormule = @idFormule, 
-                                IdMenu = @idMenu 
-                            WHERE IdReservation = @idReservation";
+            string requete = @"UPDATE Reservation SET 
+                                    Nom = @nom, 
+                                    Prenom = @prenom, 
+                                    NumTel = @numTel, 
+                                    NbPersonne = @nbPersonne, 
+                                    IdFormule = @idFormule, 
+                                    IdMenu = @idMenu 
+                                WHERE IdReservation = @idReservation";
 
             if (await _session.Connection.ExecuteAsync(requete, param: new { 
                         entite.Nom, entite.Prenom, entite.NumTel, entite.NbPersonne, entite.Formule.IdFormule, entite.Menu.IdMenu, entite.IdReservation

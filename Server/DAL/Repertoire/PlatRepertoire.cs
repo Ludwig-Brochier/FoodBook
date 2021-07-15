@@ -21,7 +21,7 @@ namespace DAL.Repertoire
         public async Task<bool> DeleteAsync(int id)
         {
             // Requete SQL pour supprimer le plat
-            var requete = @"DELETE FROM Plat WHERE IdPlat = @ID";            
+            string requete = @"DELETE FROM Plat WHERE IdPlat = @ID";            
             
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0; 
         }
@@ -29,12 +29,12 @@ namespace DAL.Repertoire
         public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
             // Requete SQL pour récupérer une liste de plat paginés
-            var requete = @"SELECT * FROM Plat
+            string requete = @"SELECT * FROM Plat
                                 ORDER BY IdPlat
                                 OFFSET @TaillePage * (@Page - 1) rows
                                 FETCH NEXT @TaillePage rows only";
             // Requete SQL pour récupérer le nombre de plat présent dans la base de données
-            var requeteNbPlat = "SELECT COUNT(*) FROM Plat";
+            string requeteNbPlat = "SELECT COUNT(*) FROM Plat";
 
             // Récupère la liste des plats
             List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requeteFiltresPlats, _session.Transaction) as List<Plat>;
@@ -79,7 +79,7 @@ namespace DAL.Repertoire
         public async Task<Plat> GetAsync(int id)
         {
             // Requete SQL pour récupérer le plat demandé
-            var requete = @"SELECT * FROM Plat WHERE IdPlat = @ID";  
+            string requete = @"SELECT * FROM Plat WHERE IdPlat = @ID";  
 
             // Le plat demandé
             Plat plat = await _session.Connection.QueryFirstOrDefaultAsync<Plat>(requete, param: new { ID = id }, _session.Transaction);
@@ -87,8 +87,8 @@ namespace DAL.Repertoire
             if (plat != null)
             {
                 string requetePlatIngredient = @"SELECT * FROM PlatIngredient
-                                                inner JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
-                                                WHERE IdPlat = @ID";
+                                                     inner JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
+                                                  WHERE IdPlat = @ID";
 
                 plat.PlatIngredients = await _session.Connection.QueryAsync<PlatIngredient, Ingredient, PlatIngredient>(requetePlatIngredient, (platInregient, ingredient) =>
                 {
@@ -103,7 +103,7 @@ namespace DAL.Repertoire
         public async Task<Plat> InsertAsync(Plat entite)
         {
             // Requete SQL pour insérer un nouveau plat
-            var requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES(@intitule, @typePlat, @prix)";
+            string requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES(@intitule, @typePlat, @prix)";
             // L'identifiant du plat généré automatiquement par la base de données, en retour de la requete SQL
             int idPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
 
@@ -111,7 +111,7 @@ namespace DAL.Repertoire
             List<PlatIngredient> platIngredients = entite.PlatIngredients; 
 
             // Requete pour insérer les ingrédients du nouveau plat
-            var requetePlatIngredients = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES(@idPlat, @idIngredient, @quantite)";
+            string requetePlatIngredients = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES(@idPlat, @idIngredient, @quantite)";
 
             // Boucle les ingrédients
             foreach (var platIngredient in platIngredients)
@@ -128,15 +128,15 @@ namespace DAL.Repertoire
         public async Task<Plat> UpdateAsync(Plat entite)
         {
             // Requete SQL pour mettre à jour un plat
-            var requete = @"UPDATE Plat SET Intitule = @intitule, TypePlat = @typePlat, Prix = @prix WHERE IdPlat = @idPlat";
+            string requete = @"UPDATE Plat SET Intitule = @intitule, TypePlat = @typePlat, Prix = @prix WHERE IdPlat = @idPlat";
 
             // Test si le plat à mettre à jour contient des ingrédients à mettre à jour dans la table d'association PlatIngredient
             if (entite.PlatIngredients.Count > 0)
             {
                 // Requete SQL pour supprimer les anciens ingrédients du plat
-                var requeteDelete = @"DELETE FROM PlatIngredient WHERE IdPlat = @idPlat";
+                string requeteDelete = @"DELETE FROM PlatIngredient WHERE IdPlat = @idPlat";
                 // Requete SQL pour ajouter les nouveaux ingrédients du plat
-                var requeteInsert = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES (@idPlat, @idIngredient, @quantite)";
+                string requeteInsert = @"INSERT INTO PlatIngredient(IdPlat, IdIngredient, Quantite) VALUES (@idPlat, @idIngredient, @quantite)";
 
                 // Supprime les ingrédients
                 await _session.Connection.ExecuteAsync(requeteDelete, entite, _session.Transaction);

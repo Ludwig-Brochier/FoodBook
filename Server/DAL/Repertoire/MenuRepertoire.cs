@@ -19,18 +19,18 @@ namespace DAL.Repertoire
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var requete = @"DELETE FROM Menu WHERE IdMenu = @ID";
+            string requete = @"DELETE FROM Menu WHERE IdMenu = @ID";
             
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0;
         }
 
         public async Task<ReponsePeriodique<Menu>> GetAllPeriodeAsync(RequetePeriodique requetePeriodique)
         {
-            var requete = @"SELECT * FROM Menu 
-                            WHERE DteMenu BETWEEN @debut AND @fin 
-                            ORDER BY IdMenu OFFSET @taillePage * (@page - 1) rows 
-                            FETCH NEXT @taillePage rows only";
-            var requeteNbMenu = @"SELECT COUNT(*) FROM Menu WHERE DteMenu BETWEEN @debut AND @fin";
+            string requete = @"SELECT * FROM Menu 
+                                WHERE DteMenu BETWEEN @debut AND @fin 
+                                ORDER BY IdMenu OFFSET @taillePage * (@page - 1) rows 
+                                FETCH NEXT @taillePage rows only";
+            string requeteNbMenu = @"SELECT COUNT(*) FROM Menu WHERE DteMenu BETWEEN @debut AND @fin";
 
             List<Menu> menus = await _session.Connection.QueryAsync<Menu>(requete, requetePeriodique, _session.Transaction) as List<Menu>;
             int nbMenu = await _session.Connection.ExecuteScalarAsync<int>(requeteNbMenu, requetePeriodique, _session.Transaction);
@@ -40,13 +40,13 @@ namespace DAL.Repertoire
 
         public async Task<Menu> GetAsync(int id)
         {
-            var requete = @"SELECT * FROM Menu WHERE IdMenu = @ID";
+            string requete = @"SELECT * FROM Menu WHERE IdMenu = @ID";
 
             Menu menu = await _session.Connection.QueryFirstOrDefaultAsync<Menu>(requete, param: new { ID = id }, _session.Transaction);
 
             if (menu != null)
             {
-                var requetePlat = @"SELECT * FROM MenuPlat inner JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat WHERE IdMenu = @ID";
+                string requetePlat = @"SELECT * FROM MenuPlat inner JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat WHERE IdMenu = @ID";
 
                 List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requetePlat, param: new { ID = id }, _session.Transaction) as List<Plat>;
 
@@ -58,12 +58,12 @@ namespace DAL.Repertoire
 
         public async Task<Menu> InsertAsync(Menu entite)
         {
-            var requete = @"INSERT INTO Menu(DteMenu, ServiceMidi, DteButoire) OUTPUT INSERTED.IdMenu VALUES(@dteMenu, @serviceMidi, @dteButoire)";
+            string requete = @"INSERT INTO Menu(DteMenu, ServiceMidi, DteButoire) OUTPUT INSERTED.IdMenu VALUES(@dteMenu, @serviceMidi, @dteButoire)";
             int idMenu = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
 
             List<Plat> plats = entite.Plats;
 
-            var requeteMenuPlats = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
+            string requeteMenuPlats = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
 
             foreach (var plat in plats)
             {
@@ -75,12 +75,12 @@ namespace DAL.Repertoire
 
         public async Task<Menu> UpdateAsync(Menu entite)
         {
-            var requete = @"UPDATE Menu SET DteMenu = @dteMenu, ServiceMidi = @serviceMidi, DteButoire = @dteButoire WHERE IdMenu = @idMenu";
+            string requete = @"UPDATE Menu SET DteMenu = @dteMenu, ServiceMidi = @serviceMidi, DteButoire = @dteButoire WHERE IdMenu = @idMenu";
 
             if (entite.Plats.Count > 0)
             {
-                var requeteDelete = @"DELETE FROM MenuPlat WHERE IdMenu = @idMenu";
-                var requeteInsert = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
+                string requeteDelete = @"DELETE FROM MenuPlat WHERE IdMenu = @idMenu";
+                string requeteInsert = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";
 
                 await _session.Connection.ExecuteAsync(requeteDelete, entite, _session.Transaction);
 
