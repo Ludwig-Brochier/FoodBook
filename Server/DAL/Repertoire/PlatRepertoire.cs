@@ -28,18 +28,34 @@ namespace DAL.Repertoire
 
         public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
+            string jointure = "";
+            string where = "";
+
+            if (requeteFiltresPlats.IdIngredient != 0)
+            {
+                jointure = "inner JOIN PlatIngredient ON Plat.IdPlat = PlatIngredient.IdPlat";
+                where = @"WHERE IdIngredient = @IdIngredient";
+            }
+
+            if (requeteFiltresPlats.Type != null)
+            {
+                where = @"WHERE TypePlat = @Type";
+            }
+
             // Requete SQL pour récupérer une liste de plat paginés
-            string requete = @"SELECT * FROM Plat
-                                ORDER BY IdPlat
+            string requete = @$"SELECT * FROM Plat
+                                {jointure}
+                                {where}
+                                ORDER BY Plat.IdPlat
                                 OFFSET @TaillePage * (@Page - 1) rows
                                 FETCH NEXT @TaillePage rows only";
             // Requete SQL pour récupérer le nombre de plat présent dans la base de données
-            string requeteNbPlat = "SELECT COUNT(*) FROM Plat";
+            string requeteNbPlat = $"SELECT COUNT(*) FROM Plat {jointure} {where}";
 
             // Récupère la liste des plats
             List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requeteFiltresPlats, _session.Transaction) as List<Plat>;
             // Recupère le nombre de plat total
-            int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, null, _session.Transaction);
+            int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, requeteFiltresPlats, _session.Transaction);
 
             return new ReponsePagination<Plat>(requeteFiltresPlats.Page, requeteFiltresPlats.TaillePage, nbPlat, plats);
         }
