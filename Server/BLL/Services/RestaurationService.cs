@@ -4,6 +4,7 @@ using BO.Entite;
 using DAL.UOW;
 using DAL.Repertoire;
 using System.Threading.Tasks;
+using BO.DTO.Modeles;
 
 namespace BLL.Services
 {
@@ -15,22 +16,63 @@ namespace BLL.Services
             _bdd = unitOfWork;
         }
 
-
-        public async Task<bool> DeleteMenuAsync(int idMenu)
+        #region Ingredient
+        public async Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
         {
-            _bdd.DebutTransaction();
-            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
-            bool delete = await menuRepertoire.DeleteAsync(idMenu);
-            if (delete)
+            IIngredientRepertoire ingredient = _bdd.GetRepertoire<IIngredientRepertoire>();
+            return await ingredient.GetAllAsync(requetePagination);
+        }
+
+        public async Task<Ingredient> GetIngredientAsync(int idIngredient)
+        {
+            IIngredientRepertoire ingredientRepertoire = _bdd.GetRepertoire<IIngredientRepertoire>();
+            return await ingredientRepertoire.GetAsync(idIngredient);
+        }
+        #endregion
+
+        #region Plat
+        public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
+        {
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await platRepertoire.GetAllPlatsAsync(requeteFiltresPlats);
+        }
+
+        public async Task<ReponsePagination<PlatPopulaire>> GetAllPlatsPopulaireAsync(RequeteFiltresPlats requeteFiltresPlats)
+        {
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await platRepertoire.GetAllPlatsPopulaireAsync(requeteFiltresPlats);
+        }
+
+        public async Task<Plat> GetPlatAsync(int idPlat)
+        {
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            return await platRepertoire.GetAsync(idPlat);
+        }
+
+        public async Task<Plat> InsertPlatAsync(Plat plat)
+        {
+            if (plat.PlatIngredients.Count == 0 || plat.Intitule == string.Empty || plat.TypePlat == string.Empty)
             {
-                _bdd.Commit();
-                return true;
+                return null;
             }
+
             else
             {
-                _bdd.Rollback();
-                return false;
+                _bdd.DebutTransaction();
+                IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+                Plat newPlat = await platRepertoire.InsertAsync(plat);
+                _bdd.Commit();
+                return newPlat;
             }
+        }
+
+        public async Task<Plat> UpdatePlatAsync(Plat plat)
+        {
+            _bdd.DebutTransaction();
+            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+            Plat newPlat = await platRepertoire.UpdateAsync(plat);
+            _bdd.Commit();
+            return newPlat;
         }
 
         public async Task<bool> DeletePlatAsync(int idPlat)
@@ -50,41 +92,19 @@ namespace BLL.Services
                 return false;
             }
         }
+        #endregion
 
-        public async Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
-        {
-            IIngredientRepertoire ingredient = _bdd.GetRepertoire<IIngredientRepertoire>();
-            return await ingredient.GetAllAsync(requetePagination);
-        }
-
+        #region Menu
         public async Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
             IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
             return await menuRepertoire.GetAllPeriodeAsync(requetePeriodique);
         }
 
-        public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequetePagination requetePagination)
-        {
-            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-            return await platRepertoire.GetAllAsync(requetePagination);
-        }
-
-        public async Task<Ingredient> GetIngredientAsync(int idIngredient)
-        {
-            IIngredientRepertoire ingredientRepertoire = _bdd.GetRepertoire<IIngredientRepertoire>();
-            return await ingredientRepertoire.GetAsync(idIngredient);
-        }
-
         public async Task<Menu> GetMenuAsync(int idMenu)
         {
             IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
             return await menuRepertoire.GetAsync(idMenu);
-        }
-
-        public async Task<Plat> GetPlatAsync(int idPlat)
-        {
-            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-            return await platRepertoire.GetAsync(idPlat);
         }
 
         public async Task<Menu> InsertMenuAsync(Menu menu)
@@ -101,24 +121,7 @@ namespace BLL.Services
                 Menu newMenu = await menuRepertoire.InsertAsync(menu);
                 _bdd.Commit();
                 return newMenu;
-            }            
-        }
-
-        public async Task<Plat> InsertPlatAsync(Plat plat)
-        {
-            if (plat.PlatIngredients.Count == 0 || plat.Intitule == string.Empty || plat.TypePlat == string.Empty)
-            {
-                return null;
             }
-
-            else
-            {
-                _bdd.DebutTransaction();
-                IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-                Plat newPlat = await platRepertoire.InsertAsync(plat);
-                _bdd.Commit();
-                return newPlat;
-            }            
         }
 
         public async Task<Menu> UpdateMenuAsync(Menu menu)
@@ -130,13 +133,22 @@ namespace BLL.Services
             return newMenu;
         }
 
-        public async Task<Plat> UpdatePlatAsync(Plat plat)
+        public async Task<bool> DeleteMenuAsync(int idMenu)
         {
             _bdd.DebutTransaction();
-            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-            Plat newPlat = await platRepertoire.UpdateAsync(plat);
-            _bdd.Commit();
-            return newPlat;
+            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+            bool delete = await menuRepertoire.DeleteAsync(idMenu);
+            if (delete)
+            {
+                _bdd.Commit();
+                return true;
+            }
+            else
+            {
+                _bdd.Rollback();
+                return false;
+            }
         }
+        #endregion
     }
 }

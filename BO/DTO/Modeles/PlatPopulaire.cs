@@ -11,12 +11,12 @@ namespace BO.DTO.Modeles
         /// <summary>
         /// Le plat
         /// </summary>
-        public Plat Plat { get; private set; } 
+        public Plat Plat { get; set; } 
 
         /// <summary>
         /// Le nombre de réservations
         /// </summary>
-        public int NbReservations { get; private set; }
+        public int NbReservations { get; set; }
 
 
         /// <summary>

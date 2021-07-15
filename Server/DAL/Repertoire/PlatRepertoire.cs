@@ -1,4 +1,5 @@
-﻿using BO.DTO.Reponses;
+﻿using BO.DTO.Modeles;
+using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
@@ -25,7 +26,7 @@ namespace DAL.Repertoire
             return await _session.Connection.ExecuteAsync(requete, param: new { ID = id }, _session.Transaction) > 0; 
         }
 
-        public async Task<ReponsePagination<Plat>> GetAllAsync(RequetePagination requetePagination)
+        public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
             // Requete SQL pour récupérer une liste de plat paginés
             var requete = @"SELECT * FROM Plat
@@ -36,11 +37,43 @@ namespace DAL.Repertoire
             var requeteNbPlat = "SELECT COUNT(*) FROM Plat";
 
             // Récupère la liste des plats
-            List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requetePagination, _session.Transaction) as List<Plat>;
+            List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requeteFiltresPlats, _session.Transaction) as List<Plat>;
             // Recupère le nombre de plat total
             int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, null, _session.Transaction);
 
-            return new ReponsePagination<Plat>(requetePagination.Page, requetePagination.TaillePage, nbPlat, plats);
+            return new ReponsePagination<Plat>(requeteFiltresPlats.Page, requeteFiltresPlats.TaillePage, nbPlat, plats);
+        }
+
+        public async Task<ReponsePagination<PlatPopulaire>> GetAllPlatsPopulaireAsync(RequeteFiltresPlats requeteFiltresPlats)
+        {
+            string requete = @"SELECT 
+                                    SUM(NbPersonne) AS NbReservations,                                    
+                                    Plat.IdPlat,
+	                                Plat.Intitule,
+	                                Plat.TypePlat,
+	                                Prix	                                
+                                FROM Reservation
+                                    inner JOIN Formule ON Reservation.IdFormule = Formule.IdFormule	
+                                    inner JOIN MenuPlat ON Reservation.IdMenu = MenuPlat.IdMenu
+                                    inner JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat
+                                WHERE SUBSTRING(Formule.Intitule, 1, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                    or SUBSTRING(Formule.Intitule, 8, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                    or SUBSTRING(Formule.Intitule, 6, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                    or SUBSTRING(Formule.Intitule, 13, 3) = SUBSTRING(Plat.TypePlat, 1, 3)	
+                                GROUP BY Plat.IdPlat, Plat.Intitule, TypePlat, Prix
+                                ORDER BY NbReservations DESC
+                                OFFSET @taillePage * (@page - 1) rows
+                                FETCH NEXT @taillePage rows only";
+            string requeteNbPlat = "SELECT COUNT(*) FROM Plat";
+
+            List<PlatPopulaire> plats = await _session.Connection.QueryAsync<PlatPopulaire, Plat, PlatPopulaire>(requete, (platPopulaire, plat) =>
+            {
+                platPopulaire.Plat = plat;
+                return platPopulaire;
+            }, requeteFiltresPlats, _session.Transaction, splitOn:"idPlat") as List<PlatPopulaire>;
+            int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, null, _session.Transaction);
+
+            return new ReponsePagination<PlatPopulaire>(requeteFiltresPlats.Page, requeteFiltresPlats.TaillePage, nbPlat, plats);
         }
 
         public async Task<Plat> GetAsync(int id)

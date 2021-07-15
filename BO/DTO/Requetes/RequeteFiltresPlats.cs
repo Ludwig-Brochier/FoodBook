@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BO.DTO.Requetes
+﻿namespace BO.DTO.Requetes
 {
     /// <summary>
     /// DTO permettant de filtrer des plats

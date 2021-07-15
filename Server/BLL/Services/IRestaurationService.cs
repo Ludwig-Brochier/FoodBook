@@ -2,6 +2,7 @@
 using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
+using BO.DTO.Modeles;
 
 namespace BLL.Services
 {
@@ -25,11 +26,21 @@ namespace BLL.Services
 
         #region Plat
         /// <summary>
-        /// Permet de récupérer tous les plats selon une pagination précise
+        /// Permet de récupérer tous les plats
+        /// Filtre possible
+        /// Mise en page possible
         /// </summary>
-        /// <param name="requetePagination">La pagination demandée</param>
+        /// <param name="requeteFiltresPlats">La pagination demandée + filtre</param>
         /// <returns>Les plats mis en page</returns>
-        Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequetePagination requetePagination);
+        Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats);
+
+        /// <summary>
+        /// Permet de récupérer tous les plats selon leur popularité
+        /// Mise en page possible
+        /// </summary>
+        /// <param name="requeteFiltresPlats">La pagination demandée + filtre</param>
+        /// <returns>Les plats classés de manière populaire mis en page</returns>
+        Task<ReponsePagination<PlatPopulaire>> GetAllPlatsPopulaireAsync(RequeteFiltresPlats requeteFiltresPlats);
 
         /// <summary>
         /// Permet de récupérer un plat précis via son ID

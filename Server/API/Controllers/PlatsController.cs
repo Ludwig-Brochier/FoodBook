@@ -27,10 +27,30 @@ namespace API.Controllers
         /// <param name="requetePagination">La pagination demandée</param>
         /// <returns>Les plats mis en page</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllPlatsAsync([FromQuery]RequetePagination requetePagination)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllPlatsAsync([FromQuery]RequeteFiltresPlats requeteFiltresPlats)
         {
-            // Méthode pour récupérer tous les plats
-            return Ok(await _restaurationService.GetAllPlatsAsync(requetePagination));
+            if ((requeteFiltresPlats.Populaire == true && requeteFiltresPlats.Type != null) || 
+                (requeteFiltresPlats.Populaire == true && requeteFiltresPlats.IdIngredient != 0) ||
+                (requeteFiltresPlats.Type != null && requeteFiltresPlats.IdIngredient != 0))
+            {
+                return BadRequest();
+            }
+
+            else
+            {
+                if (requeteFiltresPlats.Populaire == true)
+                {
+                    return Ok(await _restaurationService.GetAllPlatsPopulaireAsync(requeteFiltresPlats));
+                }
+
+                else
+                {
+                    // Méthode pour récupérer tous les plats
+                    return Ok(await _restaurationService.GetAllPlatsAsync(requeteFiltresPlats));
+                }
+            }            
         }
 
         /// <summary>
