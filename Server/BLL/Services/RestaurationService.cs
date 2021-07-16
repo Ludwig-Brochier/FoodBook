@@ -5,6 +5,7 @@ using DAL.UOW;
 using DAL.Repertoire;
 using System.Threading.Tasks;
 using BO.DTO.Modeles;
+using System;
 
 namespace BLL.Services
 {
@@ -34,6 +35,20 @@ namespace BLL.Services
         public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
             IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+
+            if (requeteFiltresPlats.Type != null)
+            {
+                if (requeteFiltresPlats.Type == "entree" || requeteFiltresPlats.Type == "plat" || requeteFiltresPlats.Type == "dessert")
+                {
+                    return await platRepertoire.GetAllPlatsAsync(requeteFiltresPlats);
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+            
             return await platRepertoire.GetAllPlatsAsync(requeteFiltresPlats);
         }
 
@@ -51,28 +66,36 @@ namespace BLL.Services
 
         public async Task<Plat> InsertPlatAsync(Plat plat)
         {
-            if (plat.PlatIngredients.Count == 0 || plat.Intitule == string.Empty || plat.TypePlat == string.Empty)
+            if (plat.PlatIngredients != null && plat.Intitule != string.Empty && plat.Prix != 0)
             {
-                return null;
+                if (plat.TypePlat == "Entrée" || plat.TypePlat == "Plat" || plat.TypePlat == "Dessert")
+                {
+                    _bdd.DebutTransaction();
+                    IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+                    Plat newPlat = await platRepertoire.InsertAsync(plat);
+                    _bdd.Commit();
+                    return newPlat;
+                }
             }
 
-            else
-            {
-                _bdd.DebutTransaction();
-                IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-                Plat newPlat = await platRepertoire.InsertAsync(plat);
-                _bdd.Commit();
-                return newPlat;
-            }
+            return null;
         }
 
         public async Task<Plat> UpdatePlatAsync(Plat plat)
         {
-            _bdd.DebutTransaction();
-            IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
-            Plat newPlat = await platRepertoire.UpdateAsync(plat);
-            _bdd.Commit();
-            return newPlat;
+            if (plat.Intitule != string.Empty && plat.Prix != 0)
+            {
+                if (plat.TypePlat == "Entrée" || plat.TypePlat == "Plat" || plat.TypePlat == "Dessert")
+                {
+                    _bdd.DebutTransaction();
+                    IPlatRepertoire platRepertoire = _bdd.GetRepertoire<IPlatRepertoire>();
+                    Plat newPlat = await platRepertoire.UpdateAsync(plat);
+                    _bdd.Commit();
+                    return newPlat;
+                }
+            }
+
+            return null;
         }
 
         public async Task<bool> DeletePlatAsync(int idPlat)
@@ -97,8 +120,16 @@ namespace BLL.Services
         #region Menu
         public async Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
-            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
-            return await menuRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            if (requetePeriodique.Fin >= requetePeriodique.Debut)
+            {
+                IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+                return await menuRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            }
+
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<Menu> GetMenuAsync(int idMenu)
@@ -109,28 +140,104 @@ namespace BLL.Services
 
         public async Task<Menu> InsertMenuAsync(Menu menu)
         {
-            if (menu.Plats.Count != 3)
-            {
-                return null;
-            }
+            int hasDate = DateTime.Compare(menu.DteMenu, new DateTime(0001, 1, 1, 0, 0, 0));
+            bool hasEntree = false;
+            bool hasPlat = false;
+            bool hasDessert = false;
 
-            else
+            if (hasDate != 0)
             {
-                _bdd.DebutTransaction();
-                IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
-                Menu newMenu = await menuRepertoire.InsertAsync(menu);
-                _bdd.Commit();
-                return newMenu;
+                if (menu.Plats.Count == 3)
+                {
+                    foreach (Plat plat in menu.Plats)
+                    {
+                        if (plat.TypePlat == "Entrée")
+                        {
+                            hasEntree = true;
+                        }
+
+                        else if (plat.TypePlat == "Plat")
+                        {
+                            hasPlat = true;
+                        }
+
+                        else if (plat.TypePlat == "Dessert")
+                        {
+                            hasDessert = true;
+                        }
+
+                        else
+                        {
+                            return null;
+                        }                        
+                    }
+
+                    if (hasEntree == true && hasPlat == true && hasDessert == true)
+                    {
+                        _bdd.DebutTransaction();
+                        IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+                        Menu newMenu = await menuRepertoire.InsertAsync(menu);
+                        _bdd.Commit();
+                        return newMenu;
+                    }
+                }
             }
+            return null;
         }
 
         public async Task<Menu> UpdateMenuAsync(Menu menu)
         {
-            _bdd.DebutTransaction();
-            IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
-            Menu newMenu = await menuRepertoire.UpdateAsync(menu);
-            _bdd.Commit();
-            return newMenu;
+            int hasDate = DateTime.Compare(menu.DteMenu, new DateTime(0001, 1, 1, 0, 0, 0));
+            bool hasEntree = false;
+            bool hasPlat = false;
+            bool hasDessert = false;
+
+            if (hasDate != 0)
+            {
+                _bdd.DebutTransaction();
+                IMenuRepertoire menuRepertoire = _bdd.GetRepertoire<IMenuRepertoire>();
+
+                if (menu.Plats == null)
+                {
+                    Menu newMenu = await menuRepertoire.UpdateAsync(menu);
+                    _bdd.Commit();
+                    return newMenu;
+                }
+
+                if (menu.Plats.Count == 3)
+                {
+                    foreach (Plat plat in menu.Plats)
+                    {
+                        if (plat.TypePlat == "Entrée")
+                        {
+                            hasEntree = true;
+                        }
+
+                        else if (plat.TypePlat == "Plat")
+                        {
+                            hasPlat = true;
+                        }
+
+                        else if (plat.TypePlat == "Dessert")
+                        {
+                            hasDessert = true;
+                        }
+
+                        else
+                        {
+                            return null;
+                        }
+                    }
+
+                    if (hasEntree == true && hasPlat == true && hasDessert == true)
+                    {
+                        Menu newMenu = await menuRepertoire.UpdateAsync(menu);
+                        _bdd.Commit();
+                        return newMenu;
+                    }
+                }
+            }
+            return null;
         }
 
         public async Task<bool> DeleteMenuAsync(int idMenu)

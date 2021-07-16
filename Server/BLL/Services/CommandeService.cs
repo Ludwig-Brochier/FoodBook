@@ -17,8 +17,16 @@ namespace BLL.Services
 
         public async Task<ReponsePeriodique<PlatIngredient>> GetCommandeIngredientsAsync(RequetePeriodique requetePeriodique)
         {
-            IIngredientRepertoire ingredientRepertoire = _bdd.GetRepertoire<IIngredientRepertoire>();
-            return await ingredientRepertoire.GetCommandeIngredientsAsync(requetePeriodique);
+            if (requetePeriodique.Fin >= requetePeriodique.Debut)
+            {
+                IIngredientRepertoire ingredientRepertoire = _bdd.GetRepertoire<IIngredientRepertoire>();
+                return await ingredientRepertoire.GetCommandeIngredientsAsync(requetePeriodique);
+            }
+
+            else
+            {
+                return null;
+            }            
         }
     }
 }

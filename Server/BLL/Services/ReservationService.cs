@@ -35,8 +35,13 @@ namespace BLL.Services
 
         public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
-            return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            if (requetePeriodique.Fin >= requetePeriodique.Debut)
+            {
+                IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+                return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            }
+
+            return null;
         }
 
         public async Task<Reservation> GetReservationAsync(int idReservation)
@@ -47,6 +52,13 @@ namespace BLL.Services
 
         public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
+            // Controle requête
+            // si nom !vide, prénom !vide, numtel !vide
+            // si nbPersonnes <= 9
+            // si idFormule compris entre 1 et 7
+            // si menu est !vide
+            // si menu éxiste
+            // si dateButoire menu supérieure à dateToday
             _bdd.DebutTransaction();
             IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
             Reservation newReservation = await reservationRepertoire.InsertAsync(reservation);
@@ -56,6 +68,7 @@ namespace BLL.Services
 
         public async Task<Reservation> UpdateReservation(Reservation reservation)
         {
+            // Même base que insert
             _bdd.DebutTransaction();
             IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
             Reservation newReservation = await reservationRepertoire.UpdateAsync(reservation);

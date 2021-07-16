@@ -77,7 +77,7 @@ namespace DAL.Repertoire
         {
             string requete = @"UPDATE Menu SET DteMenu = @dteMenu, ServiceMidi = @serviceMidi, DteButoire = @dteButoire WHERE IdMenu = @idMenu";
 
-            if (entite.Plats.Count > 0)
+            if (entite.Plats != null)
             {
                 string requeteDelete = @"DELETE FROM MenuPlat WHERE IdMenu = @idMenu";
                 string requeteInsert = @"INSERT INTO MenuPlat(IdMenu, IdPlat) VALUES(@idMenu, @idPlat)";

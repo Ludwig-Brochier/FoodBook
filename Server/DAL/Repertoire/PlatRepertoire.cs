@@ -39,22 +39,25 @@ namespace DAL.Repertoire
 
             if (requeteFiltresPlats.Type != null)
             {
+                if (requeteFiltresPlats.Type == "entree")
+                {
+                    requeteFiltresPlats.Type = "entrée";
+                }
                 where = @"WHERE TypePlat = @Type";
             }
 
-            // Requete SQL pour récupérer une liste de plat paginés
             string requete = @$"SELECT * FROM Plat
                                 {jointure}
                                 {where}
                                 ORDER BY Plat.IdPlat
                                 OFFSET @TaillePage * (@Page - 1) rows
                                 FETCH NEXT @TaillePage rows only";
-            // Requete SQL pour récupérer le nombre de plat présent dans la base de données
+            
             string requeteNbPlat = $"SELECT COUNT(*) FROM Plat {jointure} {where}";
 
-            // Récupère la liste des plats
+            
             List<Plat> plats = await _session.Connection.QueryAsync<Plat>(requete, requeteFiltresPlats, _session.Transaction) as List<Plat>;
-            // Recupère le nombre de plat total
+            
             int nbPlat = await _session.Connection.ExecuteScalarAsync<int>(requeteNbPlat, requeteFiltresPlats, _session.Transaction);
 
             return new ReponsePagination<Plat>(requeteFiltresPlats.Page, requeteFiltresPlats.TaillePage, nbPlat, plats);
@@ -120,8 +123,10 @@ namespace DAL.Repertoire
         {
             // Requete SQL pour insérer un nouveau plat
             string requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES(@intitule, @typePlat, @prix)";
+            
             // L'identifiant du plat généré automatiquement par la base de données, en retour de la requete SQL
             int idPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
+                      
 
             // Liste des ingrédients et leur quantité
             List<PlatIngredient> platIngredients = entite.PlatIngredients; 
@@ -147,7 +152,7 @@ namespace DAL.Repertoire
             string requete = @"UPDATE Plat SET Intitule = @intitule, TypePlat = @typePlat, Prix = @prix WHERE IdPlat = @idPlat";
 
             // Test si le plat à mettre à jour contient des ingrédients à mettre à jour dans la table d'association PlatIngredient
-            if (entite.PlatIngredients.Count > 0)
+            if (entite.PlatIngredients != null)
             {
                 // Requete SQL pour supprimer les anciens ingrédients du plat
                 string requeteDelete = @"DELETE FROM PlatIngredient WHERE IdPlat = @idPlat";
