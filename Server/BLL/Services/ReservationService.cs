@@ -52,7 +52,7 @@ namespace BLL.Services
 
         public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
-            if (reservation.Nom != string.Empty && reservation.Prenom != string.Empty && reservation.NumTel != string.Empty)
+            if (reservation.Nom != string.Empty || reservation.Prenom != string.Empty || reservation.NumTel != string.Empty)
             {
                 if (reservation.NbPersonne >= 1 && reservation.NbPersonne <= 9)
                 {
@@ -79,7 +79,7 @@ namespace BLL.Services
             return null;            
         }
 
-        public async Task<Reservation> UpdateReservation(Reservation reservation)
+        public async Task<Reservation> UpdateReservationAsync(Reservation reservation)
         {
             if (reservation.Nom != string.Empty && reservation.Prenom != string.Empty && reservation.NumTel != string.Empty)
             {

@@ -33,7 +33,7 @@ namespace BLL.Services
         /// </summary>
         /// <param name="reservation">Les données de la réservation</param>
         /// <returns>La réservation mise à jour</returns>
-        Task<Reservation> UpdateReservation(Reservation reservation);
+        Task<Reservation> UpdateReservationAsync(Reservation reservation);
 
         /// <summary>
         /// Permet de supprimer une réservation précise via son ID

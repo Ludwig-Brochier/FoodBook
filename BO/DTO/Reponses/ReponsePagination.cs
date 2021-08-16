@@ -43,7 +43,7 @@ namespace BO.DTO.Reponses
         /// <summary>
         /// Les données de la page
         /// </summary>
-        public List<T> Donnees { get; private set; }
+        public List<T> Donnees { get; set; }
 
 
         /// <summary>

@@ -107,7 +107,7 @@ namespace API.Controllers
             else
             {
                 // Méthode pour mettre à jour une réservation
-                Reservation updateReservation = await _reservationService.UpdateReservation(reservation);
+                Reservation updateReservation = await _reservationService.UpdateReservationAsync(reservation);
 
                 if (updateReservation != null)
                 {
