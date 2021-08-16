@@ -32,7 +32,7 @@ namespace BO.Entite
         /// Date de la prise de réservation par le client
         /// Valeur par défaut: SYSDATE
         /// </summary>
-        public DateTime DtePriseResa { get; set; }
+        public DateTime DtePriseResa => DateTime.Today;
 
         /// <summary>
         /// Nombre de personnes inclus dans la réservation

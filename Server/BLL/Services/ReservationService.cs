@@ -52,28 +52,60 @@ namespace BLL.Services
 
         public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
-            // Controle requête
-            // si nom !vide, prénom !vide, numtel !vide
-            // si nbPersonnes <= 9
-            // si idFormule compris entre 1 et 7
-            // si menu est !vide
-            // si menu éxiste
-            // si dateButoire menu supérieure à dateToday
-            _bdd.DebutTransaction();
-            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
-            Reservation newReservation = await reservationRepertoire.InsertAsync(reservation);
-            _bdd.Commit();
-            return newReservation;
+            if (reservation.Nom != string.Empty && reservation.Prenom != string.Empty && reservation.NumTel != string.Empty)
+            {
+                if (reservation.NbPersonne >= 1 && reservation.NbPersonne <= 9)
+                {
+                    if (reservation.Formule.IdFormule >= 1 && reservation.Formule.IdFormule <= 9)
+                    {
+                        IRestaurationService restaurationService = _bdd.GetRepertoire<IRestaurationService>();
+                        Menu menu = await restaurationService.GetMenuAsync((int)reservation.Menu.IdMenu);
+
+                        if (menu != null)
+                        {
+                            if (menu.DteButoire > reservation.DtePriseResa)
+                            {
+                                _bdd.DebutTransaction();
+                                IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+                                Reservation newReservation = await reservationRepertoire.InsertAsync(reservation);
+                                _bdd.Commit();
+                                return newReservation;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;            
         }
 
         public async Task<Reservation> UpdateReservation(Reservation reservation)
         {
-            // Même base que insert
-            _bdd.DebutTransaction();
-            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
-            Reservation newReservation = await reservationRepertoire.UpdateAsync(reservation);
-            _bdd.Commit();
-            return newReservation;
+            if (reservation.Nom != string.Empty && reservation.Prenom != string.Empty && reservation.NumTel != string.Empty)
+            {
+                if (reservation.NbPersonne >= 1 && reservation.NbPersonne <= 9)
+                {
+                    if (reservation.Formule.IdFormule >= 1 && reservation.Formule.IdFormule <= 9)
+                    {
+                        IRestaurationService restaurationService = _bdd.GetRepertoire<IRestaurationService>();
+                        Menu menu = await restaurationService.GetMenuAsync((int)reservation.Menu.IdMenu);
+
+                        if (menu != null)
+                        {
+                            if (menu.DteButoire > reservation.DtePriseResa)
+                            {
+                                _bdd.DebutTransaction();
+                                IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+                                Reservation newReservation = await reservationRepertoire.UpdateAsync(reservation);
+                                _bdd.Commit();
+                                return newReservation;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
