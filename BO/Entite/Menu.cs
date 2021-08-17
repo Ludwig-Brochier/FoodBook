@@ -59,7 +59,11 @@ namespace BO.Entite
         public bool Equals(Menu autre)
         {
             return autre != null &&
-                IdMenu == autre.IdMenu;
+                IdMenu == autre.IdMenu &&
+                DteMenu == autre.DteMenu &&
+                ServiceMidi == autre.ServiceMidi &&
+                DteButoire == autre.DteButoire &&
+                Plats == autre.Plats;
         }
 
         public override bool Equals(object obj)

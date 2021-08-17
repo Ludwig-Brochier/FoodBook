@@ -61,7 +61,11 @@ namespace BO.Entite
         public bool Equals(Plat autre)
         {
             return autre != null &&
-                IdPlat == autre.IdPlat;
+                IdPlat == autre.IdPlat &&
+                Intitule == autre.Intitule &&
+                TypePlat == autre.TypePlat &&
+                Prix == autre.Prix &&
+                PlatIngredients == autre.PlatIngredients;
         }
 
         public override bool Equals(object obj)

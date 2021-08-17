@@ -36,11 +36,16 @@ namespace BO.Entite
             Quantite = quantite;
         }
 
+        public bool Equals(PlatIngredient autre)
+        {
+            return autre != null &&
+                IngredientPlat == autre.IngredientPlat &&
+                Quantite == autre.Quantite;
+        }
 
         public override bool Equals(object obj)
         {
-            return obj is PlatIngredient ingredient &&
-                   EqualityComparer<Ingredient>.Default.Equals(IngredientPlat, ingredient.IngredientPlat);
+            return Equals(obj as PlatIngredient);
         }
 
         public override int GetHashCode()

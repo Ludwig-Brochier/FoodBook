@@ -39,7 +39,8 @@ namespace BO.Entite
         public bool Equals(Formule autre)
         {
             return autre != null &&
-                IdFormule == autre.IdFormule;
+                IdFormule == autre.IdFormule &&
+                Intitule == autre.Intitule;
         }
 
         public override bool Equals(object obj)
