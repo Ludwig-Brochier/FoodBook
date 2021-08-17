@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BO", "..\BO\BO.csproj", "{6EF01556-3F21-4836-AE6B-2780122B01BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUnitaire", "TestUnitaire\TestUnitaire.csproj", "{4A311FE1-CB55-47A3-A15C-04997ED07583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUnitaire", "TestUnitaire\TestUnitaire.csproj", "{4A311FE1-CB55-47A3-A15C-04997ED07583}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestIntegration", "TestIntegration\TestIntegration.csproj", "{7C6367A6-6A02-498A-A33E-013BDCCEF627}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4A311FE1-CB55-47A3-A15C-04997ED07583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A311FE1-CB55-47A3-A15C-04997ED07583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A311FE1-CB55-47A3-A15C-04997ED07583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C6367A6-6A02-498A-A33E-013BDCCEF627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C6367A6-6A02-498A-A33E-013BDCCEF627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C6367A6-6A02-498A-A33E-013BDCCEF627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C6367A6-6A02-498A-A33E-013BDCCEF627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

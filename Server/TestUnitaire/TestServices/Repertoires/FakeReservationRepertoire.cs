@@ -14,11 +14,11 @@ namespace TestUnitaire.TestServices.Repertoires
     {
         public List<Reservation> reservations = new()
         {
-            new Reservation(1, "test", "test", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
-            new Reservation(2, "test", "test", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
-            new Reservation(3, "test", "test", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
-            new Reservation(4, "test", "test", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
-            new Reservation(5, "test", "test", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
+            new Reservation(1, "test", "test", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
+            new Reservation(2, "test", "test", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
+            new Reservation(3, "test", "test", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
+            new Reservation(4, "test", "test", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
+            new Reservation(5, "test", "test", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")),
         };
 
         public Task<bool> DeleteAsync(int id)

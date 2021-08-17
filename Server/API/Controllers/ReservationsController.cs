@@ -27,10 +27,20 @@ namespace API.Controllers
         /// <param name="requetePeriodique">La période demandée, dont mise en page</param>
         /// <returns>Les réservations de la période mises en page</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllReservationsAsync([FromQuery] RequetePeriodique requetePeriodique)
         {
-            // Méthode pour récupérer les réservations d'une période
-            return Ok(await _reservationService.GetAllReservationsAsync(requetePeriodique));
+            if (requetePeriodique.Fin >= requetePeriodique.Debut)
+            {
+                // Méthode pour récupérer les réservations d'une période
+                return Ok(await _reservationService.GetAllReservationsAsync(requetePeriodique));
+            }
+
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         /// <summary>

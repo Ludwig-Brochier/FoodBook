@@ -35,13 +35,8 @@ namespace BLL.Services
 
         public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            if (requetePeriodique.Fin >= requetePeriodique.Debut)
-            {
-                IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
-                return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
-            }
-
-            return null;
+            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+            return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
         }
 
         public async Task<Reservation> GetReservationAsync(int idReservation)
@@ -52,11 +47,11 @@ namespace BLL.Services
 
         public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
-            if (reservation.Nom != string.Empty || reservation.Prenom != string.Empty || reservation.NumTel != string.Empty)
+            if (reservation.Nom != string.Empty && reservation.Prenom != string.Empty && reservation.NumTel != string.Empty)
             {
                 if (reservation.NbPersonne >= 1 && reservation.NbPersonne <= 9)
                 {
-                    if (reservation.Formule.IdFormule >= 1 && reservation.Formule.IdFormule <= 9)
+                    if (reservation.Formule.IdFormule >= 1 && reservation.Formule.IdFormule <= 7)
                     {
                         IRestaurationService restaurationService = _bdd.GetRepertoire<IRestaurationService>();
                         Menu menu = await restaurationService.GetMenuAsync((int)reservation.Menu.IdMenu);

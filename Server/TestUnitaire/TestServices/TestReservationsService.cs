@@ -34,11 +34,9 @@ namespace TestUnitaire.TestServices
 
             //Acts
             var resultOK = await reservationRepertoire.GetAllPeriodeAsync(new RequetePeriodique(DateTime.Today, DateTime.Today.AddDays(7), 1, 3));
-            var resultNull = await reservationRepertoire.GetAllPeriodeAsync(new RequetePeriodique(DateTime.Today, DateTime.Today.AddDays(-1), 1, 3));
 
             //Asserts
             Assert.NotNull(resultOK);
-            Assert.NotNull(resultNull);
         }
 
         [Fact]
@@ -63,12 +61,12 @@ namespace TestUnitaire.TestServices
             IReservationRepertoire reservationRepertoire = new FakeReservationRepertoire();
 
             //Acts
-            var resultOK = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadNom = await reservationRepertoire.InsertAsync(new Reservation(1, "", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadNbPersonne = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 10, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadMenu = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(10, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadFormule = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(10, "Entrée")));
-            var resultBadDteButoire = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today.AddDays(-10), true, null), new Formule(1, "Entrée")));
+            var resultOK = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadNom = await reservationRepertoire.InsertAsync(new Reservation(1, "", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadNbPersonne = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 10, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadMenu = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(10, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadFormule = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(10, "Entrée")));
+            var resultBadDteButoire = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today.AddDays(-10), true, null), new Formule(1, "Entrée")));
 
             //Asserts
             Assert.NotNull(resultOK);
@@ -86,12 +84,12 @@ namespace TestUnitaire.TestServices
             IReservationRepertoire reservationRepertoire = new FakeReservationRepertoire();
 
             //Acts
-            var resultOK = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadNom = await reservationRepertoire.InsertAsync(new Reservation(1, "", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadNbPersonne = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 10, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadMenu = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(10, DateTime.Today, true, null), new Formule(1, "Entrée")));
-            var resultBadFormule = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(10, "Entrée")));
-            var resultBadDteButoire = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today.AddDays(-10), true, null), new Formule(1, "Entrée")));
+            var resultOK = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadNom = await reservationRepertoire.InsertAsync(new Reservation(1, "", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadNbPersonne = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 10, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadMenu = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(10, DateTime.Today, true, null), new Formule(1, "Entrée")));
+            var resultBadFormule = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(10, "Entrée")));
+            var resultBadDteButoire = await reservationRepertoire.InsertAsync(new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today.AddDays(-10), true, null), new Formule(1, "Entrée")));
 
             //Asserts
             Assert.NotNull(resultOK);

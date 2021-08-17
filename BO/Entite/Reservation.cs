@@ -32,7 +32,7 @@ namespace BO.Entite
         /// Date de la prise de réservation par le client
         /// Valeur par défaut: SYSDATE
         /// </summary>
-        public DateTime DtePriseResa => DateTime.Today;
+        public DateTime DtePriseResa { get; set; }
 
         /// <summary>
         /// Nombre de personnes inclus dans la réservation
@@ -62,15 +62,17 @@ namespace BO.Entite
         /// <param name="nom">Nom du client</param>
         /// <param name="prenom">Prénom du client</param>
         /// <param name="numTel">Numéro de téléphone du client</param>
+        /// <param name="dtePriseResa">Date de la prise de réservation</param>
         /// <param name="nbPersonne">Nombre de personnes inclus dans la réservation</param>
         /// <param name="menu">Le menu réservé</param>
         /// <param name="formule">La formule du menu</param>
-        public Reservation(int? idReservation, String nom, String prenom, String numTel, int nbPersonne, Menu menu, Formule formule)
+        public Reservation(int? idReservation, String nom, String prenom, String numTel, DateTime dtePriseResa, int nbPersonne, Menu menu, Formule formule)
         {
             IdReservation = idReservation;
             Nom = nom;
             Prenom = prenom;
             NumTel = numTel;
+            DtePriseResa = dtePriseResa;
             NbPersonne = nbPersonne;
             Menu = menu;
             Formule = formule;
@@ -80,7 +82,14 @@ namespace BO.Entite
         public bool Equals(Reservation autre)
         {
             return autre != null &&
-                IdReservation == autre.IdReservation;
+                IdReservation == autre.IdReservation &&
+                Nom.ToLower() == autre.Nom.ToLower() &&
+                Prenom.ToLower() == autre.Prenom.ToLower() &&
+                NumTel == autre.NumTel &&
+                DtePriseResa == autre.DtePriseResa &&
+                NbPersonne == autre.NbPersonne &&
+                Menu.IdMenu == autre.Menu.IdMenu &&
+                Formule.IdFormule == autre.Formule.IdFormule;
         }
 
         public override bool Equals(object obj)

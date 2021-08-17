@@ -42,9 +42,11 @@ namespace TestUnitaire.TestControllers
 
             //Acts
             var resultOK = await reservationsController.GetAllReservationsAsync(new RequetePeriodique(DateTime.Today, DateTime.Today.AddDays(7), 1, 3));
+            var resultBadRequest = await reservationsController.GetAllReservationsAsync(new RequetePeriodique(DateTime.Today.AddDays(7), DateTime.Today, 1, 3)) as BadRequestResult;
 
             //Asserts
             Assert.NotNull(resultOK);
+            Assert.Equal(400, resultBadRequest.StatusCode);
         }
 
         [Fact]
@@ -71,7 +73,7 @@ namespace TestUnitaire.TestControllers
             //Arrange
             IReservationService reservationService = new FakeReservationService();
             ReservationsController reservationsController = new ReservationsController(reservationService);
-            Reservation testReservation = new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
+            Reservation testReservation = new Reservation(1, "test Insert", "test Insert", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
             //Acts
             var resultOK = await reservationsController.InsertReservationAsync(testReservation) as CreatedAtActionResult;
             var resultBadRequest = await reservationsController.InsertReservationAsync(null) as BadRequestResult;
@@ -89,8 +91,8 @@ namespace TestUnitaire.TestControllers
             //Arrange
             IReservationService reservationService = new FakeReservationService();
             ReservationsController reservationsController = new ReservationsController(reservationService);
-            Reservation testReservation = new Reservation(1, "test Update", "test Update", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
-            Reservation testReservationNotFound = new Reservation(10, "test Update", "test Update", "+33 6 52 35 15 82", 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
+            Reservation testReservation = new Reservation(1, "test Update", "test Update", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
+            Reservation testReservationNotFound = new Reservation(10, "test Update", "test Update", "+33 6 52 35 15 82", DateTime.Today, 4, new Menu(1, DateTime.Today, true, null), new Formule(1, "Entrée"));
 
             //Acts
             var resultOK = await reservationsController.UpdateReservationAsync(1, testReservation) as OkObjectResult;
