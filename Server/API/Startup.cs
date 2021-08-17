@@ -29,6 +29,30 @@ namespace API
             });
 
             services.AddBLL();
+
+            // Documentation utilisateur de l'API
+            // Swagger
+            services.AddOpenApiDocument(config =>
+            {
+                config.DocumentName = "API FoodBook V1.0";
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1.0";
+                    document.Info.Title = "API FoodBook";
+                    document.Info.Description = "Documentation à déstination de l'utilisateur de l'API FoodBook";
+                    document.Info.TermsOfService = "Aucun";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "Ludwig Brochier",
+                        Email = "ludwig.brochier@gmail.com"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "Utilisation à but pédagogique seulement"
+                    };
+                    config.ApiGroupNames = new[] { "1.0" };
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +62,19 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Appel de la documentation utilisateur
+            app.UseOpenApi(config =>
+            {
+                config.Path = "api/doc/{documentName}/api.json";
+            });
+
+            app.UseSwaggerUi3(config =>
+            {
+                config.DocumentPath = "api/doc/{documentName}/api.json";
+                config.Path = "/api/doc";
+            });
+            // Fin appel de la documentation utilisateur
 
             app.UseHttpsRedirection();
 
