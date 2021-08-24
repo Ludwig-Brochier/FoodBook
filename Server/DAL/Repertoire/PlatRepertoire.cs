@@ -4,6 +4,7 @@ using BO.DTO.Requetes;
 using BO.Entite;
 using DAL.UOW;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -123,11 +124,9 @@ namespace DAL.Repertoire
         {
             // Requete SQL pour insérer un nouveau plat
             string requete = @"INSERT INTO Plat(Intitule, TypePlat, Prix) OUTPUT INSERTED.IdPlat VALUES(@intitule, @typePlat, @prix)";
-            
             // L'identifiant du plat généré automatiquement par la base de données, en retour de la requete SQL
             int idPlat = await _session.Connection.QuerySingleAsync<int>(requete, entite, _session.Transaction);
-                      
-
+            
             // Liste des ingrédients et leur quantité
             List<PlatIngredient> platIngredients = entite.PlatIngredients; 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BO.Entite
 {
@@ -16,6 +17,7 @@ namespace BO.Entite
         /// <summary>
         /// Intitule du plat
         /// </summary>
+        [MaxLength(256, ErrorMessage = "Le nom du plats doit être inférieur à 256 caractères")]
         public String Intitule { get; set; }
 
         /// <summary>

@@ -65,7 +65,7 @@ namespace BLL.Services
         }
 
         public async Task<Plat> InsertPlatAsync(Plat plat)
-        {
+        {            
             if (plat.PlatIngredients != null && plat.Intitule != string.Empty && plat.Prix != 0)
             {
                 if (plat.TypePlat == "Entrée" || plat.TypePlat == "Plat" || plat.TypePlat == "Dessert")
@@ -169,7 +169,7 @@ namespace BLL.Services
                         else
                         {
                             return null;
-                        }                        
+                        }
                     }
 
                     if (hasEntree == true && hasPlat == true && hasDessert == true)
@@ -182,6 +182,7 @@ namespace BLL.Services
                     }
                 }
             }
+
             return null;
         }
 

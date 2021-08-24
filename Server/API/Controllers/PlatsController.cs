@@ -90,7 +90,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> InsertPlatAsync([FromBody]Plat plat)
-        {            
+        {
             // Méthode pour ajouter un plat
             Plat newPlat = await _restaurationService.InsertPlatAsync(plat);
 
@@ -104,7 +104,7 @@ namespace API.Controllers
             {
                 // La requête n'est pas conforme
                 return BadRequest();
-            }                      
+            }                                    
         }
 
         /// <summary>

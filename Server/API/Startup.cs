@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
-using DocFx;
+using API.GestionErreur;
 
 namespace API
 {
@@ -64,6 +64,8 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureCustomExceptionMiddleware();
+
             // Appel de la documentation utilisateur
             app.UseOpenApi(config =>
             {
@@ -77,12 +79,12 @@ namespace API
             });
             // Fin appel de la documentation utilisateur
 
-            // Appel de la documentation technique
-            app.UseDocFx(config =>
-            {
-                config.rootPath = "/doc";
-            });
-            // Fin appel de la documentation technique
+            //// Appel de la documentation technique
+            //app.UseDocFx(config =>
+            //{
+            //    config.rootPath = "/doc";
+            //});
+            //// Fin appel de la documentation technique
 
             app.UseHttpsRedirection();
 

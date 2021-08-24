@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BO.Entite
 {
@@ -16,27 +17,31 @@ namespace BO.Entite
         /// <summary>
         /// Nom du client passant la réservation
         /// </summary>
+        [MaxLength(64, ErrorMessage = "Le nom doit être inférieur à 64 caractères")]
         public String Nom { get; set; }
 
         /// <summary>
         /// Prénom du client passant la réservation
         /// </summary>
+        [MaxLength(64, ErrorMessage = "Le prénom doit être inférieur à 64 caractères")]
         public String Prenom { get; set; }
 
         /// <summary>
         /// Numéro de téléphone du client passant la réservation
         /// </summary>
+        [MaxLength(32, ErrorMessage = "Le numéro de téléphone doit être inférieur à 32 caractères")]
         public String NumTel { get; set; }
 
         /// <summary>
         /// Date de la prise de réservation par le client
         /// Valeur par défaut: SYSDATE
         /// </summary>
-        public DateTime DtePriseResa { get; set; }
+        public DateTime DtePriseResa => DateTime.Now;
 
         /// <summary>
         /// Nombre de personnes inclus dans la réservation
         /// </summary>
+        [Range(1, 9, ErrorMessage = "Le nombre de participants doit être compris entre 1 et 9")]
         public int NbPersonne { get; set; }
 
         /// <summary>
@@ -62,17 +67,15 @@ namespace BO.Entite
         /// <param name="nom">Nom du client</param>
         /// <param name="prenom">Prénom du client</param>
         /// <param name="numTel">Numéro de téléphone du client</param>
-        /// <param name="dtePriseResa">Date de la prise de réservation</param>
         /// <param name="nbPersonne">Nombre de personnes inclus dans la réservation</param>
         /// <param name="menu">Le menu réservé</param>
         /// <param name="formule">La formule du menu</param>
-        public Reservation(int? idReservation, String nom, String prenom, String numTel, DateTime dtePriseResa, int nbPersonne, Menu menu, Formule formule)
+        public Reservation(int? idReservation, String nom, String prenom, String numTel, int nbPersonne, Menu menu, Formule formule)
         {
             IdReservation = idReservation;
             Nom = nom;
             Prenom = prenom;
             NumTel = numTel;
-            DtePriseResa = dtePriseResa;
             NbPersonne = nbPersonne;
             Menu = menu;
             Formule = formule;

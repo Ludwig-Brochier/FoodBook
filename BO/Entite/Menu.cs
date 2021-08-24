@@ -91,7 +91,7 @@ namespace BO.Entite
         {
             // 0 = Dimanche, 3 = Mercredi, 6 = Samedi
             int jour = (int)dteMenu.DayOfWeek;
-
+                        
             switch (jour)
             {
                 case 1:
@@ -104,11 +104,11 @@ namespace BO.Entite
                     return dteMenu.AddDays(-5);
 
                 case 4:
-                    return dteMenu.AddDays(-6);               
+                    return dteMenu.AddDays(-6);
 
                 default:
                     return dteMenu.AddDays(-7);
-            }
+            }            
         }
     }
 }
