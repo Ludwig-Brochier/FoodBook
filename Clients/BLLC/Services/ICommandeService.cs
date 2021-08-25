@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using BO.DTO.Reponses;
+﻿using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
+using System.Threading.Tasks;
 
-namespace BLL.Services
+namespace BLLC.Services
 {
     public interface ICommandeService
     {
