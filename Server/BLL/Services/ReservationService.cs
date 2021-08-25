@@ -36,8 +36,17 @@ namespace BLL.Services
 
         public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
-            return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            if (requetePeriodique.Fin >= requetePeriodique.Debut)
+            {
+                IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
+                return await reservationRepertoire.GetAllPeriodeAsync(requetePeriodique);
+            }
+
+            else
+            {
+                return null;
+            }
+            
         }
 
         public async Task<Reservation> GetReservationAsync(int idReservation)

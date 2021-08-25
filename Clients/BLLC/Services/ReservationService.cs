@@ -2,11 +2,11 @@
 using BO.DTO.Requetes;
 using BO.Entite;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using BLLC.Extensions;
+using System.Text.Json;
 
 namespace BLLC.Services
 {
@@ -19,29 +19,49 @@ namespace BLLC.Services
             _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
         }
 
-        public Task<bool> DeleteReservationAsync(int idReservation)
+        public async Task<bool> DeleteReservationAsync(int idReservation)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.DeleteAsync($"reservations/{idReservation}");
+
+            if (reponse.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
 
-        public Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
+        public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Reservation>>($"reservations{requetePeriodique.ToUriQuery()}");
         }
 
-        public Task<Reservation> GetReservationAsync(int idReservation)
+        public async Task<Reservation> GetReservationAsync(int idReservation)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<Reservation>($"reservations/{idReservation}");
         }
 
-        public Task<Reservation> InsertReservationAsync(Reservation reservation)
+        public async Task<Reservation> InsertReservationAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.PostAsJsonAsync("reservations", reservation);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Reservation newReservation = await JsonSerializer.DeserializeAsync<Reservation>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newReservation;
+            }
         }
 
-        public Task<Reservation> UpdateReservationAsync(Reservation reservation)
+        public async Task<Reservation> UpdateReservationAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.PutAsJsonAsync("reservations/" + reservation.IdReservation, reservation);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Reservation newReservation = await JsonSerializer.DeserializeAsync<Reservation>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newReservation;
+            }
         }
     }
 }

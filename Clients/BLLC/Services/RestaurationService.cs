@@ -4,10 +4,11 @@ using BO.DTO.Requetes;
 using BO.Entite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
+using BLLC.Extensions;
 
 namespace BLLC.Services
 {
@@ -21,73 +22,113 @@ namespace BLLC.Services
         }
 
         #region Ingredient
-        public Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
+        public async Task<ReponsePagination<Ingredient>> GetAllIngredientsAsync(RequetePagination requetePagination)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Ingredient>>($"ingredients{requetePagination.ToUriQuery()}");
         }
 
-        public Task<Ingredient> GetIngredientAsync(int idIngredient)
+        public async Task<Ingredient> GetIngredientAsync(int idIngredient)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<Ingredient>($"ingredients/{idIngredient}");
         }
         #endregion
 
         #region Plat
-        public Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
+        public async Task<ReponsePagination<Plat>> GetAllPlatsAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<ReponsePagination<Plat>>($"plats{requeteFiltresPlats.ToUriQuery()}");
         }
 
-        public Task<ReponsePagination<PlatPopulaire>> GetAllPlatsPopulaireAsync(RequeteFiltresPlats requeteFiltresPlats)
+        public async Task<ReponsePagination<PlatPopulaire>> GetAllPlatsPopulaireAsync(RequeteFiltresPlats requeteFiltresPlats)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<ReponsePagination<PlatPopulaire>>($"plats{requeteFiltresPlats.ToUriQuery()}");
         }
 
-        public Task<Plat> GetPlatAsync(int idPlat)
+        public async Task<Plat> GetPlatAsync(int idPlat)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<Plat>($"plats/{idPlat}");
+        }
+        
+        public async Task<Plat> InsertPlatAsync(Plat plat)
+        {
+            var reponse = await _httpClient.PostAsJsonAsync("plats", plat);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Plat newPlat = await JsonSerializer.DeserializeAsync<Plat>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newPlat;
+            }
         }
 
-        public Task<Menu> InsertMenuAsync(Menu menu)
+        public async Task<Plat> UpdatePlatAsync(Plat plat)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.PutAsJsonAsync("plat/" + plat.IdPlat, plat);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Plat newPlat = await JsonSerializer.DeserializeAsync<Plat>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newPlat;
+            }
         }
 
-        public Task<Plat> UpdatePlatAsync(Plat plat)
+        public async Task<bool> DeletePlatAsync(int idPlat)
         {
-            throw new NotImplementedException();
-        }
+            var reponse = await _httpClient.DeleteAsync($"plats/{idPlat}");
 
-        public Task<bool> DeletePlatAsync(int idPlat)
-        {
-            throw new NotImplementedException();
+            if (reponse.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
         #endregion
 
         #region Menu
-        public Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
+        public async Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Menu>>($"menus{requetePeriodique.ToUriQuery()}");
         }
 
-        public Task<Menu> GetMenuAsync(int idMenu)
+        public async Task<Menu> GetMenuAsync(int idMenu)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<Menu>($"menus/{idMenu}");
         }
 
-        public Task<Plat> InsertPlatAsync(Plat plat)
+        public async Task<Menu> InsertMenuAsync(Menu menu)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.PostAsJsonAsync("menus", menu);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Menu newMenu = await JsonSerializer.DeserializeAsync<Menu>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newMenu;
+            }
         }
 
-        public Task<Menu> UpdateMenuAsync(Menu menu)
+        public async Task<Menu> UpdateMenuAsync(Menu menu)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.PutAsJsonAsync("menus/" + menu.IdMenu, menu);
+            using (var stream = await reponse.Content.ReadAsStreamAsync())
+            {
+                Menu newMenu = await JsonSerializer.DeserializeAsync<Menu>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return newMenu;
+            }
         }
 
-        public Task<bool> DeleteMenuAsync(int idMenu)
+        public async Task<bool> DeleteMenuAsync(int idMenu)
         {
-            throw new NotImplementedException();
+            var reponse = await _httpClient.DeleteAsync($"menus/{idMenu}");
+
+            if (reponse.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
         #endregion
     }
