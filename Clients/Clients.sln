@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BO", "..\BO\BO.csproj", "{8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLC", "BLLC\BLLC.csproj", "{664EDC88-5523-4D6D-A85F-31A940E02B9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientDesktop", "ClientDesktop\ClientDesktop.csproj", "{EC958051-CE68-431F-A94C-062C8098C342}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{664EDC88-5523-4D6D-A85F-31A940E02B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{664EDC88-5523-4D6D-A85F-31A940E02B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{664EDC88-5523-4D6D-A85F-31A940E02B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC958051-CE68-431F-A94C-062C8098C342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC958051-CE68-431F-A94C-062C8098C342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC958051-CE68-431F-A94C-062C8098C342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC958051-CE68-431F-A94C-062C8098C342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
