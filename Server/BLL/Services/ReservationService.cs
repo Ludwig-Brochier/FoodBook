@@ -4,7 +4,6 @@ using BO.Entite;
 using DAL.UOW;
 using DAL.Repertoire;
 using System.Threading.Tasks;
-using System;
 
 namespace BLL.Services
 {
@@ -68,7 +67,7 @@ namespace BLL.Services
 
                         if (menu != null)
                         {
-                            if (menu.DteButoire >= reservation.DtePriseResa)
+                            if (menu.DteButoire.Date >= reservation.DtePriseResa.Date)
                             {
                                 _bdd.DebutTransaction();
                                 IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
@@ -97,7 +96,7 @@ namespace BLL.Services
 
                         if (menu != null)
                         {
-                            if (menu.DteButoire >= reservation.DtePriseResa)
+                            if (menu.DteButoire.Date >= reservation.DtePriseResa.Date)
                             {
                                 _bdd.DebutTransaction();
                                 IReservationRepertoire reservationRepertoire = _bdd.GetRepertoire<IReservationRepertoire>();
