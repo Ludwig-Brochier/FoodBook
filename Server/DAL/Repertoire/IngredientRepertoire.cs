@@ -67,13 +67,34 @@ namespace DAL.Repertoire
                                 ORDER BY Ingredient.IdIngredient OFFSET @taillePage * (@page-1) rows
                                 FETCH NEXT @taillePage rows only";
 
+            string requeteNbIngredient = @"SELECT 
+                                                COUNT(distinct Ingredient.IdIngredient)
+                                            FROM (SELECT 
+                                                    IdReservation, 
+                                                    NbPersonne, 
+                                                    Reservation.IdMenu, 
+                                                    Reservation.IdFormule 
+                                                    FROM Reservation 
+                                                        inner JOIN menu ON Reservation.IdMenu = Menu.IdMenu  
+                                                    WHERE DteMenu BETWEEN @debut AND @fin) ReservationMenu
+                                                inner JOIN Formule ON ReservationMenu.IdFormule = Formule.IdFormule	
+                                                inner JOIN MenuPlat ON ReservationMenu.IdMenu = MenuPlat.IdMenu
+                                                inner JOIN Plat ON MenuPlat.IdPlat = Plat.IdPlat
+                                                inner JOIN PlatIngredient ON Plat.IdPlat = PlatIngredient.IdPlat
+                                                inner JOIN Ingredient ON PlatIngredient.IdIngredient = Ingredient.IdIngredient
+                                            WHERE SUBSTRING(Formule.Intitule, 1, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                                or SUBSTRING(Formule.Intitule, 8, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                                or SUBSTRING(Formule.Intitule, 6, 3) = SUBSTRING(Plat.TypePlat, 1, 3)
+                                                or SUBSTRING(Formule.Intitule, 13, 3) = SUBSTRING(Plat.TypePlat, 1, 3)";
+
             List<PlatIngredient> commande = await _session.Connection.QueryAsync<PlatIngredient, Ingredient, PlatIngredient>(requete, (platIngredient, ingredient) => 
             {
                 platIngredient.IngredientPlat = ingredient;
                 return platIngredient;
             }, requetePeriodique, _session.Transaction, splitOn:"idIngredient") as List<PlatIngredient>;
+            int nbIngredient = await _session.Connection.ExecuteScalarAsync<int>(requeteNbIngredient, requetePeriodique, _session.Transaction);
 
-            return new ReponsePeriodique<PlatIngredient>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, commande.Count, commande);
+            return new ReponsePeriodique<PlatIngredient>(requetePeriodique.Debut, requetePeriodique.Fin, requetePeriodique.Page, requetePeriodique.TaillePage, nbIngredient, commande);
         }
     }
 }
