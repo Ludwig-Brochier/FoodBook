@@ -22,10 +22,10 @@ namespace TestIntegration
             //Arrange
             List<Reservation> reservations = new()
             {
-                new Reservation(1, "cuvier", "elie", "+33 6 44 63 71 11", new DateTime(2021, 08, 23), 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null)),
-                new Reservation(2, "deloffre", "dimitri", "+33 7 53 53 39 67", new DateTime(2021, 08, 27), 2, new Menu(10, DateTime.Today, true, null), new Formule(7, null)),
-                new Reservation(3, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 27), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)),
-                new Reservation(4, "cerf", "boniface", "+33 7 57 91 18 77", new DateTime(2021, 08, 25), 9, new Menu(5, DateTime.Today, true, null), new Formule(4, null)),
+                new Reservation(1, "cuvier", "elie", "+33 6 44 63 71 11", 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null)),
+                new Reservation(2, "deloffre", "dimitri", "+33 7 53 53 39 67", 2, new Menu(10, DateTime.Today, true, null), new Formule(7, null)),
+                new Reservation(3, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)),
+                new Reservation(4, "cerf", "boniface", "+33 7 57 91 18 77", 9, new Menu(5, DateTime.Today, true, null), new Formule(4, null)),
             };
 
             //Act
@@ -49,7 +49,7 @@ namespace TestIntegration
         public async Task GetReservationAsync_Should_Be_OK()
         {
             //Arrange
-            Reservation reservation = new(3, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 27), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null));
+            Reservation reservation = new(3, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null));
 
             //Act
             var reponse = await _client.GetFromJsonAsync<Reservation>("api/reservations/3");
@@ -74,7 +74,7 @@ namespace TestIntegration
         public async Task InsertReservartionAsync_Should_Be_Created()
         {
             //Arrange
-            Reservation reservation = new(null, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021,08,23), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null));
+            Reservation reservation = new(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null));
 
             //Act
             var reponse = await _client.PostAsJsonAsync<Reservation>("api/reservations", reservation);
@@ -87,13 +87,13 @@ namespace TestIntegration
         public async Task InsertReservationsAsync_Should_Be_BadRequest()
         {
             //Act
-            var badRequestNom = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
-            var badRequestPrenom = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
-            var badRequestNumTel = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "", new DateTime(2021, 08, 23), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
-            var badRequestNbPersonne = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 100, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
-            var badRequestIdFormule = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 4, new Menu(6, DateTime.Today, true, null), new Formule(10, null)));
-            var badRequestMenu = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 4, new Menu(100, DateTime.Today, true, null), new Formule(6, null)));
-            var badRequestDteButoire = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", new DateTime(2021, 08, 31), 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestNom = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestPrenom = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestNumTel = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestNbPersonne = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", 100, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestIdFormule = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(10, null)));
+            var badRequestMenu = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(100, DateTime.Today, true, null), new Formule(6, null)));
+            var badRequestDteButoire = await _client.PostAsJsonAsync<Reservation>("api/reservations", new Reservation(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null)));
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, badRequestNom.StatusCode);
@@ -109,7 +109,7 @@ namespace TestIntegration
         public async Task UpdateReservationAsync_Should_Be_OK()
         {
             //Arrange
-            Reservation reservation = new(5, "cuvier", "elie", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null));
+            Reservation reservation = new(5, "cuvier", "elie", "+33 6 52 35 15 82", 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null));
 
             //Act
             var reponse = await _client.PutAsJsonAsync<Reservation>("api/reservations/5", reservation);
@@ -123,7 +123,7 @@ namespace TestIntegration
         {
             //Act
             var badRequestNull = await _client.PutAsJsonAsync<Reservation>("api/reservations/5", new Reservation());
-            var badRequestId = await _client.PutAsJsonAsync<Reservation>("api/reservations/5", new Reservation(10, "cuvier", "elie", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null)));
+            var badRequestId = await _client.PutAsJsonAsync<Reservation>("api/reservations/5", new Reservation(10, "cuvier", "elie", "+33 6 52 35 15 82", 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null)));
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, badRequestNull.StatusCode);
@@ -134,7 +134,7 @@ namespace TestIntegration
         public async Task UpdateReservationAsync_Should_Be_NotFound()
         {
             //Arrange
-            Reservation reservation = new(1000, "cuvier", "elie", "+33 6 52 35 15 82", new DateTime(2021, 08, 23), 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null));
+            Reservation reservation = new(1000, "cuvier", "elie", "+33 6 52 35 15 82", 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null));
 
             //Act
             var reponse = await _client.PutAsJsonAsync<Reservation>("api/reservations/1000", reservation);
