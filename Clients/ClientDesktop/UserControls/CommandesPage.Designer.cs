@@ -48,6 +48,7 @@ namespace ClientDesktop.UserControls
             this.txtPage = new System.Windows.Forms.TextBox();
             this.btnPrecedent = new System.Windows.Forms.Button();
             this.btnSuivant = new System.Windows.Forms.Button();
+            this.Ingrédient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plMain.SuspendLayout();
             this.tlpMain.SuspendLayout();
             this.tlpPeriode.SuspendLayout();
@@ -223,12 +224,17 @@ namespace ClientDesktop.UserControls
             // 
             // dgvIngredients
             // 
+            this.dgvIngredients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvIngredients.Location = new System.Drawing.Point(25, 155);
             this.dgvIngredients.Margin = new System.Windows.Forms.Padding(25, 5, 25, 5);
+            this.dgvIngredients.MultiSelect = false;
             this.dgvIngredients.Name = "dgvIngredients";
+            this.dgvIngredients.RowHeadersVisible = false;
+            this.dgvIngredients.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvIngredients.RowTemplate.Height = 25;
+            this.dgvIngredients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvIngredients.Size = new System.Drawing.Size(684, 326);
             this.dgvIngredients.TabIndex = 3;
             // 
@@ -320,6 +326,11 @@ namespace ClientDesktop.UserControls
             this.btnSuivant.UseVisualStyleBackColor = false;
             this.btnSuivant.Click += new System.EventHandler(this.btnSuivant_Click);
             // 
+            // Ingrédient
+            // 
+            this.Ingrédient.HeaderText = "Ingrédient";
+            this.Ingrédient.Name = "Ingrédient";
+            // 
             // CommandesPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -362,5 +373,6 @@ namespace ClientDesktop.UserControls
         private System.Windows.Forms.Button btnActualiser;
         private System.Windows.Forms.Button btnPrecedent;
         private System.Windows.Forms.Button btnSuivant;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ingrédient;
     }
 }

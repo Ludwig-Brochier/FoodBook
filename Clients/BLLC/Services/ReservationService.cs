@@ -5,7 +5,6 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using BLLC.Extensions;
 using System.Text.Json;
 
 namespace BLLC.Services
@@ -36,7 +35,11 @@ namespace BLLC.Services
 
         public async Task<ReponsePeriodique<Reservation>> GetAllReservationsAsync(RequetePeriodique requetePeriodique)
         {
-            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Reservation>>($"reservations{requetePeriodique.ToUriQuery()}");
+            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Reservation>>
+                ($"reservations?debut={requetePeriodique.Debut:yyyy-MM-dd}" +
+                $"&fin={requetePeriodique.Fin:yyyy-MM-dd}" +
+                $"&page={requetePeriodique.Page}" +
+                $"&taillepage={requetePeriodique.TaillePage}");
         }
 
         public async Task<Reservation> GetReservationAsync(int idReservation)

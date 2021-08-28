@@ -46,12 +46,12 @@ namespace ClientDesktop.UserControls
             this.lbPagination = new System.Windows.Forms.Label();
             this.txtPagination = new System.Windows.Forms.TextBox();
             this.txtPage = new System.Windows.Forms.TextBox();
+            this.btnPrecedent = new System.Windows.Forms.Button();
+            this.btnSuivant = new System.Windows.Forms.Button();
             this.tlpBoutons = new System.Windows.Forms.TableLayoutPanel();
             this.btnAjouter = new System.Windows.Forms.Button();
             this.btnModifier = new System.Windows.Forms.Button();
             this.btnSupprimer = new System.Windows.Forms.Button();
-            this.btnPrecedent = new System.Windows.Forms.Button();
-            this.btnSuivant = new System.Windows.Forms.Button();
             this.plMain.SuspendLayout();
             this.tlpMain.SuspendLayout();
             this.tlpPeriode.SuspendLayout();
@@ -229,12 +229,18 @@ namespace ClientDesktop.UserControls
             // 
             // dgvMenus
             // 
+            this.dgvMenus.AllowUserToAddRows = false;
+            this.dgvMenus.AllowUserToDeleteRows = false;
+            this.dgvMenus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMenus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMenus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMenus.Location = new System.Drawing.Point(25, 155);
             this.dgvMenus.Margin = new System.Windows.Forms.Padding(25, 5, 25, 5);
+            this.dgvMenus.MultiSelect = false;
             this.dgvMenus.Name = "dgvMenus";
+            this.dgvMenus.RowHeadersVisible = false;
             this.dgvMenus.RowTemplate.Height = 25;
+            this.dgvMenus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMenus.Size = new System.Drawing.Size(684, 326);
             this.dgvMenus.TabIndex = 3;
             // 
@@ -289,6 +295,7 @@ namespace ClientDesktop.UserControls
             // txtPage
             // 
             this.txtPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPage.Enabled = false;
             this.txtPage.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtPage.Location = new System.Drawing.Point(609, 10);
             this.txtPage.Margin = new System.Windows.Forms.Padding(5, 10, 5, 0);
@@ -296,6 +303,34 @@ namespace ClientDesktop.UserControls
             this.txtPage.Size = new System.Drawing.Size(40, 31);
             this.txtPage.TabIndex = 3;
             this.txtPage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnPrecedent
+            // 
+            this.btnPrecedent.BackColor = System.Drawing.Color.White;
+            this.btnPrecedent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrecedent.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrecedent.Location = new System.Drawing.Point(564, 8);
+            this.btnPrecedent.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.btnPrecedent.Name = "btnPrecedent";
+            this.btnPrecedent.Size = new System.Drawing.Size(30, 34);
+            this.btnPrecedent.TabIndex = 4;
+            this.btnPrecedent.Text = "<";
+            this.btnPrecedent.UseVisualStyleBackColor = false;
+            this.btnPrecedent.Click += new System.EventHandler(this.btnPrecedent_Click);
+            // 
+            // btnSuivant
+            // 
+            this.btnSuivant.BackColor = System.Drawing.Color.White;
+            this.btnSuivant.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSuivant.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSuivant.Location = new System.Drawing.Point(664, 8);
+            this.btnSuivant.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.btnSuivant.Name = "btnSuivant";
+            this.btnSuivant.Size = new System.Drawing.Size(30, 34);
+            this.btnSuivant.TabIndex = 5;
+            this.btnSuivant.Text = ">";
+            this.btnSuivant.UseVisualStyleBackColor = false;
+            this.btnSuivant.Click += new System.EventHandler(this.btnSuivant_Click);
             // 
             // tlpBoutons
             // 
@@ -357,32 +392,6 @@ namespace ClientDesktop.UserControls
             this.btnSupprimer.TabIndex = 2;
             this.btnSupprimer.Text = "Supprimer";
             this.btnSupprimer.UseVisualStyleBackColor = false;
-            // 
-            // btnPrecedent
-            // 
-            this.btnPrecedent.BackColor = System.Drawing.Color.White;
-            this.btnPrecedent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPrecedent.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrecedent.Location = new System.Drawing.Point(564, 8);
-            this.btnPrecedent.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.btnPrecedent.Name = "btnPrecedent";
-            this.btnPrecedent.Size = new System.Drawing.Size(30, 34);
-            this.btnPrecedent.TabIndex = 4;
-            this.btnPrecedent.Text = "<";
-            this.btnPrecedent.UseVisualStyleBackColor = false;
-            // 
-            // btnSuivant
-            // 
-            this.btnSuivant.BackColor = System.Drawing.Color.White;
-            this.btnSuivant.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSuivant.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSuivant.Location = new System.Drawing.Point(664, 8);
-            this.btnSuivant.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.btnSuivant.Name = "btnSuivant";
-            this.btnSuivant.Size = new System.Drawing.Size(30, 34);
-            this.btnSuivant.TabIndex = 5;
-            this.btnSuivant.Text = ">";
-            this.btnSuivant.UseVisualStyleBackColor = false;
             // 
             // MenusPage
             // 

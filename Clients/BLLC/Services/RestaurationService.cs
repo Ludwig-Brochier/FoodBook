@@ -88,7 +88,20 @@ namespace BLLC.Services
         #region Menu
         public async Task<ReponsePeriodique<Menu>> GetAllMenusAsync(RequetePeriodique requetePeriodique)
         {
-            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Menu>>($"menus{requetePeriodique.ToUriQuery()}");
+            if (requetePeriodique.Debut <= requetePeriodique.Fin)
+            {
+                return await _httpClient.GetFromJsonAsync<ReponsePeriodique<Menu>>
+                    ($"menus?debut={requetePeriodique.Debut:yyyy-MM-dd}" +
+                    $"&fin={requetePeriodique.Fin:yyyy-MM-dd}" +
+                    $"&page={requetePeriodique.Page}" +
+                    $"&taillepage={requetePeriodique.TaillePage}");
+            }
+
+            else
+            {
+                return null;
+            }
+            
         }
 
         public async Task<Menu> GetMenuAsync(int idMenu)

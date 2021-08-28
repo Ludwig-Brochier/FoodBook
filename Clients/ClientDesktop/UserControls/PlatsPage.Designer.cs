@@ -36,7 +36,7 @@ namespace ClientDesktop.UserControls
             this.lbFiltre = new System.Windows.Forms.Label();
             this.cbFiltre = new System.Windows.Forms.ComboBox();
             this.plFiltre = new System.Windows.Forms.Panel();
-            this.cbIngredient = new System.Windows.Forms.ListBox();
+            this.cbIngredient = new System.Windows.Forms.ComboBox();
             this.cbType = new System.Windows.Forms.ComboBox();
             this.tlpNbPlats = new System.Windows.Forms.TableLayoutPanel();
             this.lbNbPlats = new System.Windows.Forms.Label();
@@ -47,12 +47,12 @@ namespace ClientDesktop.UserControls
             this.lbPagination = new System.Windows.Forms.Label();
             this.txtPagination = new System.Windows.Forms.TextBox();
             this.txtPage = new System.Windows.Forms.TextBox();
+            this.btnPrecedent = new System.Windows.Forms.Button();
+            this.btnSuivant = new System.Windows.Forms.Button();
             this.tlpBoutons = new System.Windows.Forms.TableLayoutPanel();
             this.btnAjouter = new System.Windows.Forms.Button();
             this.btnModifier = new System.Windows.Forms.Button();
             this.btnSupprimer = new System.Windows.Forms.Button();
-            this.btnPrecedent = new System.Windows.Forms.Button();
-            this.btnSuivant = new System.Windows.Forms.Button();
             this.plMain.SuspendLayout();
             this.tlpMain.SuspendLayout();
             this.tlpFiltres.SuspendLayout();
@@ -152,6 +152,7 @@ namespace ClientDesktop.UserControls
             this.cbFiltre.Name = "cbFiltre";
             this.cbFiltre.Size = new System.Drawing.Size(235, 31);
             this.cbFiltre.TabIndex = 1;
+            this.cbFiltre.SelectedIndexChanged += new System.EventHandler(this.cbFiltre_SelectedIndexChanged);
             // 
             // plFiltre
             // 
@@ -169,15 +170,12 @@ namespace ClientDesktop.UserControls
             this.cbIngredient.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbIngredient.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbIngredient.FormattingEnabled = true;
-            this.cbIngredient.ItemHeight = 23;
             this.cbIngredient.Location = new System.Drawing.Point(0, 0);
             this.cbIngredient.Margin = new System.Windows.Forms.Padding(0);
             this.cbIngredient.Name = "cbIngredient";
-            this.cbIngredient.ScrollAlwaysVisible = true;
-            this.cbIngredient.Size = new System.Drawing.Size(259, 34);
+            this.cbIngredient.Size = new System.Drawing.Size(259, 31);
             this.cbIngredient.Sorted = true;
             this.cbIngredient.TabIndex = 1;
-            this.cbIngredient.Visible = false;
             // 
             // cbType
             // 
@@ -252,12 +250,18 @@ namespace ClientDesktop.UserControls
             // 
             // dgvPlats
             // 
+            this.dgvPlats.AllowUserToAddRows = false;
+            this.dgvPlats.AllowUserToDeleteRows = false;
+            this.dgvPlats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPlats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlats.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPlats.Location = new System.Drawing.Point(25, 155);
             this.dgvPlats.Margin = new System.Windows.Forms.Padding(25, 5, 25, 5);
+            this.dgvPlats.MultiSelect = false;
             this.dgvPlats.Name = "dgvPlats";
+            this.dgvPlats.RowHeadersVisible = false;
             this.dgvPlats.RowTemplate.Height = 25;
+            this.dgvPlats.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPlats.Size = new System.Drawing.Size(684, 326);
             this.dgvPlats.TabIndex = 3;
             // 
@@ -312,6 +316,7 @@ namespace ClientDesktop.UserControls
             // txtPage
             // 
             this.txtPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPage.Enabled = false;
             this.txtPage.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtPage.Location = new System.Drawing.Point(609, 10);
             this.txtPage.Margin = new System.Windows.Forms.Padding(5, 10, 5, 0);
@@ -319,6 +324,34 @@ namespace ClientDesktop.UserControls
             this.txtPage.Size = new System.Drawing.Size(40, 31);
             this.txtPage.TabIndex = 3;
             this.txtPage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnPrecedent
+            // 
+            this.btnPrecedent.BackColor = System.Drawing.Color.White;
+            this.btnPrecedent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrecedent.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrecedent.Location = new System.Drawing.Point(564, 8);
+            this.btnPrecedent.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.btnPrecedent.Name = "btnPrecedent";
+            this.btnPrecedent.Size = new System.Drawing.Size(30, 34);
+            this.btnPrecedent.TabIndex = 4;
+            this.btnPrecedent.Text = "<";
+            this.btnPrecedent.UseVisualStyleBackColor = false;
+            this.btnPrecedent.Click += new System.EventHandler(this.btnPrecedent_Click);
+            // 
+            // btnSuivant
+            // 
+            this.btnSuivant.BackColor = System.Drawing.Color.White;
+            this.btnSuivant.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSuivant.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSuivant.Location = new System.Drawing.Point(664, 8);
+            this.btnSuivant.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.btnSuivant.Name = "btnSuivant";
+            this.btnSuivant.Size = new System.Drawing.Size(30, 34);
+            this.btnSuivant.TabIndex = 5;
+            this.btnSuivant.Text = ">";
+            this.btnSuivant.UseVisualStyleBackColor = false;
+            this.btnSuivant.Click += new System.EventHandler(this.btnSuivant_Click);
             // 
             // tlpBoutons
             // 
@@ -381,32 +414,6 @@ namespace ClientDesktop.UserControls
             this.btnSupprimer.Text = "Supprimer";
             this.btnSupprimer.UseVisualStyleBackColor = false;
             // 
-            // btnPrecedent
-            // 
-            this.btnPrecedent.BackColor = System.Drawing.Color.White;
-            this.btnPrecedent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPrecedent.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrecedent.Location = new System.Drawing.Point(564, 8);
-            this.btnPrecedent.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.btnPrecedent.Name = "btnPrecedent";
-            this.btnPrecedent.Size = new System.Drawing.Size(30, 34);
-            this.btnPrecedent.TabIndex = 4;
-            this.btnPrecedent.Text = "<";
-            this.btnPrecedent.UseVisualStyleBackColor = false;
-            // 
-            // btnSuivant
-            // 
-            this.btnSuivant.BackColor = System.Drawing.Color.White;
-            this.btnSuivant.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSuivant.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSuivant.Location = new System.Drawing.Point(664, 8);
-            this.btnSuivant.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.btnSuivant.Name = "btnSuivant";
-            this.btnSuivant.Size = new System.Drawing.Size(30, 34);
-            this.btnSuivant.TabIndex = 5;
-            this.btnSuivant.Text = ">";
-            this.btnSuivant.UseVisualStyleBackColor = false;
-            // 
             // PlatsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -439,7 +446,6 @@ namespace ClientDesktop.UserControls
         private System.Windows.Forms.Label lbFiltre;
         private System.Windows.Forms.ComboBox cbFiltre;
         private System.Windows.Forms.Panel plFiltre;
-        private System.Windows.Forms.ListBox cbIngredient;
         private System.Windows.Forms.ComboBox cbType;
         private System.Windows.Forms.TableLayoutPanel tlpNbPlats;
         private System.Windows.Forms.Label lbNbPlats;
@@ -456,5 +462,6 @@ namespace ClientDesktop.UserControls
         private System.Windows.Forms.Button btnActualiser;
         private System.Windows.Forms.Button btnPrecedent;
         private System.Windows.Forms.Button btnSuivant;
+        private System.Windows.Forms.ComboBox cbIngredient;
     }
 }

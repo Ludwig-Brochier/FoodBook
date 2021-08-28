@@ -5,8 +5,6 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using BLLC.Extensions;
-using System.Text.Json;
 
 namespace BLLC.Services
 {

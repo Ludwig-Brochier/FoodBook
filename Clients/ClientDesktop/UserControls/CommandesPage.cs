@@ -21,7 +21,6 @@ namespace ClientDesktop.UserControls
         private int pageActuel = 1;
         private int pagination = 50;
         private int maxPage;
-        private int? nbIngredient;
 
 
         public CommandesPage()
@@ -32,6 +31,7 @@ namespace ClientDesktop.UserControls
             txtPagination.Text = pagination.ToString();
             txtPage.Text = pageActuel.ToString();
             btnPrecedent.Enabled = false;
+            btnSuivant.Enabled = false;
         }
 
         private async void ChargementListe()
@@ -39,30 +39,32 @@ namespace ClientDesktop.UserControls
             DateTime debut = dtpDebut.Value.Date;
             DateTime fin = dtpFin.Value.Date;
 
-            RequetePeriodique requete = new RequetePeriodique(new DateTime(2021,08,30), new DateTime(2021,09,03), pageActuel, txtPagination.Text == "50" ? pagination : int.Parse(txtPagination.Text));
+            RequetePeriodique requete = new RequetePeriodique(new DateTime(2021, 09, 13), new DateTime(2021, 09, 17), pageActuel, txtPagination.Text == "50" ? pagination : int.Parse(txtPagination.Text));
 
             Task<ReponsePeriodique<PlatIngredient>> reponseTask = _commandeService.GetCommandeIngredientsAsync(requete);
             ReponsePeriodique<PlatIngredient> reponse = await reponseTask;
             maxPage = reponse.TotalPages.GetValueOrDefault();
-            nbIngredient = reponse.TotalEnregistrements;
-            txtNbIngredients.Text = nbIngredient.ToString();
-            bindingSource.DataSource = reponse.Donnees;
+            txtNbIngredients.Text = reponse.TotalEnregistrements.ToString();
 
+            bindingSource.DataSource = reponse.Donnees;
             dgvIngredients.DataSource = bindingSource;
+
+            btnSuivant.Enabled = pageActuel < maxPage ? true : false;
         }
 
         private void btnActualiser_Click(object sender, EventArgs e)
         {
+            pageActuel = 1;
             RechargerPage();
         }
 
         private void RechargerPage()
         {
-            txtPage.Text = pageActuel.ToString();
             ChargementListe();
 
+            txtPage.Text = pageActuel.ToString();
             btnPrecedent.Enabled = pageActuel > 1 ? true : false;
-            btnSuivant.Enabled = pageActuel == maxPage ? false : true;
+            btnSuivant.Enabled = pageActuel < maxPage ? true : false;
         }
 
         private void PageSuivante()
