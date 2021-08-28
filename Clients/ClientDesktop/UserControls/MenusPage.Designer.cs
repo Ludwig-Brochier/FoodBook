@@ -366,6 +366,7 @@ namespace ClientDesktop.UserControls
             this.btnAjouter.TabIndex = 0;
             this.btnAjouter.Text = "Ajouter";
             this.btnAjouter.UseVisualStyleBackColor = false;
+            this.btnAjouter.Click += new System.EventHandler(this.btnAjouter_Click);
             // 
             // btnModifier
             // 
@@ -379,6 +380,7 @@ namespace ClientDesktop.UserControls
             this.btnModifier.TabIndex = 1;
             this.btnModifier.Text = "Modifier";
             this.btnModifier.UseVisualStyleBackColor = false;
+            this.btnModifier.Click += new System.EventHandler(this.btnModifier_Click);
             // 
             // btnSupprimer
             // 

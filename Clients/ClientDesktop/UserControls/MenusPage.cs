@@ -11,6 +11,7 @@ using BLLC.Services;
 using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
+using ClientDesktop;
 
 namespace ClientDesktop.UserControls
 {
@@ -107,6 +108,40 @@ namespace ClientDesktop.UserControls
         private void btnSuivant_Click(object sender, EventArgs e)
         {
             PageSuivante();
+        }
+
+        private void btnAjouter_Click(object sender, EventArgs e)
+        {
+            var gestionMenu = new GestionMenuForm();
+            gestionMenu.Initialise(null);
+            gestionMenu.ShowDialog();
+
+            gestionMenu.FormClosed += GestionMenu_FormClosed;
+        }                
+
+        private async void btnModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvMenus.SelectedRows.Count > 0)
+            {
+                int selected = (int)((Menu)dgvMenus.SelectedRows[0].DataBoundItem).IdMenu;
+                Menu menu = await GetMenu(selected);
+                var gestionMenu = new GestionMenuForm();
+                gestionMenu.Initialise(menu);
+                gestionMenu.ShowDialog();
+
+                gestionMenu.FormClosed += GestionMenu_FormClosed;
+            }            
+        }
+        
+        private void GestionMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            RechargerPage();
+        }
+
+        private async Task<Menu> GetMenu(int id)
+        {
+            Menu menu = await _restaurationService.GetMenuAsync(id);
+            return menu;
         }
     }
 }

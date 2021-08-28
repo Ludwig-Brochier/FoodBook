@@ -169,7 +169,7 @@ namespace ClientDesktop
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Accueil";
+            this.Text = "FoodBook";
             this.tlpMain.ResumeLayout(false);
             this.ltpMenu.ResumeLayout(false);
             this.flpBoutonsNavig.ResumeLayout(false);
