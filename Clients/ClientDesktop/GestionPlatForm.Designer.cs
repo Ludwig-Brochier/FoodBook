@@ -29,6 +29,8 @@ namespace ClientDesktop
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionPlatForm));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.lbTitre = new System.Windows.Forms.Label();
@@ -117,6 +119,7 @@ namespace ClientDesktop
             this.btnPlat.TabIndex = 2;
             this.btnPlat.Text = "bouton";
             this.btnPlat.UseVisualStyleBackColor = false;
+            this.btnPlat.Click += new System.EventHandler(this.btnPlat_Click);
             // 
             // tlpData
             // 
@@ -320,8 +323,17 @@ namespace ClientDesktop
             this.dgvIngredientsPlat.AllowUserToDeleteRows = false;
             this.dgvIngredientsPlat.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvIngredientsPlat.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvIngredientsPlat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvIngredientsPlat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIngredientsPlat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvIngredientsPlat.EnableHeadersVisualStyles = false;
             this.dgvIngredientsPlat.Location = new System.Drawing.Point(0, 50);
             this.dgvIngredientsPlat.Margin = new System.Windows.Forms.Padding(0);
             this.dgvIngredientsPlat.MultiSelect = false;
@@ -364,8 +376,18 @@ namespace ClientDesktop
             // 
             this.dgvIngredients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvIngredients.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvIngredients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvIngredients.ColumnHeadersVisible = false;
             this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvIngredients.EnableHeadersVisualStyles = false;
             this.dgvIngredients.Location = new System.Drawing.Point(0, 50);
             this.dgvIngredients.Margin = new System.Windows.Forms.Padding(0);
             this.dgvIngredients.MultiSelect = false;
@@ -430,6 +452,7 @@ namespace ClientDesktop
             this.txtQuantite.Name = "txtQuantite";
             this.txtQuantite.Size = new System.Drawing.Size(65, 31);
             this.txtQuantite.TabIndex = 1;
+            this.txtQuantite.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // tlpBouton
             // 
@@ -460,6 +483,7 @@ namespace ClientDesktop
             this.btnPlus.TabIndex = 0;
             this.btnPlus.Text = "<-";
             this.btnPlus.UseVisualStyleBackColor = false;
+            this.btnPlus.Click += new System.EventHandler(this.btnPlus_Click);
             // 
             // btnMoins
             // 
@@ -473,6 +497,7 @@ namespace ClientDesktop
             this.btnMoins.TabIndex = 1;
             this.btnMoins.Text = "->";
             this.btnMoins.UseVisualStyleBackColor = false;
+            this.btnMoins.Click += new System.EventHandler(this.btnMoins_Click);
             // 
             // GestionPlatForm
             // 

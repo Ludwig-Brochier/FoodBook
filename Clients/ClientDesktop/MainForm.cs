@@ -1,29 +1,30 @@
 ﻿using ClientDesktop.UserControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClientDesktop
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Formulaire par défaut
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
             ChargementAccueil();
         }
 
+        /// <summary>
+        /// Méthode pour afficher la page d'accueil
+        /// </summary>
         private void ChargementAccueil()
         {
-            tlpPage.Controls.Clear();
-            AccueilPage accueilPage = new AccueilPage();
-            tlpPage.Controls.Add(accueilPage);
+            tlpPage.Controls.Clear(); //Supprime le dernier User control chargé
+            //Ouvre le User control d'accueil
+            AccueilPage accueilPage = new AccueilPage(); 
+            tlpPage.Controls.Add(accueilPage); 
 
             GestionCouleursBtn();
         }
@@ -35,10 +36,12 @@ namespace ClientDesktop
 
         private void btnMenus_Click(object sender, EventArgs e)
         {
-            tlpPage.Controls.Clear();
+            tlpPage.Controls.Clear(); //Supprime le dernier User control chargé
+            //Ouvre le User control des menus
             MenusPage menusPage = new MenusPage();
             tlpPage.Controls.Add(menusPage);
 
+            //Applique une couleur pour signaler le menu de navigation sélectionné
             GestionCouleursBtn();
             btnMenus.BackColor = Color.FromArgb(255, 224, 192);
 
@@ -46,24 +49,31 @@ namespace ClientDesktop
 
         private void btnPlats_Click(object sender, EventArgs e)
         {
-            tlpPage.Controls.Clear();
+            tlpPage.Controls.Clear(); //Supprime le dernier User control chargé
+            //Ouvre le User control des plats
             PlatsPage platsPage = new PlatsPage();
             tlpPage.Controls.Add(platsPage);
 
+            //Applique une couleur pour signaler le menu de navigation sélectionné
             GestionCouleursBtn();
             btnPlats.BackColor = Color.FromArgb(255, 224, 192);
         }
 
         private void btnCommandes_Click(object sender, EventArgs e)
         {
-            tlpPage.Controls.Clear();
+            tlpPage.Controls.Clear(); //Supprime le dernier User control chargé
+            //Ouvre le User control des commandes
             CommandesPage commandesPage = new CommandesPage();
             tlpPage.Controls.Add(commandesPage);
 
+            //Applique une couleur pour signaler le menu de navigation sélectionné
             GestionCouleursBtn();
-            btnCommandes.BackColor = Color.FromArgb(255, 224, 192);
+            btnCommandes.BackColor = Color.FromArgb(255, 224, 192); 
         }
 
+        /// <summary>
+        /// Méthode pour gérer réinitialiser la couleur des boutons du menu de navigation
+        /// </summary>
         private void GestionCouleursBtn()
         {
             btnMenus.BackColor = Color.White;

@@ -61,7 +61,7 @@ namespace BLLC.Services
 
         public async Task<Plat> UpdatePlatAsync(Plat plat)
         {
-            var reponse = await _httpClient.PutAsJsonAsync("plat/" + plat.IdPlat, plat);
+            var reponse = await _httpClient.PutAsJsonAsync("plats/" + plat.IdPlat, plat);
             using (var stream = await reponse.Content.ReadAsStreamAsync())
             {
                 Plat newPlat = await JsonSerializer.DeserializeAsync<Plat>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
