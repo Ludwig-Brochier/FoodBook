@@ -28,7 +28,7 @@ namespace DAL.Repertoire
         {
             string requete = @"SELECT * FROM Menu 
                                 WHERE DteMenu BETWEEN @debut AND @fin 
-                                ORDER BY IdMenu OFFSET @taillePage * (@page - 1) rows 
+                                ORDER BY DteMenu, ServiceMidi Desc OFFSET @taillePage * (@page - 1) rows 
                                 FETCH NEXT @taillePage rows only";
             string requeteNbMenu = @"SELECT COUNT(*) FROM Menu WHERE DteMenu BETWEEN @debut AND @fin";
 

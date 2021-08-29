@@ -253,6 +253,7 @@ namespace ClientDesktop.UserControls
             this.dgvPlats.AllowUserToAddRows = false;
             this.dgvPlats.AllowUserToDeleteRows = false;
             this.dgvPlats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPlats.BackgroundColor = System.Drawing.Color.White;
             this.dgvPlats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlats.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPlats.Location = new System.Drawing.Point(25, 155);
@@ -387,6 +388,7 @@ namespace ClientDesktop.UserControls
             this.btnAjouter.TabIndex = 0;
             this.btnAjouter.Text = "Ajouter";
             this.btnAjouter.UseVisualStyleBackColor = false;
+            this.btnAjouter.Click += new System.EventHandler(this.btnAjouter_Click);
             // 
             // btnModifier
             // 
@@ -400,6 +402,7 @@ namespace ClientDesktop.UserControls
             this.btnModifier.TabIndex = 1;
             this.btnModifier.Text = "Modifier";
             this.btnModifier.UseVisualStyleBackColor = false;
+            this.btnModifier.Click += new System.EventHandler(this.btnModifier_Click);
             // 
             // btnSupprimer
             // 
@@ -413,6 +416,7 @@ namespace ClientDesktop.UserControls
             this.btnSupprimer.TabIndex = 2;
             this.btnSupprimer.Text = "Supprimer";
             this.btnSupprimer.UseVisualStyleBackColor = false;
+            this.btnSupprimer.Click += new System.EventHandler(this.btnSupprimer_Click);
             // 
             // PlatsPage
             // 

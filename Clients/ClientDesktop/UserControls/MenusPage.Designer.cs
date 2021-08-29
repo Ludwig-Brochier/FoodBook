@@ -232,6 +232,7 @@ namespace ClientDesktop.UserControls
             this.dgvMenus.AllowUserToAddRows = false;
             this.dgvMenus.AllowUserToDeleteRows = false;
             this.dgvMenus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMenus.BackgroundColor = System.Drawing.Color.White;
             this.dgvMenus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMenus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMenus.Location = new System.Drawing.Point(25, 155);
@@ -394,6 +395,7 @@ namespace ClientDesktop.UserControls
             this.btnSupprimer.TabIndex = 2;
             this.btnSupprimer.Text = "Supprimer";
             this.btnSupprimer.UseVisualStyleBackColor = false;
+            this.btnSupprimer.Click += new System.EventHandler(this.btnSupprimer_Click);
             // 
             // MenusPage
             // 

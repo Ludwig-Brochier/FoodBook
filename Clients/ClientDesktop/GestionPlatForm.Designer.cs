@@ -1,7 +1,7 @@
 ﻿
 namespace ClientDesktop
 {
-    partial class GestionPlatsForm
+    partial class GestionPlatForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,35 +29,35 @@ namespace ClientDesktop
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionPlatsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionPlatForm));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.lbTitre = new System.Windows.Forms.Label();
             this.btnPlat = new System.Windows.Forms.Button();
             this.tlpData = new System.Windows.Forms.TableLayoutPanel();
             this.tlpIntitule = new System.Windows.Forms.TableLayoutPanel();
+            this.lbIntitule = new System.Windows.Forms.Label();
+            this.txtIntitule = new System.Windows.Forms.TextBox();
             this.tlpData2 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpType = new System.Windows.Forms.TableLayoutPanel();
+            this.lbType = new System.Windows.Forms.Label();
+            this.cbType = new System.Windows.Forms.ComboBox();
             this.tlpPrix = new System.Windows.Forms.TableLayoutPanel();
+            this.lbPrix = new System.Windows.Forms.Label();
+            this.txtPrix = new System.Windows.Forms.TextBox();
             this.tlpGestionIngredients = new System.Windows.Forms.TableLayoutPanel();
             this.tlpIngredientsPlats = new System.Windows.Forms.TableLayoutPanel();
+            this.lbIngredientsPlat = new System.Windows.Forms.Label();
+            this.dgvIngredientsPlat = new System.Windows.Forms.DataGridView();
             this.tlpListeIngredients = new System.Windows.Forms.TableLayoutPanel();
+            this.lbIngredients = new System.Windows.Forms.Label();
+            this.dgvIngredients = new System.Windows.Forms.DataGridView();
             this.tlpGestionIngredients2 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpQuantite = new System.Windows.Forms.TableLayoutPanel();
-            this.lbIntitule = new System.Windows.Forms.Label();
-            this.lbType = new System.Windows.Forms.Label();
-            this.lbPrix = new System.Windows.Forms.Label();
             this.lbQuantite = new System.Windows.Forms.Label();
-            this.lbIngredientsPlat = new System.Windows.Forms.Label();
-            this.lbIngredients = new System.Windows.Forms.Label();
-            this.txtIntitule = new System.Windows.Forms.TextBox();
-            this.cbType = new System.Windows.Forms.ComboBox();
-            this.txtPrix = new System.Windows.Forms.TextBox();
             this.txtQuantite = new System.Windows.Forms.TextBox();
             this.tlpBouton = new System.Windows.Forms.TableLayoutPanel();
             this.btnPlus = new System.Windows.Forms.Button();
             this.btnMoins = new System.Windows.Forms.Button();
-            this.dgvIngredientsPlat = new System.Windows.Forms.DataGridView();
-            this.dgvIngredients = new System.Windows.Forms.DataGridView();
             this.tlpMain.SuspendLayout();
             this.tlpData.SuspendLayout();
             this.tlpIntitule.SuspendLayout();
@@ -66,12 +66,12 @@ namespace ClientDesktop
             this.tlpPrix.SuspendLayout();
             this.tlpGestionIngredients.SuspendLayout();
             this.tlpIngredientsPlats.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredientsPlat)).BeginInit();
             this.tlpListeIngredients.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
             this.tlpGestionIngredients2.SuspendLayout();
             this.tlpQuantite.SuspendLayout();
             this.tlpBouton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredientsPlat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -153,6 +153,27 @@ namespace ClientDesktop
             this.tlpIntitule.Size = new System.Drawing.Size(534, 75);
             this.tlpIntitule.TabIndex = 0;
             // 
+            // lbIntitule
+            // 
+            this.lbIntitule.AutoSize = true;
+            this.lbIntitule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbIntitule.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbIntitule.Location = new System.Drawing.Point(3, 0);
+            this.lbIntitule.Name = "lbIntitule";
+            this.lbIntitule.Size = new System.Drawing.Size(528, 37);
+            this.lbIntitule.TabIndex = 0;
+            this.lbIntitule.Text = "Intitule :";
+            this.lbIntitule.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // txtIntitule
+            // 
+            this.txtIntitule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtIntitule.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtIntitule.Location = new System.Drawing.Point(3, 40);
+            this.txtIntitule.Name = "txtIntitule";
+            this.txtIntitule.Size = new System.Drawing.Size(528, 31);
+            this.txtIntitule.TabIndex = 1;
+            // 
             // tlpData2
             // 
             this.tlpData2.ColumnCount = 2;
@@ -187,6 +208,28 @@ namespace ClientDesktop
             this.tlpType.Size = new System.Drawing.Size(267, 75);
             this.tlpType.TabIndex = 0;
             // 
+            // lbType
+            // 
+            this.lbType.AutoSize = true;
+            this.lbType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbType.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbType.Location = new System.Drawing.Point(3, 0);
+            this.lbType.Name = "lbType";
+            this.lbType.Size = new System.Drawing.Size(261, 37);
+            this.lbType.TabIndex = 0;
+            this.lbType.Text = "Type :";
+            this.lbType.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // cbType
+            // 
+            this.cbType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbType.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cbType.FormattingEnabled = true;
+            this.cbType.Location = new System.Drawing.Point(3, 40);
+            this.cbType.Name = "cbType";
+            this.cbType.Size = new System.Drawing.Size(261, 31);
+            this.cbType.TabIndex = 1;
+            // 
             // tlpPrix
             // 
             this.tlpPrix.ColumnCount = 1;
@@ -195,14 +238,35 @@ namespace ClientDesktop
             this.tlpPrix.Controls.Add(this.lbPrix, 0, 0);
             this.tlpPrix.Controls.Add(this.txtPrix, 0, 1);
             this.tlpPrix.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpPrix.Location = new System.Drawing.Point(267, 0);
-            this.tlpPrix.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpPrix.Location = new System.Drawing.Point(287, 0);
+            this.tlpPrix.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.tlpPrix.Name = "tlpPrix";
             this.tlpPrix.RowCount = 2;
             this.tlpPrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpPrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpPrix.Size = new System.Drawing.Size(267, 75);
+            this.tlpPrix.Size = new System.Drawing.Size(247, 75);
             this.tlpPrix.TabIndex = 1;
+            // 
+            // lbPrix
+            // 
+            this.lbPrix.AutoSize = true;
+            this.lbPrix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbPrix.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbPrix.Location = new System.Drawing.Point(3, 0);
+            this.lbPrix.Name = "lbPrix";
+            this.lbPrix.Size = new System.Drawing.Size(241, 37);
+            this.lbPrix.TabIndex = 0;
+            this.lbPrix.Text = "Prix :";
+            this.lbPrix.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // txtPrix
+            // 
+            this.txtPrix.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPrix.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPrix.Location = new System.Drawing.Point(3, 40);
+            this.txtPrix.Name = "txtPrix";
+            this.txtPrix.Size = new System.Drawing.Size(241, 31);
+            this.txtPrix.TabIndex = 1;
             // 
             // tlpGestionIngredients
             // 
@@ -215,11 +279,11 @@ namespace ClientDesktop
             this.tlpGestionIngredients.Controls.Add(this.tlpGestionIngredients2, 1, 0);
             this.tlpGestionIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpGestionIngredients.Location = new System.Drawing.Point(0, 150);
-            this.tlpGestionIngredients.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpGestionIngredients.Margin = new System.Windows.Forms.Padding(0, 0, 0, 25);
             this.tlpGestionIngredients.Name = "tlpGestionIngredients";
             this.tlpGestionIngredients.RowCount = 1;
             this.tlpGestionIngredients.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpGestionIngredients.Size = new System.Drawing.Size(534, 321);
+            this.tlpGestionIngredients.Size = new System.Drawing.Size(534, 296);
             this.tlpGestionIngredients.TabIndex = 2;
             // 
             // tlpIngredientsPlats
@@ -235,8 +299,38 @@ namespace ClientDesktop
             this.tlpIngredientsPlats.RowCount = 2;
             this.tlpIngredientsPlats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17F));
             this.tlpIngredientsPlats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83F));
-            this.tlpIngredientsPlats.Size = new System.Drawing.Size(204, 321);
+            this.tlpIngredientsPlats.Size = new System.Drawing.Size(204, 296);
             this.tlpIngredientsPlats.TabIndex = 0;
+            // 
+            // lbIngredientsPlat
+            // 
+            this.lbIngredientsPlat.AutoSize = true;
+            this.lbIngredientsPlat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbIngredientsPlat.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbIngredientsPlat.Location = new System.Drawing.Point(3, 0);
+            this.lbIngredientsPlat.Name = "lbIngredientsPlat";
+            this.lbIngredientsPlat.Size = new System.Drawing.Size(198, 50);
+            this.lbIngredientsPlat.TabIndex = 0;
+            this.lbIngredientsPlat.Text = "Ingrédients du plat :";
+            this.lbIngredientsPlat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // dgvIngredientsPlat
+            // 
+            this.dgvIngredientsPlat.AllowUserToAddRows = false;
+            this.dgvIngredientsPlat.AllowUserToDeleteRows = false;
+            this.dgvIngredientsPlat.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvIngredientsPlat.BackgroundColor = System.Drawing.Color.White;
+            this.dgvIngredientsPlat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvIngredientsPlat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvIngredientsPlat.Location = new System.Drawing.Point(0, 50);
+            this.dgvIngredientsPlat.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvIngredientsPlat.MultiSelect = false;
+            this.dgvIngredientsPlat.Name = "dgvIngredientsPlat";
+            this.dgvIngredientsPlat.RowHeadersVisible = false;
+            this.dgvIngredientsPlat.RowTemplate.Height = 25;
+            this.dgvIngredientsPlat.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvIngredientsPlat.Size = new System.Drawing.Size(204, 246);
+            this.dgvIngredientsPlat.TabIndex = 1;
             // 
             // tlpListeIngredients
             // 
@@ -251,8 +345,36 @@ namespace ClientDesktop
             this.tlpListeIngredients.RowCount = 2;
             this.tlpListeIngredients.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17F));
             this.tlpListeIngredients.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83F));
-            this.tlpListeIngredients.Size = new System.Drawing.Size(205, 321);
+            this.tlpListeIngredients.Size = new System.Drawing.Size(205, 296);
             this.tlpListeIngredients.TabIndex = 1;
+            // 
+            // lbIngredients
+            // 
+            this.lbIngredients.AutoSize = true;
+            this.lbIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbIngredients.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbIngredients.Location = new System.Drawing.Point(3, 0);
+            this.lbIngredients.Name = "lbIngredients";
+            this.lbIngredients.Size = new System.Drawing.Size(199, 50);
+            this.lbIngredients.TabIndex = 0;
+            this.lbIngredients.Text = "Ingrédients :";
+            this.lbIngredients.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // dgvIngredients
+            // 
+            this.dgvIngredients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvIngredients.BackgroundColor = System.Drawing.Color.White;
+            this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvIngredients.Location = new System.Drawing.Point(0, 50);
+            this.dgvIngredients.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvIngredients.MultiSelect = false;
+            this.dgvIngredients.Name = "dgvIngredients";
+            this.dgvIngredients.RowHeadersVisible = false;
+            this.dgvIngredients.RowTemplate.Height = 25;
+            this.dgvIngredients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvIngredients.Size = new System.Drawing.Size(205, 246);
+            this.dgvIngredients.TabIndex = 1;
             // 
             // tlpGestionIngredients2
             // 
@@ -268,7 +390,7 @@ namespace ClientDesktop
             this.tlpGestionIngredients2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
             this.tlpGestionIngredients2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32F));
             this.tlpGestionIngredients2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
-            this.tlpGestionIngredients2.Size = new System.Drawing.Size(125, 321);
+            this.tlpGestionIngredients2.Size = new System.Drawing.Size(125, 296);
             this.tlpGestionIngredients2.TabIndex = 2;
             // 
             // tlpQuantite
@@ -284,44 +406,8 @@ namespace ClientDesktop
             this.tlpQuantite.RowCount = 2;
             this.tlpQuantite.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuantite.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuantite.Size = new System.Drawing.Size(125, 109);
+            this.tlpQuantite.Size = new System.Drawing.Size(125, 100);
             this.tlpQuantite.TabIndex = 0;
-            // 
-            // lbIntitule
-            // 
-            this.lbIntitule.AutoSize = true;
-            this.lbIntitule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbIntitule.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbIntitule.Location = new System.Drawing.Point(3, 0);
-            this.lbIntitule.Name = "lbIntitule";
-            this.lbIntitule.Size = new System.Drawing.Size(528, 37);
-            this.lbIntitule.TabIndex = 0;
-            this.lbIntitule.Text = "Intitule :";
-            this.lbIntitule.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // lbType
-            // 
-            this.lbType.AutoSize = true;
-            this.lbType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbType.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbType.Location = new System.Drawing.Point(3, 0);
-            this.lbType.Name = "lbType";
-            this.lbType.Size = new System.Drawing.Size(261, 37);
-            this.lbType.TabIndex = 0;
-            this.lbType.Text = "Type :";
-            this.lbType.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // lbPrix
-            // 
-            this.lbPrix.AutoSize = true;
-            this.lbPrix.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbPrix.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbPrix.Location = new System.Drawing.Point(3, 0);
-            this.lbPrix.Name = "lbPrix";
-            this.lbPrix.Size = new System.Drawing.Size(261, 37);
-            this.lbPrix.TabIndex = 0;
-            this.lbPrix.Text = "Prix :";
-            this.lbPrix.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // lbQuantite
             // 
@@ -330,68 +416,16 @@ namespace ClientDesktop
             this.lbQuantite.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbQuantite.Location = new System.Drawing.Point(3, 0);
             this.lbQuantite.Name = "lbQuantite";
-            this.lbQuantite.Size = new System.Drawing.Size(119, 54);
+            this.lbQuantite.Size = new System.Drawing.Size(119, 50);
             this.lbQuantite.TabIndex = 0;
             this.lbQuantite.Text = "Quantite :";
             this.lbQuantite.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lbIngredientsPlat
-            // 
-            this.lbIngredientsPlat.AutoSize = true;
-            this.lbIngredientsPlat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbIngredientsPlat.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbIngredientsPlat.Location = new System.Drawing.Point(3, 0);
-            this.lbIngredientsPlat.Name = "lbIngredientsPlat";
-            this.lbIngredientsPlat.Size = new System.Drawing.Size(198, 54);
-            this.lbIngredientsPlat.TabIndex = 0;
-            this.lbIngredientsPlat.Text = "Ingrédients du plat :";
-            this.lbIngredientsPlat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lbIngredients
-            // 
-            this.lbIngredients.AutoSize = true;
-            this.lbIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbIngredients.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbIngredients.Location = new System.Drawing.Point(3, 0);
-            this.lbIngredients.Name = "lbIngredients";
-            this.lbIngredients.Size = new System.Drawing.Size(199, 54);
-            this.lbIngredients.TabIndex = 0;
-            this.lbIngredients.Text = "Ingrédients :";
-            this.lbIngredients.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // txtIntitule
-            // 
-            this.txtIntitule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtIntitule.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtIntitule.Location = new System.Drawing.Point(3, 40);
-            this.txtIntitule.Name = "txtIntitule";
-            this.txtIntitule.Size = new System.Drawing.Size(528, 31);
-            this.txtIntitule.TabIndex = 1;
-            // 
-            // cbType
-            // 
-            this.cbType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbType.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbType.FormattingEnabled = true;
-            this.cbType.Location = new System.Drawing.Point(3, 40);
-            this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(261, 31);
-            this.cbType.TabIndex = 1;
-            // 
-            // txtPrix
-            // 
-            this.txtPrix.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPrix.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtPrix.Location = new System.Drawing.Point(3, 40);
-            this.txtPrix.Name = "txtPrix";
-            this.txtPrix.Size = new System.Drawing.Size(261, 31);
-            this.txtPrix.TabIndex = 1;
             // 
             // txtQuantite
             // 
             this.txtQuantite.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtQuantite.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtQuantite.Location = new System.Drawing.Point(30, 57);
+            this.txtQuantite.Location = new System.Drawing.Point(30, 53);
             this.txtQuantite.Margin = new System.Windows.Forms.Padding(30, 3, 30, 3);
             this.txtQuantite.Name = "txtQuantite";
             this.txtQuantite.Size = new System.Drawing.Size(65, 31);
@@ -405,13 +439,13 @@ namespace ClientDesktop
             this.tlpBouton.Controls.Add(this.btnPlus, 0, 0);
             this.tlpBouton.Controls.Add(this.btnMoins, 0, 1);
             this.tlpBouton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpBouton.Location = new System.Drawing.Point(0, 109);
+            this.tlpBouton.Location = new System.Drawing.Point(0, 100);
             this.tlpBouton.Margin = new System.Windows.Forms.Padding(0);
             this.tlpBouton.Name = "tlpBouton";
             this.tlpBouton.RowCount = 2;
             this.tlpBouton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpBouton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpBouton.Size = new System.Drawing.Size(125, 102);
+            this.tlpBouton.Size = new System.Drawing.Size(125, 94);
             this.tlpBouton.TabIndex = 1;
             // 
             // btnPlus
@@ -419,10 +453,10 @@ namespace ClientDesktop
             this.btnPlus.BackColor = System.Drawing.Color.White;
             this.btnPlus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPlus.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPlus.Location = new System.Drawing.Point(40, 10);
-            this.btnPlus.Margin = new System.Windows.Forms.Padding(40, 10, 40, 10);
+            this.btnPlus.Location = new System.Drawing.Point(40, 5);
+            this.btnPlus.Margin = new System.Windows.Forms.Padding(40, 5, 40, 5);
             this.btnPlus.Name = "btnPlus";
-            this.btnPlus.Size = new System.Drawing.Size(45, 31);
+            this.btnPlus.Size = new System.Drawing.Size(45, 37);
             this.btnPlus.TabIndex = 0;
             this.btnPlus.Text = "<-";
             this.btnPlus.UseVisualStyleBackColor = false;
@@ -432,47 +466,15 @@ namespace ClientDesktop
             this.btnMoins.BackColor = System.Drawing.Color.White;
             this.btnMoins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMoins.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnMoins.Location = new System.Drawing.Point(40, 61);
-            this.btnMoins.Margin = new System.Windows.Forms.Padding(40, 10, 40, 10);
+            this.btnMoins.Location = new System.Drawing.Point(40, 52);
+            this.btnMoins.Margin = new System.Windows.Forms.Padding(40, 5, 40, 5);
             this.btnMoins.Name = "btnMoins";
-            this.btnMoins.Size = new System.Drawing.Size(45, 31);
+            this.btnMoins.Size = new System.Drawing.Size(45, 37);
             this.btnMoins.TabIndex = 1;
             this.btnMoins.Text = "->";
             this.btnMoins.UseVisualStyleBackColor = false;
             // 
-            // dgvIngredientsPlat
-            // 
-            this.dgvIngredientsPlat.AllowUserToAddRows = false;
-            this.dgvIngredientsPlat.AllowUserToDeleteRows = false;
-            this.dgvIngredientsPlat.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvIngredientsPlat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvIngredientsPlat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvIngredientsPlat.Location = new System.Drawing.Point(0, 54);
-            this.dgvIngredientsPlat.Margin = new System.Windows.Forms.Padding(0);
-            this.dgvIngredientsPlat.MultiSelect = false;
-            this.dgvIngredientsPlat.Name = "dgvIngredientsPlat";
-            this.dgvIngredientsPlat.RowHeadersVisible = false;
-            this.dgvIngredientsPlat.RowTemplate.Height = 25;
-            this.dgvIngredientsPlat.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvIngredientsPlat.Size = new System.Drawing.Size(204, 267);
-            this.dgvIngredientsPlat.TabIndex = 1;
-            // 
-            // dgvIngredients
-            // 
-            this.dgvIngredients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvIngredients.Location = new System.Drawing.Point(0, 54);
-            this.dgvIngredients.Margin = new System.Windows.Forms.Padding(0);
-            this.dgvIngredients.MultiSelect = false;
-            this.dgvIngredients.Name = "dgvIngredients";
-            this.dgvIngredients.RowHeadersVisible = false;
-            this.dgvIngredients.RowTemplate.Height = 25;
-            this.dgvIngredients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvIngredients.Size = new System.Drawing.Size(205, 267);
-            this.dgvIngredients.TabIndex = 1;
-            // 
-            // GestionPlatsForm
+            // GestionPlatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -482,7 +484,7 @@ namespace ClientDesktop
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "GestionPlatsForm";
+            this.Name = "GestionPlatForm";
             this.Text = "FoodBook";
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
@@ -497,14 +499,14 @@ namespace ClientDesktop
             this.tlpGestionIngredients.ResumeLayout(false);
             this.tlpIngredientsPlats.ResumeLayout(false);
             this.tlpIngredientsPlats.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredientsPlat)).EndInit();
             this.tlpListeIngredients.ResumeLayout(false);
             this.tlpListeIngredients.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).EndInit();
             this.tlpGestionIngredients2.ResumeLayout(false);
             this.tlpQuantite.ResumeLayout(false);
             this.tlpQuantite.PerformLayout();
             this.tlpBouton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredientsPlat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).EndInit();
             this.ResumeLayout(false);
 
         }

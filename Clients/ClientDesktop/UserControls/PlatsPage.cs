@@ -19,6 +19,7 @@ namespace ClientDesktop.UserControls
     {
         private readonly IRestaurationService _restaurationService;
         private BindingSource bindingSource = new BindingSource();
+        private int nbPlats = 0;
         private int pageActuel = 1;
         private int pagination = 10;
         private int maxPage;
@@ -37,8 +38,11 @@ namespace ClientDesktop.UserControls
 
             txtPagination.Text = pagination.ToString();
             txtPage.Text = pageActuel.ToString();
+            txtNbPlats.Text = nbPlats.ToString();
             btnPrecedent.Enabled = false;
             btnSuivant.Enabled = false;
+            btnModifier.Enabled = false;
+            btnSupprimer.Enabled = false;
                         
             cbFiltre.DataSource = new List<String>() {"", "Populaire", "Type de plat", "Ingrédient"};
             cbFiltre.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -61,7 +65,8 @@ namespace ClientDesktop.UserControls
                 Task<ReponsePagination<PlatPopulaire>> reponseTask = _restaurationService.GetAllPlatsPopulaireAsync(requete);
                 ReponsePagination<PlatPopulaire> reponse = await reponseTask;
                 maxPage = reponse.TotalPages.GetValueOrDefault();
-                txtNbPlats.Text = reponse.TotalEnregistrements.ToString();
+                nbPlats = reponse.TotalEnregistrements.GetValueOrDefault();
+                txtNbPlats.Text = nbPlats.ToString();
 
                 bindingSource.DataSource = reponse.Donnees;
                 dgvPlats.DataSource = bindingSource;
@@ -72,7 +77,8 @@ namespace ClientDesktop.UserControls
                 Task<ReponsePagination<Plat>> reponseTask = _restaurationService.GetAllPlatsAsync(requete);
                 ReponsePagination<Plat> reponse = await reponseTask;
                 maxPage = reponse.TotalPages.GetValueOrDefault();
-                txtNbPlats.Text = reponse.TotalEnregistrements.ToString();
+                nbPlats = reponse.TotalEnregistrements.GetValueOrDefault();
+                txtNbPlats.Text = nbPlats.ToString();
 
                 bindingSource.DataSource = reponse.Donnees;
                 dgvPlats.DataSource = bindingSource;
@@ -82,6 +88,10 @@ namespace ClientDesktop.UserControls
             }        
 
             btnSuivant.Enabled = pageActuel < maxPage ? true : false;
+            btnModifier.Enabled = nbPlats > 0 ? true : false;
+            btnModifier.Enabled = cbFiltre.SelectedIndex == 0 ? true : false;
+            btnSupprimer.Enabled = nbPlats > 0 ? true : false;
+            btnSupprimer.Enabled = cbFiltre.SelectedIndex == 0 ? true : false;
         }
 
         private void btnActualiser_Click(object sender, EventArgs e)
@@ -180,6 +190,66 @@ namespace ClientDesktop.UserControls
             else if (cbFiltre.Text == "Ingrédient")
             {
                 cbIngredient.Visible = true;
+            }
+        }
+
+        private void btnAjouter_Click(object sender, EventArgs e)
+        {
+            GestionPlatForm gestionPlat = new GestionPlatForm();
+            gestionPlat.Initialise(null);
+            gestionPlat.ShowDialog();
+
+            RechargerPage();
+        }
+
+        private async void btnModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvPlats.SelectedRows.Count == 1)
+            {
+                int selected = (int)((Plat)dgvPlats.SelectedRows[0].DataBoundItem).IdPlat;
+                Plat plat = await _restaurationService.GetPlatAsync(selected);
+                GestionPlatForm gestionPlat = new GestionPlatForm();
+                gestionPlat.Initialise(plat);
+                gestionPlat.ShowDialog();
+
+                RechargerPage();
+            }
+        }
+
+        private async void btnSupprimer_Click(object sender, EventArgs e)
+        {
+            if (dgvPlats.SelectedRows.Count == 1)
+            {
+                int selected = (int)((Plat)dgvPlats.SelectedRows[0].DataBoundItem).IdPlat;
+
+                DialogResult result = MessageBox.Show("Voulez-vous vraiment supprimer ce plat ?",
+                                                        "Attention",
+                                                        MessageBoxButtons.YesNo,
+                                                        MessageBoxIcon.Question,
+                                                        MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.Yes)
+                {
+                    bool isdelete = await _restaurationService.DeletePlatAsync(selected);
+                    string message = "";
+                    string titre = "";
+
+                    if (isdelete == true)
+                    {
+                        message = "Le plat à bien était supprimer.";
+                        titre = "Confirmation";
+
+                        RechargerPage();
+                    }
+
+                    else
+                    {
+                        message = "Un ou plusieurs menus sont constitués de ce plat. Suppression impossible !";
+                        titre = "Erreur";
+                    }
+
+                    MessageBox.Show(message, titre);
+                }
             }
         }
     }

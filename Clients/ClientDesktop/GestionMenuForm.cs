@@ -17,7 +17,9 @@ namespace ClientDesktop
     public partial class GestionMenuForm : Form
     {
         private readonly IRestaurationService _restaurationService;
+        private Menu menu = new Menu();
         private List<Plat> plats = new List<Plat>();
+        private bool isAjout = true;
 
         public GestionMenuForm()
         {
@@ -32,20 +34,19 @@ namespace ClientDesktop
             GetDesserts();
         }
 
-        public void Initialise(Menu menu)
+        public void Initialise(Menu menu1)
         {        
-            if (menu == null)
+            if (menu1 == null)
             {
                 lbTitre.Text = "Nouveau menu";
                 btnMenu.Text = "Ajouter";
-
-                cbEntree.SelectedIndex = -1;
-                cbPlat.SelectedIndex = -1;
-                cbDessert.SelectedIndex = -1;
             }
 
             else
             {
+                menu = menu1;
+
+                isAjout = false;
                 lbTitre.Text = "Modification du menu";
                 btnMenu.Text = "Modifier";
 
@@ -55,10 +56,71 @@ namespace ClientDesktop
                     cbService.SelectedIndex = 1;
                 }
 
-                plats = menu.Plats;
-                cbEntree.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Entrée").Intitule;
-                cbPlat.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Plat").Intitule;
-                cbDessert.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Dessert").Intitule;
+                plats = menu.Plats;                
+            }
+        }
+
+        private async void btnMenu_Click(object sender, EventArgs e)
+        {
+            if (isAjout == true)
+            {
+                if (cbEntree.SelectedIndex != -1 && cbPlat.SelectedIndex != -1 && cbDessert.SelectedIndex != -1)
+                {
+                    Menu newMenu = await _restaurationService.InsertMenuAsync(new Menu(0, dtpDate.Value, cbService.Text == "Midi" ? true : false, 
+                                                                                new List<Plat>() { cbEntree.SelectedItem as Plat, 
+                                                                                cbPlat.SelectedItem as Plat, 
+                                                                                cbDessert.SelectedItem as Plat }));
+
+                    if (newMenu.IdMenu != null)
+                    {
+                        DialogResult result = MessageBox.Show("Le menu à bien était ajouté.", "Confirmation", MessageBoxButtons.OK);
+                        if (result == DialogResult.OK || result == DialogResult.Cancel)
+                        {
+                            this.Close();
+                        }
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Le menu éxiste déjà !", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                }
+
+                else
+                {
+                    MessageBox.Show("Veuillez renseigner tous les champs !", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+            }
+
+            else if (isAjout == false)
+            {
+                Menu newMenu = await _restaurationService.UpdateMenuAsync(new Menu(menu.IdMenu, dtpDate.Value, cbService.Text == "Midi" ? true : false,
+                                                                            new List<Plat>() { cbEntree.SelectedItem as Plat,
+                                                                            cbPlat.SelectedItem as Plat,
+                                                                            cbDessert.SelectedItem as Plat }));
+
+                if (newMenu.IdMenu != null)
+                {
+                    DialogResult result = MessageBox.Show("Le menu à bien était modifié.", "Confirmation", MessageBoxButtons.OK);
+                    if (result == DialogResult.OK || result == DialogResult.Cancel)
+                    {
+                        this.Close();
+                    }
+                }
+
+                else
+                {
+                    MessageBox.Show("Une erreur est survenue.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            else
+            {
+                DialogResult result = MessageBox.Show("Une erreur est survenue.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (result == DialogResult.OK || result == DialogResult.Cancel)
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -69,9 +131,17 @@ namespace ClientDesktop
             ReponsePagination<Plat> reponse = await reponseTask;
 
             cbEntree.DataSource = reponse.Donnees;            
-            cbEntree.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbEntree.DropDownStyle = ComboBoxStyle.DropDownList;            
+            cbEntree.FormattingEnabled = true;
+            if (isAjout == true)
+            {
+                cbEntree.SelectedIndex = -1;
+            }
+            else
+            {
+                cbEntree.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Entrée");
+            }
             cbEntree.DisplayMember = "Intitule";
-            cbEntree.FormattingEnabled = true;            
         }
 
         private async void GetPlats()
@@ -81,9 +151,17 @@ namespace ClientDesktop
             ReponsePagination<Plat> reponse = await reponseTask;
 
             cbPlat.DataSource = reponse.Donnees;            
-            cbPlat.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbPlat.DropDownStyle = ComboBoxStyle.DropDownList;            
+            cbPlat.FormattingEnabled = true;
+            if (isAjout == true)
+            {
+                cbPlat.SelectedIndex = -1;
+            }
+            else
+            {
+                cbPlat.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Plat");
+            }
             cbPlat.DisplayMember = "Intitule";
-            cbPlat.FormattingEnabled = true;            
         }
 
         private async void GetDesserts()
@@ -93,9 +171,17 @@ namespace ClientDesktop
             ReponsePagination<Plat> reponse = await reponseTask;
 
             cbDessert.DataSource = reponse.Donnees;
-            cbDessert.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbDessert.DisplayMember = "Intitule";
+            cbDessert.DropDownStyle = ComboBoxStyle.DropDownList;            
             cbDessert.FormattingEnabled = true;
+            if (isAjout == true)
+            {
+                cbDessert.SelectedIndex = -1;
+            }
+            else
+            {
+                cbDessert.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Dessert");
+            }
+            cbDessert.DisplayMember = "Intitule";
         }
     }
 }

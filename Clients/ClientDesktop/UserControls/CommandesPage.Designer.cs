@@ -225,6 +225,7 @@ namespace ClientDesktop.UserControls
             // dgvIngredients
             // 
             this.dgvIngredients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvIngredients.BackgroundColor = System.Drawing.Color.White;
             this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvIngredients.Location = new System.Drawing.Point(25, 155);

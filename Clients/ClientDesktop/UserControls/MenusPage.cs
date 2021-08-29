@@ -19,6 +19,7 @@ namespace ClientDesktop.UserControls
     {
         private readonly IRestaurationService _restaurationService;
         private BindingSource bindingSource = new BindingSource();
+        private int nbMenus = 0;
         private int pageActuel = 1;
         private int pagination = 10;
         private int maxPage;
@@ -32,8 +33,11 @@ namespace ClientDesktop.UserControls
 
             txtPagination.Text = pagination.ToString();
             txtPage.Text = pageActuel.ToString();
+            txtNbMenus.Text = nbMenus.ToString();
             btnPrecedent.Enabled = false;
             btnSuivant.Enabled = false;
+            btnModifier.Enabled = false;
+            btnSupprimer.Enabled = false;
         }
 
         private async void ChargementListe()
@@ -49,7 +53,8 @@ namespace ClientDesktop.UserControls
             if (reponse != null)
             {
                 maxPage = reponse.TotalPages.GetValueOrDefault();
-                txtNbMenus.Text = reponse.TotalEnregistrements.ToString();
+                nbMenus = reponse.TotalEnregistrements.GetValueOrDefault();
+                txtNbMenus.Text = nbMenus.ToString();
 
                 bindingSource.DataSource = reponse.Donnees;
                 dgvMenus.DataSource = bindingSource;
@@ -58,6 +63,8 @@ namespace ClientDesktop.UserControls
                 dgvMenus.Columns[2].ReadOnly = true;
 
                 btnSuivant.Enabled = pageActuel < maxPage ? true : false;
+                btnModifier.Enabled = nbMenus > 0 ? true : false;
+                btnSupprimer.Enabled = nbMenus > 0 ? true : false;
             }
 
             else
@@ -112,36 +119,62 @@ namespace ClientDesktop.UserControls
 
         private void btnAjouter_Click(object sender, EventArgs e)
         {
-            var gestionMenu = new GestionMenuForm();
+            GestionMenuForm gestionMenu = new GestionMenuForm();
             gestionMenu.Initialise(null);
             gestionMenu.ShowDialog();
 
-            gestionMenu.FormClosed += GestionMenu_FormClosed;
+            RechargerPage();
         }                
 
         private async void btnModifier_Click(object sender, EventArgs e)
         {
-            if (dgvMenus.SelectedRows.Count > 0)
+            if (dgvMenus.SelectedRows.Count == 1)
             {
                 int selected = (int)((Menu)dgvMenus.SelectedRows[0].DataBoundItem).IdMenu;
-                Menu menu = await GetMenu(selected);
-                var gestionMenu = new GestionMenuForm();
+                Menu menu = await _restaurationService.GetMenuAsync(selected);
+                GestionMenuForm gestionMenu = new GestionMenuForm();
                 gestionMenu.Initialise(menu);
                 gestionMenu.ShowDialog();
 
-                gestionMenu.FormClosed += GestionMenu_FormClosed;
+                RechargerPage();
             }            
         }
-        
-        private void GestionMenu_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            RechargerPage();
-        }
 
-        private async Task<Menu> GetMenu(int id)
+        private async void btnSupprimer_Click(object sender, EventArgs e)
         {
-            Menu menu = await _restaurationService.GetMenuAsync(id);
-            return menu;
+            if (dgvMenus.SelectedRows.Count == 1)
+            {
+                int selected = (int)((Menu)dgvMenus.SelectedRows[0].DataBoundItem).IdMenu;
+
+                DialogResult result = MessageBox.Show("Voulez-vous vraiment supprimer ce menu ?",
+                                                        "Attention",
+                                                        MessageBoxButtons.YesNo,
+                                                        MessageBoxIcon.Question,
+                                                        MessageBoxDefaultButton.Button2) ;
+
+                if (result == DialogResult.Yes)
+                {
+                    bool isdelete = await _restaurationService.DeleteMenuAsync(selected);
+                    string message = "";
+                    string titre = "";
+
+                    if (isdelete == true)
+                    {
+                        message = "Le menu à bien était supprimer.";
+                        titre = "Confirmation";
+
+                        RechargerPage();
+                    }
+
+                    else
+                    {
+                        message = "Une ou plusieurs réservations sont actives pour ce menu. Suppression impossible !";
+                        titre = "Erreur";
+                    }
+
+                    MessageBox.Show(message, titre);
+                }
+            }
         }
     }
 }

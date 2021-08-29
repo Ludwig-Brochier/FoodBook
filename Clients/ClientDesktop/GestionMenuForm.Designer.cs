@@ -101,6 +101,7 @@ namespace ClientDesktop
             this.btnMenu.TabIndex = 1;
             this.btnMenu.Text = "bouton";
             this.btnMenu.UseVisualStyleBackColor = false;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // tlpdata
             // 
