@@ -39,8 +39,7 @@ namespace BO.Entite
         public bool Equals(PlatIngredient autre)
         {
             return autre != null &&
-                IngredientPlat == autre.IngredientPlat &&
-                Quantite == autre.Quantite;
+                IngredientPlat == autre.IngredientPlat;
         }
 
         public override bool Equals(object obj)

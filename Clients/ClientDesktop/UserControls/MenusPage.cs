@@ -61,7 +61,12 @@ namespace ClientDesktop.UserControls
                 bindingSource.DataSource = reponse.Donnees;
                 dgvMenus.DataSource = bindingSource;
                 dgvMenus.Columns[0].Visible = false;
+                dgvMenus.Columns[1].HeaderText = "Date du menu";
+                dgvMenus.Columns[1].DefaultCellStyle.Format = "D";
                 dgvMenus.Columns[2].ReadOnly = true;
+                dgvMenus.Columns[2].HeaderText = "Service de midi";
+                dgvMenus.Columns[3].HeaderText = "Date butoire";
+                dgvMenus.Columns[3].DefaultCellStyle.Format = "D";
 
                 //Condition si boutons actifs ou non
                 btnSuivant.Enabled = pageActuel < maxPage ? true : false;

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using API.GestionErreur;
+using DocFx;
 
 namespace API
 {
@@ -79,12 +80,12 @@ namespace API
             });
             // Fin appel de la documentation utilisateur
 
-            //// Appel de la documentation technique
+            ////Appel de la documentation technique
             //app.UseDocFx(config =>
             //{
             //    config.rootPath = "/doc";
             //});
-            //// Fin appel de la documentation technique
+            ////Fin appel de la documentation technique
 
             app.UseHttpsRedirection();
 

@@ -78,6 +78,8 @@ namespace ClientDesktop.UserControls
                 //Affichage de la liste
                 bindingSource.DataSource = reponse.Donnees;
                 dgvPlats.DataSource = bindingSource;
+                dgvPlats.Columns[0].HeaderText = "Intitule";
+                dgvPlats.Columns[1].HeaderText = "Nombre de réservations";
             }
 
             else
@@ -94,6 +96,7 @@ namespace ClientDesktop.UserControls
                 dgvPlats.DataSource = bindingSource;
                 dgvPlats.Columns[0].Visible = false;
                 dgvPlats.Columns[1].Width = 400;
+                dgvPlats.Columns[2].HeaderText = "Type de plat";
                 dgvPlats.Columns[3].DefaultCellStyle.Format = "c"; //Format monétaire avec le signe €
             }        
 

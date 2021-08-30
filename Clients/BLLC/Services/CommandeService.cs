@@ -20,11 +20,19 @@ namespace BLLC.Services
 
         public async Task<ReponsePeriodique<PlatIngredient>> GetCommandeIngredientsAsync(RequetePeriodique requetePeriodique)
         {
-            return await _httpClient.GetFromJsonAsync<ReponsePeriodique<PlatIngredient>>
+            if (requetePeriodique.Debut <= requetePeriodique.Fin)
+            {
+                return await _httpClient.GetFromJsonAsync<ReponsePeriodique<PlatIngredient>>
                 ($"commandes?debut={requetePeriodique.Debut:yyyy-MM-dd}" +
                 $"&fin={requetePeriodique.Fin:yyyy-MM-dd}" +
                 $"&page={requetePeriodique.Page}" +
                 $"&taillepage={requetePeriodique.TaillePage}");
+            }
+
+            else
+            {
+                return null;
+            }            
         }
     }
 }

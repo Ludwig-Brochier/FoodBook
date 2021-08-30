@@ -40,20 +40,33 @@ namespace ClientDesktop.UserControls
             DateTime debut = dtpDebut.Value.Date;
             DateTime fin = dtpFin.Value.Date;
 
-            RequetePeriodique requete = new RequetePeriodique(new DateTime(2021, 09, 13), new DateTime(2021, 09, 17), pageActuel, txtPagination.Text == "50" ? pagination : int.Parse(txtPagination.Text));
+            RequetePeriodique requete = new RequetePeriodique(debut, fin, pageActuel, txtPagination.Text == "50" ? pagination : int.Parse(txtPagination.Text));
 
             //Consomme l'API pour liste des commandes
             Task<ReponsePeriodique<PlatIngredient>> reponseTask = _commandeService.GetCommandeIngredientsAsync(requete);
             ReponsePeriodique<PlatIngredient> reponse = await reponseTask;
-            maxPage = reponse.TotalPages.GetValueOrDefault();
-            txtNbIngredients.Text = reponse.TotalEnregistrements.ToString();
 
-            //Affichage de la liste
-            bindingSource.DataSource = reponse.Donnees;
-            dgvIngredients.DataSource = bindingSource;
+            if (reponse != null)
+            {
+                maxPage = reponse.TotalPages.GetValueOrDefault();
+                txtNbIngredients.Text = reponse.TotalEnregistrements.ToString();
 
-            //Condition si bouton page suivante est actif ou non
-            btnSuivant.Enabled = pageActuel < maxPage ? true : false;
+                //Affichage de la liste
+                bindingSource.DataSource = reponse.Donnees;
+                dgvIngredients.DataSource = bindingSource;
+                dgvIngredients.Columns[0].HeaderText = "Ingrédient";
+                dgvIngredients.Columns[1].HeaderText = "Quantité";
+
+                //Condition si bouton page suivante est actif ou non
+                btnSuivant.Enabled = pageActuel < maxPage ? true : false;
+            }
+
+            else
+            {
+                //Message d'erreur
+                dgvIngredients.DataSource = null;
+                MessageBox.Show("Veuillez saisir une date de fin supérieure à la date de début.", "Attention !", buttons: MessageBoxButtons.OK);
+            }
         }
 
         private void btnActualiser_Click(object sender, EventArgs e)

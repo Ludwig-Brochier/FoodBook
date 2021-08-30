@@ -15,6 +15,7 @@ namespace ClientDesktop
         private Plat plat = new Plat();
         private List<PlatIngredient> ingredientsPlat = new List<PlatIngredient>();
         private BindingSource bsIngredients = new BindingSource();
+        private BindingSource bsIngredientsPlat = new BindingSource();
         private bool isAjout = true; //Booléen de controle si ajout ou modification
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace ClientDesktop
         public void Initialise(Plat plat1)
         {
             GetListeIngredientAsync();
-            
+
             //Si ajout d'un nouveau plat
             if (plat1 == null)
             {
@@ -78,7 +79,7 @@ namespace ClientDesktop
             if (isAjout == true)
             {
                 //Condition si tout les champs sont renseignés
-                if (txtIntitule.Text != string.Empty && cbType.SelectedIndex != -1 && txtPrix.Text != string.Empty)
+                if (txtIntitule.Text != string.Empty && cbType.SelectedIndex != -1 && txtPrix.Text != string.Empty && dgvIngredientsPlat.RowCount > 0)
                 {
                     //Consomme l'API et ajoute un nouveau plat
                     Plat newPlat = await _restaurationService.InsertPlatAsync(new Plat(0, txtIntitule.Text, cbType.SelectedItem.ToString(), 
@@ -113,7 +114,7 @@ namespace ClientDesktop
             else
             {
                 //Condition si tout les champs sont renseignés
-                if (txtIntitule.Text != string.Empty && txtPrix.Text != string.Empty)
+                if (txtIntitule.Text != string.Empty && txtPrix.Text != string.Empty && dgvIngredientsPlat.RowCount > 0)
                 {
                     //Consomme l'API et modifie le plat
                     Plat newPlat = await _restaurationService.UpdatePlatAsync(new Plat(plat.IdPlat, txtIntitule.Text, cbType.SelectedItem.ToString(),
@@ -153,13 +154,27 @@ namespace ClientDesktop
         /// <param name="e"></param>
         private void btnPlus_Click(object sender, EventArgs e)
         {
-            if (bsIngredients.Current != null)
+            //Condition si ingrédient de la liste sélectionné
+            if (dgvIngredients.SelectedRows.Count > 0)
             {
-                Ingredient selected = bsIngredients.Current as Ingredient;
-                ingredientsPlat.Add(new PlatIngredient(selected, int.Parse(txtQuantite.Text)));
+                //Condition si ingrédient n'est pas déjà présent dans la liste des ingrédients du plat
+                if (!ingredientsPlat.Contains(new PlatIngredient(bsIngredients.Current as Ingredient, 0)))
+                {                    
+                    Ingredient selected = bsIngredients.Current as Ingredient; //Récupère l'ingrédient sélectionné
+                    bsIngredientsPlat.Add(new PlatIngredient(selected, int.Parse(txtQuantite.Text))); //Ajoute l'ingrédient au binding source
+                    ChargementListeIngredientsPlat();
+                }
 
-                ChargementListeIngredientsPlat();
-            }            
+                else
+                {
+                    MessageBox.Show("L'ingrédient est déjà présent dans la liste des ingrédients du plat !", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+            }
+
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un ingrédient dans la liste des ingrédients.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         /// <summary>
@@ -169,11 +184,16 @@ namespace ClientDesktop
         /// <param name="e"></param>
         private void btnMoins_Click(object sender, EventArgs e)
         {
-            if (dgvIngredientsPlat.SelectedRows.Count == 1)
+            //Condition si ingrédient de la liste sélectionné
+            if (dgvIngredientsPlat.SelectedRows.Count > 0)
             {
-                ingredientsPlat.Remove(dgvIngredientsPlat.SelectedRows[0].DataBoundItem as PlatIngredient);
-
+                bsIngredientsPlat.Remove(bsIngredientsPlat.Current as PlatIngredient); //Supprime l'ingrédient du binding source
                 ChargementListeIngredientsPlat();
+            }
+
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un ingrédient dans la liste des ingrédients du plat.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 
@@ -193,6 +213,7 @@ namespace ClientDesktop
             dgvIngredients.DataSource = bsIngredients;
             dgvIngredients.Columns[0].Visible = false;
             dgvIngredients.Columns[2].Visible = false;
+            dgvIngredients.ClearSelection();
         }
 
         /// <summary>
@@ -200,7 +221,9 @@ namespace ClientDesktop
         /// </summary>
         private void ChargementListeIngredientsPlat()
         {
-            dgvIngredientsPlat.DataSource = ingredientsPlat;
+            bsIngredientsPlat.DataSource = ingredientsPlat; //Ajoute la liste des ingrédients du plat au binding source
+            dgvIngredientsPlat.DataSource = bsIngredientsPlat; //Ajoute le binding source au data grid view
+            dgvIngredientsPlat.Columns[0].HeaderText = "Ingrédient"; //Renomme la première colonne
         }
     }
 }

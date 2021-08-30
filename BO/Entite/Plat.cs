@@ -75,6 +75,11 @@ namespace BO.Entite
             return Equals(obj as Plat);
         }
 
+        public override string ToString()
+        {
+            return Intitule;
+        }
+
         public override int GetHashCode()
         {
             int hashCode = 37635952;

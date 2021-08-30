@@ -55,6 +55,12 @@ namespace BO.Entite
         {
             return Equals(obj as Ingredient);
         }
+
+        public override string ToString()
+        {
+            return Intitule;
+        }
+
         public override int GetHashCode()
         {
             int hashCode = -1107114518;
