@@ -3,7 +3,6 @@ using BO.DTO.Reponses;
 using BO.DTO.Requetes;
 using BO.Entite;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
