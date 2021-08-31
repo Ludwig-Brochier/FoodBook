@@ -73,7 +73,8 @@ namespace DAL.Repertoire
                 entite.Nom, entite.Prenom, entite.NumTel, entite.NbPersonne, entite.Formule.IdFormule, entite.Menu.IdMenu 
             }, _session.Transaction);
 
-            return await GetAsync(idReservation);
+            Reservation newReservation = await GetAsync(idReservation);
+            return newReservation;
         }
 
         public async Task<Reservation> UpdateAsync(Reservation entite)
@@ -91,7 +92,8 @@ namespace DAL.Repertoire
                         entite.Nom, entite.Prenom, entite.NumTel, entite.NbPersonne, entite.Formule.IdFormule, entite.Menu.IdMenu, entite.IdReservation
                         }, _session.Transaction) > 0 )
             {
-                return await GetAsync((int)entite.IdReservation);
+                Reservation newRservation = await GetAsync((int)entite.IdReservation);
+                return newRservation;
             }
             else
             {
