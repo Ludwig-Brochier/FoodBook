@@ -14,6 +14,7 @@ namespace BLLC.Services
     public class RestaurationService : IRestaurationService
     {
         private readonly HttpClient _httpClient;
+
         public RestaurationService()
         {
             _httpClient = new HttpClient();
