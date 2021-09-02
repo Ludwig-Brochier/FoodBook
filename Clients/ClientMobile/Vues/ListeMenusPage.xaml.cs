@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ClientMobile.VueModeles;
+using ClientMobile.VMDatas;
 
 namespace ClientMobile.Vues
 {
@@ -30,8 +31,11 @@ namespace ClientMobile.Vues
 
         private void lvListeMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            
-            Frame.Navigate(typeof(ReservationPage));            
+            if (lvListeMenu.SelectedItem != null)
+            {
+                listeMenusVueModele.MenuSelected = (MenuService)lvListeMenu.SelectedItem;
+                Frame.Navigate(typeof(ReservationPage));
+            }            
         }
     }
 }

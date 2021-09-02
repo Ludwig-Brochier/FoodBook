@@ -36,11 +36,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Source="../Assets/Menus.jpg" Stretch="Fill" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="ter" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Foreground="White" Margin="10,0,0,0"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="eret" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Foreground="White" Margin="0,0,10,0"/>
-            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="ezt" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
-            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="zrt" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
-            <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="rteer" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind reservationVueModele.Menu.dteMenu.ToLongDateString()}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Foreground="White" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind reservationVueModele.Menu.midiSoir}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Foreground="White" Margin="0,0,10,0"/>
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind reservationVueModele.Menu.entree}" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Bind reservationVueModele.Menu.plat}" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="{x:Bind reservationVueModele.Menu.dessert}" HorizontalAlignment="Center" FontSize="17" Foreground="White"/>
         </Grid>
 
 
