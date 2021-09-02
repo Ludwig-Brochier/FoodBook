@@ -32,5 +32,15 @@ namespace ClientMobile.Vues
         {
             Frame.Navigate(typeof(MainPage));
         }
+        
+        private void btnRetour_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ListeMenusPage));
+        }
+
+        private void btnReserver_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
