@@ -5,10 +5,34 @@
     xmlns:local="using:ClientMobile"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="../Assets/Accueil.jpg" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="UniformToFill" Opacity="0.6"/>
+        <Image Source="../Assets/Logo100pxArrondi.png" Height="70" Width="70"/>
+        
+        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Accueil" FontSize="25" Foreground="White"/>
 
+        <controls:Loading x:Name="LoadingControl" IsLoading="{Binding IsBusy}" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <StackPanel Orientation="Vertical" Padding="12">
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Bienvenue" Foreground="Black" FontSize="30" TextAlignment="Center"/>
+                <TextBlock Text="Chargement de la liste" Foreground="Black" FontSize="17" TextAlignment="Center"/>
+                <Grid Margin="0,20,0,0">
+                    <Image Source="../../Assets/ToolkitLogo.png" Height="50" />
+                    <ProgressRing IsActive="True" Foreground="Black" Width="100" Height="100"/>
+                </Grid>
+            </StackPanel>
+        </controls:Loading>
+        
     </Grid>
 </Page>

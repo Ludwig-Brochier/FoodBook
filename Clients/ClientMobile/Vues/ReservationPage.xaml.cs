@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,29 +12,25 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using ClientMobile.VueModeles;
 
 namespace ClientMobile.Vues
 {
-    public sealed partial class MainPage : Page
-    {        
-        public MainPage()
+    /// <summary>
+    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
+    /// </summary>
+    public sealed partial class ReservationPage : Page
+    {
+        private readonly ReservationVueModele reservationVueModele = new ReservationVueModele();
+
+        public ReservationPage()
         {
             this.InitializeComponent();
-            Load();
         }
 
-        private async void Load()
+        private void Logo_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await Loader();
-        }
-
-        private async Task Loader()
-        {
-            LoadingControl.IsLoading = true;
-            await Task.Delay(3000);
-
-            Frame.Navigate(typeof(ListeMenusPage));
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }
