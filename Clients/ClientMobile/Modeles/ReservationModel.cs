@@ -40,8 +40,6 @@ namespace ClientMobile.Modeles
             set
             {
                 Set(ref _menu, value);
-
-                //toutes les 3sec je vais chercher les infos sur l'api
             }
         }
 

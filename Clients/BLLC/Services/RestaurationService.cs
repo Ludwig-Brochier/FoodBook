@@ -17,7 +17,15 @@ namespace BLLC.Services
 
         public RestaurationService()
         {
-            _httpClient = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+            _httpClient = new HttpClient(handler);
+
             _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
         }
 
@@ -94,7 +102,7 @@ namespace BLLC.Services
                     ($"menus?debut={requetePeriodique.Debut:yyyy-MM-dd}" +
                     $"&fin={requetePeriodique.Fin:yyyy-MM-dd}" +
                     $"&page={requetePeriodique.Page}" +
-                    $"&taillepage={requetePeriodique.TaillePage}");
+                    $"&taillepage={requetePeriodique.TaillePage}");                
             }
 
             else

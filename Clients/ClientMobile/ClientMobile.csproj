@@ -124,6 +124,7 @@
     <Compile Include="Modeles\ReservationModel.cs" />
     <Compile Include="VMDatas\MenuService.cs" />
     <Compile Include="VueModeles\ListeMenusVueModele.cs" />
+    <Compile Include="VueModeles\MainVueModele.cs" />
     <Compile Include="VueModeles\ReservationVueModele.cs" />
     <Compile Include="VueModeles\VueModelesBase.cs" />
     <Compile Include="Vues\ListeMenusPage.xaml.cs">

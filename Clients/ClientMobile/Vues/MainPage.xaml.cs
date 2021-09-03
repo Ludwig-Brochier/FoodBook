@@ -13,29 +13,28 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using ClientMobile.Modeles;
+using ClientMobile.VueModeles;
 
 namespace ClientMobile.Vues
 {
     public sealed partial class MainPage : Page
-    {        
+    {
+        private MainVueModele VM = new MainVueModele();
+
         public MainPage()
         {
             this.InitializeComponent();
-            Load();
+            VM.PropertyChanged += VM_PropertyChanged;
+            VM.Chargement();
         }
 
-        private async void Load()
+        private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            await Loader();
-        }
-
-        private async Task Loader()
-        {
-            LoadingControl.IsLoading = true;
-            await Task.Delay(3000);
-
-            Frame.Navigate(typeof(ListeMenusPage));
+            if(e.PropertyName =="IsLoading" && !VM.IsLoading)
+            {
+                Frame.Navigate(typeof(ListeMenusPage));
+            }
         }
     }
 }

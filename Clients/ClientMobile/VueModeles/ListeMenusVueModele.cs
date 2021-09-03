@@ -21,37 +21,14 @@ namespace ClientMobile.VueModeles
 
         public ListeMenusVueModele()
         {
-            menus = _menuModele.menus;
-            StructurerService(menus);
+            StructurerService();
         }
 
-        private void StructurerService(List<Menu> oldService)
+        private async Task StructurerService()
         {
-            foreach (Menu menu in oldService)
+            menus = _menuModele.menus;
+            foreach (Menu menu in menus)
             {
-                //MenuService newMenu = new MenuService();
-                //newMenu.id = (int)menu.IdMenu;
-                //newMenu.dteMenu = menu.DteMenu;
-                //newMenu.midiSoir = menu.ServiceMidi ? "Midi" : "Soir";
-                //List<Plat> plats = menu.Plats;
-                //foreach (Plat plat in plats)
-                //{
-                //    if (plat.TypePlat == "Entrée")
-                //    {
-                //        newMenu.entree = plat.Intitule;
-                //    }
-
-                //    else if (plat.TypePlat == "Plat")
-                //    {
-                //        newMenu.plat = plat.Intitule;
-                //    }
-
-                //    else
-                //    {
-                //        newMenu.dessert = plat.Intitule;
-                //    }
-                //}
-
                 menusService.Add(MenuService.FromMenu(menu));
             }
         }
