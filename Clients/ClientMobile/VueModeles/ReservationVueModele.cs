@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BO.Entite;
 using ClientMobile.Modeles;
 using ClientMobile.VMDatas;
-using ClientMobile.Vues;
 
 namespace ClientMobile.VueModeles
 {
+    /// <summary>
+    /// Vue Modele de la page des réservation
+    /// </summary>
     public class ReservationVueModele : VueModelesBase
     {
-        private readonly ReservationModel _reservationModel = ReservationModel.Instance;
-        private readonly ListeMenusPage listeMenusPage = new ListeMenusPage();        
+        private readonly ReservationModel _reservationModel = ReservationModel.Instance; //Instance du Singleton
 
         public ReservationVueModele()
         {
-            Menu = MenuService.FromMenu(ReservationModel.Instance.Menu);
+            Menu = MenuService.FromMenu(_reservationModel.Menu);
             _reservationModel.PropertyChanged += Instance_PropertyChanged;
         }
 
@@ -28,7 +25,6 @@ namespace ClientMobile.VueModeles
                 Menu = MenuService.FromMenu(_reservationModel.Menu);
             }
         }
-
 
         private MenuService _menu;
         public MenuService Menu
@@ -72,6 +68,9 @@ namespace ClientMobile.VueModeles
             set => Set(ref _formuleResa, value);
         }
 
+        /// <summary>
+        /// Gestion de l'affichage de la PopUp Validation réservation
+        /// </summary>
         private bool _popUp = false;
         public bool PopUp
         {
@@ -79,6 +78,9 @@ namespace ClientMobile.VueModeles
             set => Set(ref _popUp, value);
         }
 
+        /// <summary>
+        /// Gestion du message de la PopUp Validation réservation
+        /// </summary>
         private string _messagePopUpResa = "";
         public string MessagePopUpResa
         {
@@ -86,8 +88,13 @@ namespace ClientMobile.VueModeles
             set => Set(ref _messagePopUpResa, value);
         }
 
-        public async Task CommandReserver()
+        /// <summary>
+        /// Méthode pour la réservation d'un menu
+        /// </summary>
+        /// <returns></returns>
+        public async Task ReserverMenu()
         {
+            //Test si tous les champs sont renseignés
             if (Nom != string.Empty && Prenom != string.Empty && NumTel != string.Empty && NbParticipants >= 1 && NbParticipants <= 9 && FormuleResa != string.Empty)
             {
                 _reservationModel.Nom = Nom;
@@ -98,18 +105,24 @@ namespace ClientMobile.VueModeles
 
                 Reservation reservation = await _reservationModel.AjoutReservation();
 
+                //Test si la réservation a bien été ajoutée
                 MessagePopUpResa = reservation.IdReservation != null ? "Votre réservation est prise en compte." : "Une erreur est survenue.";
 
-                PopUp = true;
+                PopUp = true; //Affichage PopUp
             }
 
             else
             {
-                MessagePopUpResa = "Veuillez remplir tous les champs.";
-                PopUp = true;
+                MessagePopUpResa = "Veuillez renseigner tous les champs.";
+                PopUp = true; //Affichage PopUp
             }
         }
 
+        /// <summary>
+        /// Transforme l'intitulé d'une formule en object Formule
+        /// </summary>
+        /// <param name="intitule">Intitulé de la formule choisie</param>
+        /// <returns>L'object Formule</returns>
         private Formule GetFormule(string intitule)
         {
             switch (intitule)

@@ -1,17 +1,14 @@
 ﻿using ClientMobile.Modeles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ClientMobile.VueModeles
 {
-    class MainVueModele :  VueModelesBase
+    /// <summary>
+    /// Vue Modele de la page d'accueil
+    /// </summary>
+    public class MainVueModele :  VueModelesBase
     {
-
-        private MenuModele _menuModele = MenuModele.Instance; 
-
+        private MenuModele _menuModele = MenuModele.Instance; //Instance du Singleton
 
         private bool _isLoading = true;
         public bool IsLoading
@@ -20,6 +17,10 @@ namespace ClientMobile.VueModeles
             set => Set(ref _isLoading, value);
         }
 
+        /// <summary>
+        /// Chargement de la liste des menus du service
+        /// </summary>
+        /// <returns></returns>
         public async Task Chargement()
         {
             IsLoading = true;

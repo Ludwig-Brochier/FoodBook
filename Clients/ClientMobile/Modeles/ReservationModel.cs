@@ -1,26 +1,27 @@
 ﻿using BO.Entite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BLLC.Services;
 
 namespace ClientMobile.Modeles
 {
-    class ReservationModel : ModeleBase
+    /// <summary>
+    /// Modele de l'entité Reservation
+    /// </summary>
+    public class ReservationModel : ModeleBase
     {
         private readonly IReservationService _reservationService = new ReservationService();
         private static ReservationModel _instance;
         private static object verrou = new object();
 
-
+        /// <summary>
+        /// Singleton du model de Reservation
+        /// </summary>
         public static ReservationModel Instance {
             get
             {
                 if(_instance == null)
                 {
-                    lock(verrou)
+                    lock(verrou) //Thread safe
                     {
                         if(_instance == null)
                         {
@@ -32,11 +33,18 @@ namespace ClientMobile.Modeles
             }
         }
 
+        /// <summary>
+        /// Méthode pour ajouter une réservation
+        /// Consomme l'API via la BLLC
+        /// </summary>
+        /// <returns>La réservation</returns>
         public async Task<Reservation> AjoutReservation()
         {
             Reservation reservation = new Reservation(0, Nom, Prenom, NumTel, NbParticipants, Menu, FormuleResa);
             return await _reservationService.InsertReservationAsync(reservation);
         }
+
+        //Les données utiles pour la création d'une réservation
 
         private Menu _menu;
         public Menu Menu

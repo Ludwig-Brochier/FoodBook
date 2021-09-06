@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClientMobile.Modeles;
 using BO.Entite;
@@ -9,13 +6,13 @@ using ClientMobile.VMDatas;
 
 namespace ClientMobile.VueModeles
 {
-
-
+    /// <summary>
+    /// Vue Modele de la page des menus du service
+    /// </summary>
     public class ListeMenusVueModele : VueModelesBase
     {
-        private readonly ReservationModel _reservationModel = ReservationModel.Instance;
-
-        private readonly MenuModele _menuModele = MenuModele.Instance;
+        private readonly ReservationModel _reservationModel = ReservationModel.Instance; //Instance du Singleton
+        private readonly MenuModele _menuModele = MenuModele.Instance; //Instance du Singleton
         private List<Menu> menus = new List<Menu>();
         public List<MenuService> menusService = new List<MenuService>();
 
@@ -24,6 +21,10 @@ namespace ClientMobile.VueModeles
             StructurerService();
         }
 
+        /// <summary>
+        /// Transforme les menus en menus service
+        /// </summary>
+        /// <returns></returns>
         private async Task StructurerService()
         {
             menus = _menuModele.menus;
@@ -33,7 +34,9 @@ namespace ClientMobile.VueModeles
             }
         }
 
-
+        /// <summary>
+        /// Récupère le menu sélectionné
+        /// </summary>
         private MenuService _menuSelected;
         public MenuService MenuSelected
         {

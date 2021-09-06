@@ -1,12 +1,13 @@
 ﻿using BO.Entite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientMobile.VMDatas
 {
+    /// <summary>
+    /// Données utiles pour la gestion des menus
+    /// Réécriture propre à l'application mobile de l'entité Menu
+    /// </summary>
     public struct MenuService
     {
         public int id;
@@ -16,14 +17,20 @@ namespace ClientMobile.VMDatas
         public string plat;
         public string dessert;
         
+        /// <summary>
+        /// Méthode pour transformer un Menu en MenuService
+        /// </summary>
+        /// <param name="menu">Le menu à transformer</param>
+        /// <returns>Le MenuService</returns>
         public static MenuService FromMenu(Menu menu)
         {
             var newMenu = new MenuService();
             newMenu.id = (int)menu.IdMenu;
             newMenu.dteMenu = menu.DteMenu;
-            newMenu.midiSoir = menu.ServiceMidi ? "Midi" : "Soir";
+            newMenu.midiSoir = menu.ServiceMidi ? "Midi" : "Soir"; //Transformation du bool en string
             List<Plat> plats = menu.Plats;
-            foreach (Plat plat in plats)
+            //Gestion des plats du menu
+            foreach (Plat plat in plats) //Retourne uniquement l'intitulé du plat correspondant
             {
                 if (plat.TypePlat == "Entrée")
                 {

@@ -1,37 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using ClientMobile.Modeles;
+﻿using Windows.UI.Xaml.Controls;
 using ClientMobile.VueModeles;
 
 namespace ClientMobile.Vues
 {
+    /// <summary>
+    /// Page d'accueil de l'application mobile
+    /// Ecran de chargement puis navigation vers la page des menus du service
+    /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainVueModele VM = new MainVueModele();
+        private readonly MainVueModele _mainVueModele = new MainVueModele();
 
         public MainPage()
         {
             this.InitializeComponent();
-            VM.PropertyChanged += VM_PropertyChanged;
-            VM.Chargement();
+            _mainVueModele.PropertyChanged += VM_PropertyChanged;
+            _mainVueModele.Chargement();
         }
 
         private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName =="IsLoading" && !VM.IsLoading)
+            if(e.PropertyName =="IsLoading" && !_mainVueModele.IsLoading)
             {
                 Frame.Navigate(typeof(ListeMenusPage));
             }

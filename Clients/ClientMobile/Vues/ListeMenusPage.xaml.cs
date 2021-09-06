@@ -1,39 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using ClientMobile.VueModeles;
 using ClientMobile.VMDatas;
 
 namespace ClientMobile.Vues
 {
     /// <summary>
-    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
+    /// Page des menus du service
     /// </summary>
     public sealed partial class ListeMenusPage : Page
     {
-        private readonly ListeMenusVueModele listeMenusVueModele = new ListeMenusVueModele();
+        private readonly ListeMenusVueModele _listeMenusVueModele = new ListeMenusVueModele();
 
         public ListeMenusPage()
         {
             this.InitializeComponent();            
         }
 
+        /// <summary>
+        /// Click sur la liste des menus
+        /// Sélection d'un menu précis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lvListeMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (lvListeMenu.SelectedItem != null)
             {
-                listeMenusVueModele.MenuSelected = (MenuService)lvListeMenu.SelectedItem;
+                _listeMenusVueModele.MenuSelected = (MenuService)lvListeMenu.SelectedItem; //Menu précis
                 Frame.Navigate(typeof(ReservationPage));
             }            
         }
