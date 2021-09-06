@@ -45,7 +45,7 @@ namespace BO.Entite
         /// </summary>
         /// <param name="idMenu">Identifiant du menu</param>
         /// <param name="dteMenu">Date du menu</param>
-        /// <param bool name="serviceMidi">Si menu du midi = 1 ou du soir = 0</param>
+        /// <param name="serviceMidi">Si menu du midi = 1 ou du soir = 0</param>
         /// <param name="plats">Liste des plats constituant le menu</param>
         public Menu(int? idMenu, DateTime dteMenu, bool serviceMidi, List<Plat> plats)
         {

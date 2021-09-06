@@ -80,12 +80,12 @@ namespace API
             });
             // Fin appel de la documentation utilisateur
 
-            ////Appel de la documentation technique
-            //app.UseDocFx(config =>
-            //{
-            //    config.rootPath = "/doc";
-            //});
-            ////Fin appel de la documentation technique
+            //Appel de la documentation technique
+            app.UseDocFx(config =>
+            {
+                config.rootPath = "/doc";
+            });
+            //Fin appel de la documentation technique
 
             app.UseHttpsRedirection();
 

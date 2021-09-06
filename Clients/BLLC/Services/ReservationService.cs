@@ -21,8 +21,8 @@ namespace BLLC.Services
                 {
                     return true;
                 };
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
+            _httpClient = new HttpClient(handler);
+            _httpClient.BaseAddress = new Uri("http://user04.2isa.org/api/");
         }
 
         public async Task<bool> DeleteReservationAsync(int idReservation)

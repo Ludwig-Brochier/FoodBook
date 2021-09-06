@@ -14,7 +14,6 @@ namespace BLLC.Services
     public class RestaurationService : IRestaurationService
     {
         private readonly HttpClient _httpClient;
-
         public RestaurationService()
         {
             HttpClientHandler handler = new HttpClientHandler();
@@ -26,7 +25,7 @@ namespace BLLC.Services
                 };
             _httpClient = new HttpClient(handler);
 
-            _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
+            _httpClient.BaseAddress = new Uri("http://user04.2isa.org/api/");
         }
 
         #region Ingredient
