@@ -14,6 +14,13 @@ namespace BLLC.Services
         private readonly HttpClient _httpClient;
         public ReservationService()
         {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
         }

@@ -15,7 +15,7 @@ namespace ClientMobile.VueModeles
     {
         private readonly ReservationModel _reservationModel = ReservationModel.Instance;
 
-        private readonly MenuModele _menuModele = MenuModele.GetInstance;
+        private readonly MenuModele _menuModele = MenuModele.Instance;
         private List<Menu> menus = new List<Menu>();
         public List<MenuService> menusService = new List<MenuService>();
 

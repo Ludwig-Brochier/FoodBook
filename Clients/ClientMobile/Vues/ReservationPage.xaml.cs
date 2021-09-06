@@ -38,9 +38,14 @@ namespace ClientMobile.Vues
             Frame.Navigate(typeof(ListeMenusPage));
         }
 
-        private void btnReserver_Click(object sender, RoutedEventArgs e)
+        private async void btnReserver_Click(object sender, RoutedEventArgs e)
         {
+            await reservationVueModele.CommandReserver();
+        }
 
+        private void btnFermerPopUp_Click(object sender, RoutedEventArgs e)
+        {
+            reservationVueModele.PopUp = false;
         }
     }
 }

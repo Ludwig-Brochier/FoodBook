@@ -10,7 +10,7 @@ namespace ClientMobile.VueModeles
     class MainVueModele :  VueModelesBase
     {
 
-        private MenuModele _menuModele = MenuModele.GetInstance; 
+        private MenuModele _menuModele = MenuModele.Instance; 
 
 
         private bool _isLoading = true;

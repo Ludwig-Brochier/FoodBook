@@ -17,7 +17,7 @@ namespace BLLC.Services
 
         public RestaurationService()
         {
-            var handler = new HttpClientHandler();
+            HttpClientHandler handler = new HttpClientHandler();
             handler.ClientCertificateOptions = ClientCertificateOption.Manual;
             handler.ServerCertificateCustomValidationCallback =
                 (httpRequestMessage, cert, cetChain, policyErrors) =>

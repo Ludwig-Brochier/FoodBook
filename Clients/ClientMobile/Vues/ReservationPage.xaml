@@ -45,10 +45,10 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,25,0,0" Width="250">
-            <TextBox x:Name="tbNom" PlaceholderText="Nom" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White"/>
-            <TextBox x:Name="tbPrenom" PlaceholderText="Prénom" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White"/>
-            <TextBox x:Name="tbTel" PlaceholderText="Téléphone" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White"/>
-            <ComboBox x:Name="cbFormule" PlaceholderText="Formule" Width="250" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White">
+            <TextBox x:Name="tbNom" PlaceholderText="Nom" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White" Text="{x:Bind reservationVueModele.Nom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="tbPrenom" PlaceholderText="Prénom" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White" Text="{x:Bind reservationVueModele.Prenom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="tbTel" PlaceholderText="Téléphone" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White" Text="{x:Bind reservationVueModele.NumTel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="cbFormule" PlaceholderText="Formule" Width="250" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White" SelectedItem="{x:Bind reservationVueModele.FormuleResa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <x:String>Entrée</x:String>
                 <x:String>Plat</x:String>
                 <x:String>Dessert</x:String>
@@ -57,7 +57,7 @@
                 <x:String>Plat - Dessert</x:String>
                 <x:String>Entrée - Plat - Dessert</x:String>
             </ComboBox>
-            <ComboBox x:Name="cbParticipants" PlaceholderText="Participants" Width="250" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White">
+            <ComboBox x:Name="cbParticipants" PlaceholderText="Participants" Width="250" Margin="0,10,0,10" Background="#FFDCA440" Foreground="White" PlaceholderForeground="White" SelectedItem="{x:Bind reservationVueModele.NbParticipants, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <x:Int32>1</x:Int32>
                 <x:Int32>2</x:Int32>
                 <x:Int32>3</x:Int32>
@@ -70,5 +70,20 @@
             </ComboBox>
             <Button x:Name="btnReserver" Style="{StaticResource ButtonRevealStyle}" Content="Réserver" HorizontalAlignment="Center" Margin="0,25,0,0" BorderThickness="5" Background="#FFDCA440" Foreground="White" FontSize="24" Click="btnReserver_Click" FontWeight="Bold" />
         </StackPanel>
+        
+        <Popup x:Name="Validation" IsOpen="{x:Bind reservationVueModele.PopUp, Mode=OneWay}" Grid.ColumnSpan="2" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-200,0,0,0">
+            <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                BorderThickness="2" Width="200" Height="200">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{x:Bind reservationVueModele.MessagePopUpResa, Mode=OneWay}" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                    <Button Content="Fermer" Grid.Row="1" Click="btnFermerPopUp_Click" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                </Grid>                
+            </Border>
+        </Popup>
     </Grid>
 </Page>

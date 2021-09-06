@@ -13,34 +13,34 @@ namespace ClientMobile.Modeles
     public class MenuModele : ModeleBase
     {
         private readonly IRestaurationService _restaurationService = new RestaurationService();
-        private static MenuModele Instance;
+        private static MenuModele _instance;
         private static readonly object Verrou = new object();
-
+        private DateTime debutSemaine;
+        private DateTime finSemaine;
         public List<Menu> menus;
-        
-        private bool isLoaded = false; //
 
-        public static MenuModele GetInstance
+        public static MenuModele Instance
         {
             get
             {
-                if (Instance == null)
+                if (_instance == null)
                 {
                     lock (Verrou)
                     {
-                        if (Instance == null)
+                        if (_instance == null)
                         {
-                            Instance = new MenuModele();
+                            _instance = new MenuModele();
                         }
                     }
                 }
 
-                return Instance;
+                return _instance;
             }
         }
 
         private MenuModele()
         {
+            SemaineMenu();
         }
 
         public async Task SetListMenu()
@@ -56,7 +56,7 @@ namespace ClientMobile.Modeles
 
         public async Task<List<Menu>> GetMenusServicesAsync()
         {
-            RequetePeriodique requete = new RequetePeriodique(new DateTime(2021, 08, 30), new DateTime(2021, 09, 03), 1, 10);
+            RequetePeriodique requete = new RequetePeriodique(debutSemaine, finSemaine, 1, 10);
             ReponsePeriodique<Menu> reponse = await _restaurationService.GetAllMenusAsync(requete);
             return reponse.Donnees;
         }
@@ -65,6 +65,33 @@ namespace ClientMobile.Modeles
         {
             Menu menu = await _restaurationService.GetMenuAsync(idMenu);
             return menu.Plats;
+        }
+
+        public void SemaineMenu()
+        {
+            DateTime dateDepart = GetDateDepart();
+            int daysUntilMonday = ((int)DayOfWeek.Monday - (int)dateDepart.DayOfWeek + 7) % 7;
+            if (daysUntilMonday == 0)
+            {
+                daysUntilMonday = 7;
+            }
+
+            debutSemaine = dateDepart.AddDays(daysUntilMonday);
+            finSemaine = debutSemaine.AddDays(4);
+        }
+
+        public DateTime GetDateDepart()
+        {
+            DateTime today = DateTime.Today;
+            switch ((int)today.DayOfWeek)
+            {
+                case 6:
+                    return today.AddDays(2);
+                case 0:
+                    return today.AddDays(1);
+                default:
+                    return today;
+            }
         }
     }
 }
