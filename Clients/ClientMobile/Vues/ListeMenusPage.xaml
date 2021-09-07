@@ -46,7 +46,7 @@
 
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Services" FontSize="25" Foreground="White"/>
 
-        <ListView x:Name="lvListeMenu"  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{x:Bind listeMenusVueModele.menusService}" Margin="0,25,0,50" ItemTemplate="{StaticResource MenusItem}" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" Tapped="lvListeMenu_Tapped">
+        <ListView x:Name="lvListeMenu"  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{x:Bind _listeMenusVueModele.menusService}" Margin="0,25,0,50" ItemTemplate="{StaticResource MenusItem}" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" Tapped="lvListeMenu_Tapped">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Template">

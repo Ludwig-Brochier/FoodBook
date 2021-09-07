@@ -143,5 +143,10 @@ namespace ClientMobile.VueModeles
                     return new Formule(7, "Entrée/Plat/Dessert");
             }
         }
+
+        public void ClosePopup()
+        {
+            PopUp = false;
+        }
     }
 }
