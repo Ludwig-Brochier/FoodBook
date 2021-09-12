@@ -74,7 +74,7 @@ namespace TestIntegration
         public async Task InsertReservartionAsync_Should_Be_Created()
         {
             //Arrange
-            Reservation reservation = new(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(6, DateTime.Today, true, null), new Formule(6, null));
+            Reservation reservation = new(null, "lussier", "sigolène", "+33 6 52 35 15 82", 4, new Menu(30, DateTime.Today, true, null), new Formule(6, null));
 
             //Act
             var reponse = await _client.PostAsJsonAsync<Reservation>("api/reservations", reservation);
@@ -109,10 +109,10 @@ namespace TestIntegration
         public async Task UpdateReservationAsync_Should_Be_OK()
         {
             //Arrange
-            Reservation reservation = new(5, "cuvier", "elie", "+33 6 52 35 15 82", 1, new Menu(1, DateTime.Today, true, null), new Formule(1, null));
+            Reservation reservation = new(20, "cuvier", "elie", "+33 6 52 35 15 82", 1, new Menu(30, DateTime.Today, true, null), new Formule(1, null));
 
             //Act
-            var reponse = await _client.PutAsJsonAsync<Reservation>("api/reservations/5", reservation);
+            var reponse = await _client.PutAsJsonAsync<Reservation>("api/reservations/20", reservation);
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, reponse.StatusCode);

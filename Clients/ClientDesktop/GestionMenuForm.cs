@@ -148,8 +148,7 @@ namespace ClientDesktop
             Task<ReponsePagination<Plat>> reponseTask = _restaurationService.GetAllPlatsAsync(requete);
             ReponsePagination<Plat> reponse = await reponseTask;
 
-            //Initialisation du ComboBox pour le type entrée
-            cbEntree.DataSource = reponse.Donnees;            
+            //Initialisation du ComboBox pour le type entrée                      
             cbEntree.DropDownStyle = ComboBoxStyle.DropDownList;            
             cbEntree.FormattingEnabled = true;
             
@@ -161,6 +160,7 @@ namespace ClientDesktop
             else
             {
                 //Modification d'un menu
+                cbEntree.DataSource = reponse.Donnees; //Récupère l'entrée du menu
                 cbEntree.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Entrée"); //Sélectionne l'entrée du menu
             }
             cbEntree.DisplayMember = "Intitule";
@@ -176,8 +176,7 @@ namespace ClientDesktop
             Task<ReponsePagination<Plat>> reponseTask = _restaurationService.GetAllPlatsAsync(requete);
             ReponsePagination<Plat> reponse = await reponseTask;
 
-            //Initialisation du ComboBox pour le type plat
-            cbPlat.DataSource = reponse.Donnees;            
+            //Initialisation du ComboBox pour le type plat                        
             cbPlat.DropDownStyle = ComboBoxStyle.DropDownList;            
             cbPlat.FormattingEnabled = true;
             if (isAjout == true)
@@ -188,6 +187,7 @@ namespace ClientDesktop
             else
             {
                 //Modification d'un menu
+                cbPlat.DataSource = reponse.Donnees; //Récupère le plat du menu
                 cbPlat.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Plat"); //Sélectionne le plat du menu
             }
             cbPlat.DisplayMember = "Intitule";
@@ -203,8 +203,7 @@ namespace ClientDesktop
             Task<ReponsePagination<Plat>> reponseTask = _restaurationService.GetAllPlatsAsync(requete);
             ReponsePagination<Plat> reponse = await reponseTask;
 
-            //Initialisation du ComboBox pour le type dessert
-            cbDessert.DataSource = reponse.Donnees;
+            //Initialisation du ComboBox pour le type dessert            
             cbDessert.DropDownStyle = ComboBoxStyle.DropDownList;            
             cbDessert.FormattingEnabled = true;
             if (isAjout == true)
@@ -215,6 +214,7 @@ namespace ClientDesktop
             else
             {
                 //Modification d'un menu
+                cbDessert.DataSource = reponse.Donnees; //Récupère le dessert du menu
                 cbDessert.SelectedItem = plats.FirstOrDefault(p => p.TypePlat == "Dessert"); //Sélectionne le dessert du menu
             }
             cbDessert.DisplayMember = "Intitule";
